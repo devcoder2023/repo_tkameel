@@ -1,0 +1,184 @@
+@import url("stylemain.css");
+
+
+
+.wrapper .divmain {
+    /*overflow-y: auto;*/
+    /*padding: 20px 240px;*/
+    /*gap: 0px;*/
+    
+    /*border: 1px dashed orange;*/
+}
+
+.widget {
+    /*padding: 0px;*/
+}
+
+
+.coverHome {
+    width: 100%;
+    height: 100%;
+    
+    display: flex;
+    position: relative;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 30px;
+}
+
+.widgetColumn {
+}
+.widgetUser {
+    grid-column: 1/4;
+}
+.widgetChat {
+    grid-column: 4/9;
+}
+.widgetProject {
+    grid-column: 9/13;
+}
+
+
+
+
+/*============================ USER ===============================*/
+
+.containerUser, .containerPost {
+    /*width: 100%;*/
+    height: 100%;
+    
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    align-items: center;
+    justify-content: flex-start;
+    /*overflow-y: auto;*/
+}
+
+.widgetUser .widgetFollowerHeader {
+    justify-content: space-between;
+}
+.navbrowseusers {
+    font-size: var(--font-size-xmid);
+}
+
+
+.widgetUser .widgetFollowerBody, .widgetUser .widgetSuggestionsBody {
+    height: unset;
+    max-height: 425px;
+}
+
+
+.containerItemUser.containerItemUserSuggestions .containerSmall .containerProfile {
+    width: calc( 100% - 40px);
+    border: 0px solid lightblue;
+}
+.containerItemUser .containerSmall .containerButtons {
+    width: 40px;
+    border: 0px solid lightgreen;
+}
+
+
+/*============================ CHAT ===============================*/
+
+
+.widgetHeader.widgetChatHeader {
+    height: unset;
+    
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0px;
+    
+    /*border: 1px dashed gray;*/
+}
+
+.widgetChatBody {
+    height: auto;
+    max-height: 700px;
+    /*overflow-y: auto;*/
+}
+
+
+
+
+
+
+
+
+/*============================ PROJECT ===============================*/
+
+.widgetProjectBody {
+    height: auto;
+    max-height: 850px;
+/*    overflow-y: auto;*/
+}
+
+.widgetProject {
+    /*display: none;*/
+}
+
+
+
+
+
+
+
+
+
+
+
+
+@media (max-width: 1250px) {
+    
+    .widgetColumn {
+        
+    }
+    .widgetUser {
+        grid-column: 1/4;
+    }
+    .widgetChat {
+        grid-column: 4/9;
+    }
+    .widgetProject {
+        display: none;
+    }
+}
+
+
+@media (max-width: 900px) {
+    
+    .widgetColumn {
+        /*padding: 0px;*/
+    }
+    .widgetUser {
+        grid-column: 1/5;
+    }
+    .widgetChat {
+        grid-column: 1/5;
+    }
+    .widgetProject {
+        display: flex;
+        grid-column: 1/5;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

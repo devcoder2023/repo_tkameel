@@ -1,0 +1,328 @@
+@import url("stylemain.css");
+
+
+
+
+/*===================== WIDGET VIEW =====================*/
+.widgetView {
+    grid-column: 1/13;
+}
+
+.widgetView .widgetViewHeader {
+    justify-content: space-between;
+}
+
+.widgetView .widgetViewBody {
+    /*height: 100%;*/
+    height: 420px;
+    overflow-y: auto;
+    /*border: 1px solid blue;*/
+
+}
+
+.containerButtonsWidgetHeader {
+    display: flex;
+    position: relative;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    
+    /*border: 1px solid green;*/
+}
+
+.containerSwitchStatusProject {
+    /*width: 100%;*/
+    height: 100%;
+    
+    display: flex;
+    position: relative;
+    align-items: center;
+    /*justify-content: flex-end;*/
+    justify-content: center;
+    padding: 0px 20px;
+    gap: 20px;
+    
+    /*border: 1px solid blue;*/
+}
+
+.containerVisitorProject {
+    /*width: 100%;*/
+    height: 100%;
+    
+    display: flex;
+    position: relative;
+    align-items: center;
+    /*justify-content: flex-end;*/
+    justify-content: center;
+    padding: 0px 20px;
+    gap: 20px;
+    
+    /*border: 1px solid blue;*/
+}
+
+
+/*===================== WIDGET MEMBERS =====================*/
+.widgetMembers {
+    /*height: calc(100% - 0px);/* 200 is contCreate AND 30 is gap*/
+    min-height: 500px;
+    /*display: none;*/
+    grid-column: 1/13;
+}
+
+.widgetMembers .widgetMembersHeader {
+
+}
+
+
+.widgetMembersBody .card.cardList {
+    /*width: 100%;*/
+    /*width: 500px;*/
+    /*min-width: 500px;*/
+}
+.widgetMembers .widgetMembersBody {
+    overflow-y: auto;
+    /*flex-wrap: wrap;*/
+    
+}
+
+.containerItemMember .containerButtonsEvaluation {
+    width: 100%;
+    height: 100%;
+    
+    display: none;
+    flex-direction: row;
+    position: absolute;
+    align-items: center;
+    justify-content: center;
+    top: 0;
+    right: 0;
+    
+    background: linear-gradient( 90deg, rgba(242,246,255,0.50), rgba(242,246,255,0.50), rgba(242,246,255,0.50) );
+    border: 0px solid #ffaaaa;
+    
+}
+.containerItemMember.evaluation .containerButtonsEvaluation {
+    display: none;
+}
+.containerItemMember.evaluation:hover .containerButtonsEvaluation {
+    display: flex;
+}
+
+
+
+/*===================== WIDGET TSK =====================*/
+.widgetTask {
+    /*height: calc(100% - 0px);/* 200 is contCreate AND 30 is gap*/
+    min-height: 500px;
+    /*display: none;*/
+    grid-column: 1/13;
+}
+
+.widgetTask .widgetTaskHeader {
+    justify-content: space-between;
+}
+.widgetTask .widgetTaskBody {
+    
+}
+
+
+/*=========================================================*/
+
+.widgetDashboard {
+    grid-column: 1/13;
+}
+.widgetBottom {
+    grid-column: 1/13;
+}
+
+.widgetBottom .widgetBottomHeader {
+    justify-content: flex-end;
+}
+
+
+/*=========================================================*/
+
+.lightBoxCard.grid .divBody .containerfiled.icons {
+    flex-direction: row;
+}
+
+.lightBoxCard.grid .divBody .containerfiled.profile {
+    flex-direction: row;
+    
+    /*border: 1px solid lightgreen;*/
+}
+
+.lightBoxCard.grid .divBody .containerfiled .containerProfile {
+    width: 75%;
+    border: 1px solid lightgray;
+}
+
+
+
+
+
+@media (max-width: 1250px) {
+    
+    .widgetView, .widgetDashboard, .widgetMembers, .widgetTask, .widgetBottom {
+        grid-column: 1/9;
+    }
+    
+    .widgetView .widgetViewBody {
+        height: unset;
+        min-height: unset;
+        max-height: unset;
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        gap: 10px;
+        overflow-y: visible;
+    }
+    .widgetView .widgetViewBody .containerDetailes {
+        overflow-y: unset;
+    }
+}
+
+@media (max-width: 900px) {
+    
+    .widgetView, .widgetDashboard, .widgetTask, .widgetMembers, .widgetBottom {
+        grid-column: 1/5;
+    }
+    
+    .widgetView {
+        height: unset;
+    }
+    .containerButtonsWidgetHeader {
+        flex-direction: column-reverse;
+        /*gap: 0px;*/
+    }
+    .widgetView .widgetViewBody .inner .griddetailes {
+        
+        display: flex;
+        flex-direction: column;
+        
+    }
+    .widgetView .widgetViewBody .containerDetailes {
+        
+    }
+    .widgetView .widgetViewHeader {
+        width: 100%;
+        height: unset;
+        display: flex;
+        /*flex-direction: column;*/flex-direction: column-reverse;
+        position: relative;
+        align-items: center;
+        justify-content: center;
+    }
+    .widgetView .widgetViewHeader h3 {
+        width: 100%;
+    }
+    .widgetView .widgetViewBody {
+        height: unset;
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        gap: 10px;
+        overflow-y: visible;
+        
+    }
+    .widgetView .widgetViewBody .containerDetailes {
+        overflow-y: visible;
+    }    
+    .widgetView .widgetViewBody .inner .bodydetailes {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+    .cardDetailsText {
+        width: 100%; 
+        /*height: 100px;*/
+        flex: unset;
+    }
+    .cardDetailsImage {
+        width: 100%; 
+        /*height: 300px;*/
+        flex: unset;
+    }
+    .widgetView .widgetViewBody .containerSkills {
+        width: 100%;
+        min-width: unset;
+    }
+    
+    .cardList .body {
+        overflow-y: visible;
+    }
+    
+    
+    
+    
+    .widgetDashboard {
+        height: unset;
+    }
+    .widgetDashboardBody {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: flex-start;
+    }
+    
+    .widgetMembers{
+        height: unset;
+        min-height: unset;
+    }
+    .widgetMembersBody {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: flex-start;
+    }
+    .widgetMembersBody .card.cardList {
+        width: 100%;
+        min-width: unset;
+    }
+    
+    
+    .widgetTask {
+        height: unset;
+        min-height: unset;
+    }
+    .widgetTaskBody {
+        height: unset;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: flex-start;
+    }
+    
+    
+    
+    .containerSmall .containerProfile {
+        height: 60px;
+    }
+    .containerSmall .containerBody {
+        height: 60px;
+    }
+    .containerSmall .containerButtons {
+        height: 60px;
+    }
+    
+    .widgetBottom .widgetHeader {
+        height: unset;
+        justify-content: center;
+        
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

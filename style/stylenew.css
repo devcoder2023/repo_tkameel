@@ -1,0 +1,151 @@
+
+@import url("stylemain.css");
+
+
+
+.widgetNew {
+    grid-column: 1/13;
+}
+
+.widgetNewBody {
+    
+}
+
+.widgetNewBody .inner {
+    width: 100%;
+
+    display: grid;
+    position: relative;
+    grid-template-columns: auto auto;
+    grid-template-rows: auto auto auto;
+    /*grid-template-rows: auto minmax(40px, 150px) auto;*/
+    padding: 20px;
+    gap: 20px;
+
+}
+
+.containerfiled {
+    width: 100%;
+    height: 100%;
+    
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: 0px;
+}
+
+.containerfiledname {
+    grid-column: 1/3;
+}
+.containerfiledcategory {
+    grid-column: 1/2;
+}
+.containerfiledtype {
+    grid-column: 2/3;
+    
+}
+.containerfileddescription {
+    grid-column: 1/2;
+}
+.containerfiledgoals {
+    grid-column: 2/3;
+}
+.containerfiledimage {
+    grid-column: 1/3;
+}
+
+.containerfiled label {
+    /*width: 120px;*/
+    /*min-width: 120px;*/
+    /*padding: 0px 5px;*/
+    /*text-align: left;*/
+    text-wrap: nowrap;
+    /*border: 1px solid red;*/
+}
+.containerfiled .validation {
+    height: var(--font-size-xsm);
+    /*border: 1px solid red;*/
+    font-size: var(--font-size-xmid);
+    color: var(--color-btndelete);
+}
+
+.inputs.area {
+    width: clamp(300px, 300px, 300px);
+    height: 80px;
+    min-height: unset;
+}
+.containerinputimg {
+    width: 100%;
+    max-width: 220px;
+    height: 40px;
+    
+    display: flex;
+    position: relative;
+    align-items: center;
+    justify-content: center;
+    /*border: 1px solid red;*/
+    border-radius: var(--radius-mid);
+}
+.containerinputimg input {
+    min-width: 220px;
+    overflow: hidden;
+}
+.containerinputimg .divsvg {
+    width: 40px;
+    min-width: 40px;
+    max-width: 40px;
+    height: 36px;
+    min-height: 36px;
+    max-height: 36px;
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    background-color: var(--color-primary);
+    border-radius: 0;
+    /*border: 1px solid green;*/
+}
+
+
+
+
+
+@media (max-width: 1250px) {
+    
+    .widgetNew {
+        grid-column: 1/9;
+    }
+    
+    .widgetNewBody .inner {
+        /*display: flex;*/
+        /*flex-direction: column;*/
+        grid-template-columns: auto auto;
+    }
+}
+
+@media (max-width: 900px) {
+    
+    .widgetNew {
+        grid-column: 1/5;
+    }
+    
+    .widgetNewBody .inner {
+        display: flex;
+        flex-direction: column;
+    }
+    
+}
+
+
+
+
+
+
+
+
+

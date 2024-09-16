@@ -1,0 +1,799 @@
+@import url("stylemain.css");
+
+
+
+
+/*===================== MAIN =====================*/
+
+
+
+.notion {
+    width: 100%;
+    height: 150px;
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    
+    background-color: var(--color-secondry);
+    font-size: var(--font-size-xlarg);
+    
+}
+
+/*===================== PAGE MAIN =====================*/
+
+.card {
+    border: 0px solid lightgray;
+}
+.widgetOne {
+    height: 320px;
+    min-height: 320px;
+    
+    grid-column: 1/13;
+    
+    /*overflow-y: auto;*/
+    /*overflow-x: auto;*/
+}
+
+.widgetTow {
+    height: 500px;
+    min-height: 500px;
+    
+    grid-column: 1/13;
+    
+    /*overflow-y: auto;*/
+    /*overflow-x: auto;*/
+}
+
+.widgetThree {
+    /*height: 700px;*/
+    min-height: 700px;
+    grid-column: 1/13;
+    
+}
+.widgetThree .widgetThreeBody {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.widgetThree .widgetThreeBody .containerList {
+    /*width: 100%;*/
+    /*height: 100%;*/
+
+    display: flex;
+    flex-direction: row;
+    position: relative;
+    align-items: center;
+    justify-content: flex-start;
+    
+    background-image: url("https://www.skillslinked.com/web/files/photoProject/6875image8888.jpg");
+    /*border: 2px solid greenyellow; */
+     
+    /*overflow-x: auto;*/
+    /*overflow-x: hidden;*/
+    
+    overflow-x: scroll;
+    /*overflow-y: hidden;*/
+    
+}
+.containerList.row::-webkit-scrollbar {
+  display: visible;
+}
+.widgetThree .widgetThreeBody .containerList ul {
+    width: unset;
+    height: 100%;
+    
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content:flex-start;
+    padding: 10px;
+    gap: 10px;
+    
+    /*overflow-x: scroll;*/
+    list-style-type:none;
+    white-space:nowrap;
+}
+
+/*.widgetThree .widgetThreeBody .containerList ul {*/
+/*    display: flex;*/
+/*    flex-direction: row;*/
+    /*justify-content:space-around;*/
+    /*padding: 10px;*/
+    /*gap: 10px;*/
+/*    overflow-x: scroll;*/
+/*    white-space:nowrap;*/
+    
+    /*list-style-type:none;*/
+/*}*/
+/*.widgetThree .widgetThreeBody .containerList ul li {*/
+/*    display:inline;*/
+    /*float: right;*/
+/*}*/
+
+
+.containerListRow {
+    width: 100%;
+    /*width: clamp(1300px, 1300px, 1300px);*/
+    /*width: 1300px;*/
+    /*max-width: 1300px;*/
+    /*min-width: 1300px;*/
+    height: 100%;
+    
+    display: flex;
+    padding: 20px;
+    gap: 70px;
+    overflow-x: auto;
+    
+    /*background-image: url("https://www.skillslinked.com/web/files/photoProject/6875image8888.jpg");*/
+    /*border: 1px solid green;*/
+    
+    scroll-snap-type: x mandatory; /* خاصية تخلي الإلتصاق فعال لطرف العنصر الداخلي  مايكون حر بالتحرك*/
+    scroll-padding-inline-start: 20px;/*هذا يخلي الإلتصاق يأخذ بعين الإعتبار حجم الهاش */
+    scroll-behavior: smooth; /*طبيعة حركة العناصر عند تحرك السكرول*/
+    scrollbar-width: 0;
+}
+.containerListRow.dragging {
+    /*يكون الوضع طبيعي عندما يكون التحريك بالضغط*/
+    scroll-snap-type: none;
+    scroll-behavior: auto;
+}
+.containerListRow .card{
+    scroll-snap-align: start; /*هذي الخاصية اللي تخلي العنصر يكون طرفه ملتصق بأول حاويته*/
+}
+.containerListRow.dragging .card{
+    cursor: grab;
+    user-select: none;
+}
+.containerListRow::-webkit-scrollbar {
+  display: none;
+}
+.navigation {
+    width: 40px;
+    height: 100%;
+    
+    display: flex;
+    position: relative;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    
+    /*border: 1px solid blue; */
+}
+.navigation .divsvg.circle {
+    border-radius: 50%;
+    border: 1px solid lightgray; 
+}
+/*.containerListRow { -ms-overflow-style: none; }*/
+/*.containerListRow::-webkit-scrollbar { display: none; }*/
+
+
+
+.widgetThree .widgetThreeBody .containerListRow .cardProject {
+    width: 300px;
+    min-width: 300px;
+    
+    backdrop-filter: blur(5px);
+    background-color: rgba(255, 255, 255, 0.5);
+    border: 1px solid lightgray; 
+}
+/*.widgetThree .widgetThreeBody .containerListRow .cardProject:not(:last-child) { margin-right: 10px; }*/
+
+.cardProject .header{
+    /*border: 2px solid red; */
+}
+.cardProject .body{
+    /*border: 2px solid blue;*/
+}
+.cardProject .footer{
+    /*border: 2px solid green; */
+}
+
+
+
+
+
+
+.widgetOne .widgetOneHeader {
+    justify-content: space-between;
+}
+
+.widgetOne .widgetOneBody {
+
+}
+
+.widgetOne .widgetOneBody .inner {
+    width: 100%;
+    height: 100%;
+    
+    display: flex;
+    position: relative;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 10px;
+    
+    /*display: grid;*/
+    /*position: relative;*/
+    /*flex-wrap: wrap; */
+    /* grid-template-columns: auto auto auto; */
+    /*grid-template-columns: repeat(4, 1fr);*/
+    /* padding: 20px; */
+    /*gap: 20px;*/
+
+    /* border: 2px solid red; */
+    /*-------------
+
+    /* width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    gap: 20px;
+
+    border: 2px solid red; */
+}
+
+
+.widgetOne .card {
+    /*width: 100%;*/
+    /*height: 100%;*/
+
+    /*display: flex;*/
+    /*flex-direction: column;*/
+    /*align-items: flex-start;*/
+    justify-content: flex-start;
+    padding: 20px;
+
+    /*background-color: var(--color-secondry);*/
+    border-radius: var(--radius-larg);
+}
+.widgetOne .card.cardName {
+    flex: 2;
+}
+.widgetOne .card.cardAbout {
+    flex: 2;
+}
+.widgetOne .card.cardCount {
+    flex: 1.5;
+}
+.widgetOne .card.cardMark {
+    flex: 1;
+}
+.widgetOne .card.cardContact {
+    flex: 2;
+}
+
+.widgetOne .card.cardName .body {
+    width: 100%;
+    height: 100%;
+    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.widgetOne .card.cardName .userImage {
+    width: 150px;
+    min-width: 150px;
+    max-width: 150px;
+    height: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+
+     /*border: 1px solid green; */
+}
+
+.widgetOne .card.cardName .userImage .containerImage {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    
+    /*border: 1px solid var(--color-primary-light); */
+}
+
+.widgetOne .card.cardName .userImage img {
+    width: 100%;
+    height: 100%;
+    /* height: auto; */
+    object-fit: cover;
+    object-position: center center;
+
+    /*border: 15px solid var(--color-primary-light);*/
+    border-radius: 50%;
+}
+.widgetOne .card.cardName .containerName {
+    width: 100%;
+    height: 60px;
+    
+    display:flex;
+    position: relative;
+    align-items: center;
+    justify-content: center;
+    
+    /*border: 1px solid red;*/
+}
+
+.widgetOne .card.cardName .containerName .divsvg {
+    position: absolute;
+    top: 3px;
+    left: 2px;
+}
+
+.widgetOne .card.cardAbout .body {
+    justify-content: flex-start;
+}
+.prographAbout {
+    /*border: 1px solid red;*/
+}
+
+
+/*.widgetOne .card .header {*/
+/*    width: 100%;*/
+/*    height: 40px;*/
+
+/*    display: flex;*/
+/*    position: relative;*/
+/*    align-items: center;*/
+/*    justify-content: space-between;*/
+
+     /*border: 1px solid yellow;*/
+/*}*/
+
+/*.widgetOne .card .body {*/
+/*    width: 100%;*/
+/*    height: 100px;*/
+
+/*    display: flex;*/
+/*    position: relative;*/
+/*    align-items: flex-start;*/
+/*    justify-content: space-between;*/
+    /*overflow-y: auto;*/
+
+     /*border: 1px solid yellow;*/
+/*}*/
+
+/*.widgetOne .card .displaynumber {*/
+/*    width: 100%;*/
+/*    height: 100%;*/
+/*    max-height: 140px;*/
+
+/*    display: flex;*/
+/*    align-items: flex-start;*/
+/*    justify-content: center;*/
+
+/*     border: 1px solid red; */
+/*    font-size: 100px;*/
+    /* line-height: 100%; */
+/*    line-height: 140px;*/
+/*}*/
+
+
+/*===================== PAGE VIEW =====================*/
+
+.buttons.buttonFollow {
+    /*display: none;*/
+}
+
+.buttons.buttonUnFollow {
+    background-color: red;
+}
+
+.widgetTow .widgetTowHeader {
+    /*width: 100%;*/
+    /*height: 60px;*/
+
+    /*display: flex;*/
+    /*position: relative;*/
+    /*align-items: center;*/
+    /*justify-content: flex-start;*/
+    gap: 20px;
+    
+    /* border: 1px solid green; */
+}
+
+
+.widgetTow .widgetTowBodyx {
+    width: 100%;
+    height: 500px;
+    /*grid-column: 1/13;*/
+    
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    position: relative;
+    align-items: flex-start;
+    justify-content: center;
+    /*padding: 20px;*/
+    /*gap: 20px;*/
+    
+    /*border: 2px solid red;*/
+}
+.widgetTow .cardx {
+    /*width: 100%;*/
+    /*height: ;*/
+
+    /*display: flex;*/
+    /*flex-direction: column;*/
+    /*position: relative;*/
+    /*align-items: center;*/
+    /*justify-content: flex-start;*/
+    
+    border: 2px solid orange;
+    
+}
+.widgetTow .widgetTowBody {
+    width: 100%;
+    
+    /*display: flex;*/
+    /*flex-direction: row;*/
+    /*align-items: flex-start;*/
+    /*justify-content: center;*/
+
+    /*display: grid;*/
+    /*position: relative;*/
+    /*flex-wrap: wrap; */
+    /*grid-template-columns: auto auto; */
+    /*grid-template-columns: repeat(2, 1fr);*/
+    /*padding: 20px;*/
+    /*gap: 20px;*/
+    
+     /*border: 1px solid green; */
+}
+
+.widgetTow .widgetTowBody .inner {
+    width: 100%;
+
+    display: grid;
+    position: relative;
+    flex-wrap: wrap; 
+    /* grid-template-columns: auto auto auto; */
+    grid-template-columns: repeat(3, 1fr);
+    /* padding: 20px; */
+    gap: 20px;
+
+    /* border: 2px solid red; */
+    /*-------------
+
+    /* width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    gap: 20px;
+
+    border: 2px solid red; */
+}
+
+.widgetTow .card {
+    /*width: 100%;*/
+    /*height: 100%;*/
+
+    /*display: flex;*/
+    /*flex-direction: column;*/
+    /*position: relative;*/
+    /*align-items: center;*/
+    /* gap: 40px; */
+    /*flex: 1 1 150px;*/
+    padding: 20px;
+
+    /*background-color: var(--color-secondry);*/
+    border-radius: var(--radius-larg);
+    /* border: 1px solid lightgray; */
+}
+/*.widgetTow .card .title {*/
+/*    width: 100%;*/
+/*    height: 60px;*/
+
+/*    display: flex;*/
+/*    align-items: center;*/
+/*    justify-content: space-between;*/
+/*    padding: 10px;*/
+
+    /* background-color: yellow; */
+/*}*/
+
+.widgetOne .card .header .containerButtonsHeader,
+.widgetTow .card .header .containerButtonsHeader {
+    /* width: 100%; */
+    height: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    
+    /*border: 1px solid orange;*/
+}
+.widgetOne .card .header .containerButtonsHeader.hide,
+.widgetTow .card .header .containerButtonsHeader.hide {
+    display: none;
+}
+
+
+
+
+
+.cardEmpty {
+    width: 100%;
+    height: 100px;
+    min-height: 100px;
+    max-height: 100px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    background-color: var(--color-secondry);
+    border-radius: var(--radius-mid);
+    border: 0px solid lightgray;
+}
+.cardEmpty .body {
+    width: 100%;
+    height: 100%;
+    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    
+    font-size: 24px;
+    color: lightgray;
+    border: 0px solid lightgray;
+}
+
+
+
+
+.lightBoxCard .divBody .containerfiled.containerfileddescription.hide {
+    display: none;
+}
+.lightBoxCard .divBody .containerfiled.area {
+    flex-direction: column;
+    grid-column: 1 / 3;
+}
+.lightBoxCard .divBody .containerfiled .containerLabel {
+    width: 100%;
+
+    display: flex;
+    align-items:center;
+    justify-content: flex-start;
+}
+
+.lightBoxCard .divFooter {
+    width: 100%;
+    height: 60px;
+
+    display: flex;
+    position: relative;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 10px;
+
+    background-color: transparent;
+    /*border: 1px solid red;*/
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*===================== CLASS STATE =====================*/
+
+.cardList .body.borderEdit {
+    border: 2px solid var(--color-btnupdate);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+@media (max-width: 1250px) {
+    
+    .widgetOne , .widgetTow, .widgetThree {
+        height: unset;
+        min-height: unset;
+        
+        grid-column: 1/9;
+    }
+    
+    .widgetOne .widgetOneBody  {
+        display: grid;
+        position: relative;
+        flex-wrap: wrap; 
+        grid-template-columns: repeat(2, 1fr);
+ 
+    }
+    .widgetTow .widgetTowBody {
+        display: grid;
+        position: relative;
+        flex-wrap: wrap;
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .containerFlat {
+        display: none;
+    }
+    
+    .lightBoxCard.grid .divBody .inner {
+        display: flex;
+        flex-direction: column;
+    }
+    
+    
+    .containerListRow {
+        gap: 40px
+    }
+    
+}
+
+@media (max-width: 900px) {
+    
+    .widgetOne, .widgetTow, .widgetThree {
+        grid-column: 1/5;
+    }
+    
+    
+    .widgetOne .widgetOneBody  {
+        /*display: flex;*/
+        /*position: relative;*/
+        /*flex-wrap: wrap; */
+        grid-template-columns: repeat(1, 1fr);
+ 
+    }
+    .widgetTow .widgetTowBody {
+        /*display: grid;*/
+        /*position: relative;*/
+        /*flex-wrap: wrap;*/
+        grid-template-columns: repeat(1, 1fr);
+    }
+    /*.widgetBottom .widgetHeader {*/
+    /*    height: unset;*/
+    /*    justify-content: center;*/
+        
+    /*}*/
+    
+    .widgetThree .widgetThreeBody .containerListRow .cardProject {
+        width: 200px;
+        min-width: 200px;
+    }
+}
+
+
+
+
+@media (max-width: 750px) {
+    .containerSmall {
+        /*height: unset;*/
+        /*flex-direction: column;*/
+    }
+    .containerSmall .containerIcon {
+        height: 60px;
+    }
+    .containerSmall .containerProfile {
+        height: 60px;
+    }
+    .containerSmall .containerBody {
+        height: 60px;
+    }
+    .containerSmall .containerButtons {
+        height: 60px;
+        /*display: none;*/
+    }
+    
+    
+    .widget2 {
+        /*height: none;*/
+        /*min-height: none;*/
+        /*max-height: none;*/
+        
+    }
+    .widgetOne {
+        height: unset;
+        min-height: unset;
+        
+        display: flex;
+        flex-direction: column;
+        overflow-y: visible;
+        overflow-x: visible;
+        /*overflow: visible;*/
+    }
+    .widgetTow {
+        height: unset;
+        min-height: unset;
+            
+        overflow-y: visible;
+        overflow-x: visible;
+        /*overflow: visible;*/
+    }
+    .widgetBody {
+        display: flex;
+        flex-direction: column;
+    }
+    .inner {
+        width: 100%;
+        
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+    /*.widgetTow .widgetTowBody .inner {*/
+    /*    width: 100%;*/
+        
+    /*    display: flex;*/
+    /*    flex-direction: column;*/
+    /*    gap: 10px;*/
+        
+    /*}*/
+    
+    
+    /*.containerSmall .containerButtons {*/
+        /*display: none;*/
+    /*}*/
+    
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

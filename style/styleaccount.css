@@ -1,0 +1,331 @@
+@import url("stylemain.css");
+
+
+
+.wrapper {
+    align-items: center;
+    justify-content: center;
+}
+
+.widget {
+    /*width: 50%;*/
+    width: 500px;
+    
+    
+    position: absolute;
+    
+    transition: 0.3s ease;
+    /*border: 1px solid green;*/
+    border-radius: var(--radius-xlarg);
+}
+.widget.login {
+    min-height: 500px;
+    background-color: var(--color-secondry);
+}
+
+
+
+.divlogin {
+    display: block;
+    margin: 35px 0px 0px 0px;
+    
+    /*font-family: "almarai";*/
+    font-size: 28px;
+    font-weight: bold;
+    color: var(--color-primary);
+    align-self: center;
+}
+
+.containerform {
+    width: 100%;
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    /*border: 1px solid green;*/
+}
+.containerform form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+
+.containerwarning {
+    width: 100%;
+    /*height: 45px;*/
+    min-height: 80px;
+    
+    display: flex;
+    position: relative;
+    align-items: flex-end;
+    justify-content: center;
+    
+    background-color: transparent;
+    /*border: 1px solid green;*/
+}
+.containerwarningtext {
+    /*width: 220px;*/
+    /*height: 100%;*/
+    
+    display: none;
+    /*align-items: center;*/
+    /*justify-content: center;*/
+    padding: 5px;
+    
+    /*background-color: transparent;*/
+    color: #fff;
+    font-size: 12px;
+    /*border: 2px solid #f00;*/
+    border-radius: var(--radius-mid);
+}
+
+.containerbuttons {
+    width: 100%;
+    height: 60px;
+    
+    display: flex;
+    position: relative;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    
+    /*border: 1px solid green;*/
+
+}
+.containerbuttons.sign {
+    justify-content: space-between;
+}
+
+
+/*===================== SIGNUP ===========================*/
+
+
+.wrappernewitems {
+    /*width: 60%;*/
+    width: 500px;
+    height: 80%;
+    
+    display: flex;
+    position: relative;
+    /*align-items: flex-start;*/
+    align-items: center;
+    justify-content: center;
+    
+    /*flex-flow: wrap;*/
+    background-color: var(--color-secondry);
+    /*border: 1px solid yellow;*/
+    border-radius: var(--radius-xlarg);
+}
+.wrappernewitems .widget {
+    width: 100%;
+    height: 100%;
+}
+.wrappernewitems .inner {
+    width: 100%;
+   /* height: 100%;*/
+    
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    align-items: space-between;
+    justify-content: space-between;
+    padding: 10px 30px;
+    /*padding: 10px;*/
+    gap: 10px;
+    overflow: auto;
+    
+    background-color: transparent;
+    /*border: 1px solid #f00;*/
+}
+
+.wrappernewitems .inner::-webkit-scrollbar {
+  display: none;
+}
+/*.wrappersignup {*/
+/*    height: 700px;*/
+/*    display: flex;*/
+    /*flex-flow: wrap;*/
+/*    align-items: center;*/
+/*    justify-content: center;*/
+/*}*/
+
+.widget.second{
+    opacity: 0;
+    pointer-events: none;
+    transform: translateX(100%); /*100px*/
+}
+.widget.third{
+    opacity: 0;
+    pointer-events: none;
+    transform: translateX(100%); /*100px*/
+}
+.widget.fourth{
+    opacity: 0;
+    pointer-events: none;
+    transform: translateX(100%); /*100px*/
+}
+
+
+
+.wrappernewitems .widget.second{
+    opacity: 0;
+    pointer-events: none;
+    transform: translateX(100%); /*100px*/
+}
+.wrappernewitems .widget.third{
+    opacity: 0;
+    pointer-events: none;
+    transform: translateX(100%); /*100px*/
+}
+.wrappernewitems .widget.fourth{
+    opacity: 0;
+    pointer-events: none;
+    transform: translateX(100%); /*100px*/
+}
+
+
+.wrappernewitems.secActive .widget.first {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateX(100%); /*100px*/
+}
+.wrappernewitems.secActive .widget.second {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateX(0);
+}
+.wrappernewitems.secActive .widget.third {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateX(100%); /*100px*/
+}
+.wrappernewitems.secActive .widget.fourth{
+    opacity: 0;
+    pointer-events: none;
+    transform: translateX(100%); /*100px*/
+}
+
+
+.wrappernewitems.thrdActive .widget.first {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateX(100%);
+}
+.wrappernewitems.thrdActive .widget.second {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateX(100%);
+}
+.wrappernewitems.thrdActive .widget.third {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateX(0);
+}
+.wrappernewitems.thrdActive .widget.fourth{
+    opacity: 0;
+    pointer-events: none;
+    transform: translateX(100%);
+}
+
+.wrappernewitems.fourActive .widget.first {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateX(100%);
+}
+.wrappernewitems.fourActive .widget.second {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateX(100%);
+}
+.wrappernewitems.fourActive .widget.third {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateX(100%);
+}
+.wrappernewitems.fourActive .widget.fourth{
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateX(0);
+}
+
+
+
+/*===================== FORGET ===========================*/
+
+
+.wrappernewitems {
+    /*height: 350px;*/
+}
+
+
+
+
+
+
+
+@media (max-width: 880px) {
+    
+    .widget {
+        width: 90%;
+    }
+    
+    .containerbuttons.sign {
+        height: unset;
+        
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

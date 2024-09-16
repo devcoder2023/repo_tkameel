@@ -1,0 +1,440 @@
+@import url("stylemain.css");
+
+
+
+/*.wrapper .divmain {*/
+/*    display: flex;*/
+/*    flex-direction: row;*/
+/*    position: relative;*/
+/*    padding: 20px 240px;*/
+/*}*/
+.wrapper .divmain.warning {
+    
+    flex-direction: column;
+    
+}
+
+.widget {
+    /*height: unset;*/
+    /*padding: 0px;*/
+    /*border: 1px solid red;*/
+    /*min-height: 800px;*/
+}
+.widgetBody {
+    overflow: auto;
+}
+/*
+.widgetInformation {
+    flex: 1;
+    max-width: 350px;
+}
+.widgetChat {
+    flex: 2;
+}
+.widgetSkill {
+    flex: 1;
+    max-width: 300px;
+}
+.widgetDirect {
+    flex: 1;
+    max-width: 300px;
+}
+*/
+
+.widgetInformation {
+    grid-column: 1/4;
+}
+.widgetChat {
+    grid-column: 4/8;
+}
+.widgetSkill {
+    grid-column: 8/11;
+}
+.widgetDirect {
+    grid-column: 11/13;
+}
+
+
+
+
+
+/*============================ CHAT ===============================*/
+
+
+.widgetHeader.widgetChatHeader {
+    height: unset;
+    
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0px;
+    
+    /*border: 1px dashed gray;*/
+}
+
+
+
+
+.widgetSkillsBody {
+    overflow-y: auto;
+}
+
+.coverPublish {
+    width: 100%;
+    height :80px;
+    
+    display: flex;
+    position: relative;
+    align-items: center;
+    justify-content: center;
+    
+    background-color: #F9F9F9;
+    
+}
+
+.containerPublish {
+    width: 100%;
+    height :100%;
+    
+    display: flex;
+    flex-direction: row;
+    position: relative;
+    align-items: center;
+    justify-content: center;
+    
+}
+
+
+
+
+
+/*============================ SKILL ===============================*/
+
+
+
+
+
+/*============================ INFORMATION ===============================*/
+
+.widgetHeader.widgetInformationHeader {
+    height: unset;
+    
+    display:flex;
+    flex-direction: column;
+    position: relative;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 8px;
+    
+    /*border: 1px dashed red;*/
+}
+
+.coverImageProject {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    max-height: 200px;
+    
+    display:flex;
+    position: relative;
+    align-items: center;
+    justify-content: center;
+    
+    /*border: 1px solid var(--color-primary-light);*/    
+    /*border: 1px dashed red;*/
+}
+.coverImageProject img {
+    width: 100%;
+    height: 100%;
+    /* height: auto; */
+    object-fit: cover;
+    object-position: center center;
+}
+
+.coverInfoProject {
+    width: 100%;
+    /*height: 300px;*/
+    
+    display:flex;
+    flex-direction: column;
+    position: relative;
+    align-items: center;
+    justify-content: center;
+    
+    /*border: 1px solid yellow;*/
+}
+.coverNameProject {
+    width: 100%;
+    height: 80px;
+    
+    display: flex;
+    position: absolute;
+    align-items: flex-end;
+    justify-content: center;
+    padding: 8px;
+    bottom: 0px;
+    
+    text-wrap: nowrap;
+    color: var(--color-primary-light);
+    background: linear-gradient(0deg, rgba(44,58,74,1.0) 0%, rgba(44,58,74,0.6) 65%, rgba(44,58,74,0.0) 100%);
+    /*border: 1px solid red;*/
+}
+
+.coverNameProject .txetNameProject {
+    width: 100%;
+    display:inline-block;
+
+    /*display: flex;*/
+    /*position: relative;*/
+    /*align-items: center;*/
+    /*justify-content: center;*/
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+
+    
+    /*text-wrap: nowrap;*/
+    /*border: 1px solid green;*/
+}
+
+.coverNameProject .divsvg svg {
+    width: 35px;
+    min-width: 35px;
+    max-width: 35px;
+    height: 35px;
+    min-height: 35px;
+    max-height: 35px;
+}
+
+.coverNameProject .divsvg {
+    background: linear-gradient(0deg, rgba(200,200,200,0.4) 0%, rgba(200,200,200,0.4) 65%, rgba(200,200,200,0.4) 100%);
+}
+.coverNameProject .divsvg:hover {
+    background: linear-gradient(0deg, rgba(200,200,200,1.0) 0%, rgba(200,200,200,0.6) 65%, rgba(200,200,200,0.0) 100%);
+}
+.coverNameProject .divsvg .svgfill {
+    fill: var(--color-primary-light);
+}
+
+.coverInfoProject .textDescription {
+    
+    /*white-space: nowrap;*/
+    /*overflow: hidden;*/
+    /*text-overflow: ellipsis;*/
+
+    display: -webkit-box; 
+    -webkit-box-orient: vertical; 
+    -webkit-line-clamp: 2; 
+    overflow: hidden; 
+    text-overflow: ellipsis; 
+    
+    font-size: var(--font-size-mid);
+}
+
+.widgetInformationBody {
+    width: 100%;
+    height: 100%;
+    
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 12px;
+    
+    /*overflow-y: hidden;*/
+    
+    /*border: 1px dashed red;*/
+    
+}
+
+.containerProgress {
+    width: 100%;
+    height: 60px;
+    
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 10px 10px;
+    
+    /*border: 1px dashed red;*/
+    
+}
+
+.containerProgress p {
+    font-size: var(--font-size-xmid);
+}
+
+.containerProgress .innerProgress {
+    width: 100%;
+    height: 10px;
+    
+    background-color: var(--color-primary-mid);
+    border-radius: 5px;
+
+}
+.containerProgress .outterProgress {
+    width: 50%;
+    height: 10px;
+    
+    background-color: var(--color-primary);
+    border-radius: 5px;
+
+}
+
+.widgetInformationBody .cardList .header {
+    justify-content: flex-start;
+    padding: 0px 10px;
+    gap: 10px;
+}
+.containerInformationMember {
+    width: 100%;
+    /*height: calc( 100% - 80px);*/
+    height: 100%; 
+    
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    align-items: center;
+    justify-content: flex-start;
+    /*gap: 8px;*/
+    
+    /*font-size: var(--font-size-mid);*/
+    border: 1px solid red;
+}
+.containerNumber {
+    width: 100%;
+    height: 60px;
+    
+    display: flex;
+    /*flex-direction: column;*/
+    position: relative;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 0px 10px;
+    gap: 10px;
+    
+    /*border: 1px solid yellow;*/
+}
+.containerList .listChat {
+    /*width: 100%;*/
+    /*height: 100%; */
+    /* calc( 100% - 140px);*/
+    /*max-height: unset;*/
+    /*min-height: unset;*/
+    
+    /*display: flex;*/
+    /*flex-direction: column-reverse;*/
+    /*position: relative;*/
+    /*align-items: flex-end;*/
+    /*justify-content: flex-end;*/
+    
+    overflow-y: auto;
+    /*border: 1px solid yellow;*/
+}
+
+.containerList .listChat::-webkit-scrollbar {
+  display: none;
+}
+
+.containerItemMember .containerSmall .containerProfile {
+    width: 60%;
+    border: 0px solid lightblue;
+}
+.containerItemMember .containerSmall .containerBody.member {
+    width: 40%;
+    border: 0px solid lightgreen;
+    
+    /*position: absolute;*/
+    /*height: 100%;*/
+    /*top: 0px;*/
+    /*left: 0px;*/
+    
+}
+
+
+/*.containerItemSkill .containerSmall .containerBody {*/
+/*    width: 50%;*/
+/*    border: 0px solid #ffaaaa;*/
+/*}*/
+/*.containerItemSkill .containerSmall .containerButtons {*/
+/*    width: 50%;*/
+/*    border: 0px solid lightgreen;*/
+    
+    /*position: absolute;*/
+    /*height: 100%;*/
+    /*top: 0px;*/
+    /*left: 0px;*/
+    
+/*}*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@media (max-width: 1250px) {
+        
+    .widgetColumn {
+        
+    }
+    .widgetInformation {
+        grid-column: 1/4;
+    }
+    .widgetChat {
+        grid-column: 4/9;
+    }
+    .widgetSkill {
+        /*display: none;*/
+        grid-column: 1/4;
+    }
+    .widgetDirect {
+        /*display: none;*/
+        grid-column: 4/9;
+    }
+}
+
+
+@media (max-width: 900px) {
+    
+    .widgetColumn {
+        /*padding: 0px;*/
+    }
+    .widgetInformation {
+        grid-column: 1/5;
+    }
+    .widgetChat {
+        grid-column: 1/5;
+    }
+    .widgetSkill {
+        /*display: flex;*/
+        grid-column: 1/5;
+    }
+    .widgetDirect {
+        /*display: flex;*/
+        grid-column: 1/5;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,285 @@
+@import url("stylemain.css");
+
+.wrapper {
+    
+    /*display: flex;*/
+    /*flex-direction: column;*/
+    /*position: relative;*/
+    /*align-items: center;*/
+    /*justify-content: flex-start;*/
+    
+    /*padding: 20px 240px;*/
+    /*background-color: var(--color-primary);*/
+    /*border: 1px solid lightblue;*/
+}
+.wrapper .divmain {
+    /*gap: 20px;*/
+    row-gap: 30px;
+}
+.widgetGuideUp {
+    grid-column: 1/13;
+}
+h1 {
+    text-wrap: nowrap;
+}
+.content {
+    /*width: 100%;*/
+    /*height: 100%;*/
+    /*min-height: 100%;*/
+    
+    /*display: flex;*/
+    /*position: relative;*/
+    /*align-items: center;*/
+    /*justify-content: space-between;*/
+    /*padding: 20px;*/
+    /*overflow-y: auto;*/
+    
+    /*background-color: var(--color-primary-mid);*/
+    /*border: 1px solid lightblue;*/
+    border-radius: 20px;
+}
+
+
+
+/*================= GUIDE ======================*/
+
+.widgetGuide {
+    grid-column: 1/13;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    
+    background-color: var(--color-secondry);
+    /*border: 1px dashed var(--color-primary);*/
+    border-radius: var(--radius-mid);
+}
+.widgetGuide .part {
+    width: 100%;
+    height: 100%;
+    /*max-width: 70%;*/
+    /*height: 120px;*/
+    display: flex;
+    position: relative;
+    align-items: center;
+    justify-content: center;
+    padding: 30px;
+    gap: 30px;
+    
+    /*border:1px solid orange;*/
+    
+}
+.widgetGuide .part.partText {
+    width: 50%;
+}
+
+.widgetGuide .partText.hide {
+    display: none;
+}
+
+.widgetGuide .part.partImage {
+    width: 50%;
+    height: 100%;
+    
+    overflow: hidden;
+}
+
+.widgetGuide .partImage img {
+    width: 100%;
+    height: 100%;
+    /*aspect-ratio: 1 / 1;*/
+    
+    object-fit: contain;
+    object-position: center center;
+    
+    border-radius: var(--radius-mid);
+    
+}
+.widgetGuide .partImage img.down1 {
+    width: 100%;
+    /*max-height: 50%;*/
+}
+/*================= GUIDE ICONS ======================*/
+
+.widgetIcons {
+    grid-column: 1/13;
+}
+.widgetIcons.hide {
+    display: none;
+}
+.widgetIcons .widgetBodyIcons {
+    width: 100%;
+    
+    /*display: flex;*/
+    flex-direction: column;
+    /*position: relative;*/
+    /*align-items: center;*/
+    /*justify-content: flex-start;*/
+    
+    /*border: 1px solid blue;*/
+}
+.widgetBodyIcons .divsvg {
+    /*border: 1px solid green;*/
+}
+.widgetIcons .widgetBodyIcons .containerIcons {
+    width: 100%;
+    height: 100%;
+    
+    display: flex;
+    position: relative;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 5px;
+    gap: 5px;
+    
+    /*background-color: var(--color-primary-mid);*/
+    /*border: 1px solid orange;*/
+}
+
+
+
+
+
+
+
+/*================= GUIDE SUPPORT ======================*/
+
+.widgetSupport {
+    grid-column: 1/13;
+    background-color: var(--color-secondry);
+}
+.widgetBodySupport {
+    height: unset;
+    overflow-y: unset;
+}
+.containerSupport {
+    width: 100%;
+    
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    align-items: center;
+    justify-content: flex-start;
+    
+    /*border: 1px solid orange;*/
+}
+.textSupport {
+    width: 100%;
+    
+    padding: 10px;
+    text-align: center;
+}
+.containerPublish {
+    height: 200px;
+    max-height: unset;
+}
+.boxSupport {
+    width: 40%;
+    
+    display: flex;
+    /*flex-direction: column;*/
+    position: relative;
+    align-items: flex-start;
+    justify-content: center;
+    
+    /*border: 1px solid orange;*/
+}
+
+.containerChoise {
+    width: 100%;
+    
+    display: flex;
+    position: relative;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 5px 10px;
+    gap: 20px;
+    
+    /*border: 1px solid red;*/
+}
+
+.containerChoise .choise {
+    width: 120px;
+    height: 30px;
+    
+    display: flex;
+    position: relative;
+    align-items: center;
+    justify-content: center;
+    
+    background-color: var(--color-primary-light);
+    border: 1px solid var(--color-primary);
+    border-radius: 15px;
+    color: var(--font-color-primary-light);
+    font-size: var(--font-size-xmid);
+}
+
+.containerChoise .choise.select {
+    
+    background-color: var(--color-primary);
+    border: 1px solid var(--color-primary-light);
+    color: var(--font-color-primary);
+}
+
+
+@media (max-width: 1250px) {
+    
+    .wrapper .divmain {
+        /*grid-row-gap: 20px;*/
+        /*grid-template-rows: repeat(20, auto);*/
+        row-gap: 30px;
+        /*grid-gap-rows: 30px;*/
+    }
+    .widgetGuide , .widgetGuideUp {
+        grid-column: 1/9;
+        flex-direction: column;
+    }
+    
+    .widgetGuide .part {
+        padding: 10px;
+        gap: 10px
+    }
+    .widgetGuide .part.partText {
+        width: 90%;
+    }
+    .widgetGuide .part.partImage {
+        width: 90%;
+    }
+    
+    .boxSupport {
+        width: 75%;
+    }
+}
+
+@media (max-width: 1250px) {
+    
+    .widgetGuide , .widgetGuideUp {
+        grid-column: 1/5;
+        flex-direction: column;
+    }
+    .boxSupport {
+        width: 90%;
+    }
+    .containerChoise {
+        flex-direction: column;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
