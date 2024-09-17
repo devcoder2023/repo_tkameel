@@ -103,6 +103,12 @@ export default function Main() {
         
     }
     
+    this.goToDashboard = function( codeUser ) {
+        
+        window.location.href = this.pathDomain + "dashboard";
+        
+    }
+    
     
     this.publishPost = function( within , content , codeUser , codeProject , codeProjectSkill ) {
         
@@ -192,9 +198,11 @@ export default function Main() {
         xhr.open( method, path, true);
         xhr.setRequestHeader("Authorization" , token );
         
+        
         for(var i=0; i<headers.length; i++) {
             
         }
+        
         
         if(form == null)
         {
@@ -481,13 +489,13 @@ export default function Main() {
         
         document.addEventListener( "click" , (e) => {
             
-            if( !menu.contains( e.target ) && !buttonMenu.contains( e.target ) ) {
-                menu.classList.add("hide");
-            }
+            // if( !menu.contains( e.target ) && !buttonMenu.contains( e.target ) ) {
+            //     menu.classList.add("hide");
+            // }
             
-            if( !menuNotification.contains( e.target ) && !buttonNotification.contains( e.target ) ) {
-                menuNotification.classList.add("hide");
-            }
+            // if( !menuNotification.contains( e.target ) && !buttonNotification.contains( e.target ) ) {
+            //     menuNotification.classList.add("hide");
+            // }
             
         });
         

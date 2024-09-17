@@ -1,15 +1,16 @@
 
 <!DOCTYPE html >
 <html lang="en" dir="rtl">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
-        <link rel="stylesheet" href="./style/styleaccount.css">
-        <link rel="icon" href="./files/logo/icn_ar.png">
-        <title>إستعادة كلمة المرور</title>
-    </head>
-    <body>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+    <link rel="stylesheet" href="./style/styleaccount.css">
+    <link rel="icon" href="./files/logo/icn_ar.png">
+    <script defer type="module" src="./js/scriptforget.js"></script>
+    <title>إستعادة كلمة المرور</title>
+</head>
+<body>
     
     <div class="wrapper">
         
@@ -107,7 +108,7 @@
                         
                             <input type="password" id="password" name="password" class="inputs linpassword" placeholder="ادخل كلمة السر الجديدة" required />
                             <span id="validPassword" class="validation validPassword"></span>
-
+    
                             <input type="password" id="repassword" name="repassword" class="inputs linrepassword" placeholder="أعد إدخال كلمة السر" required />
                             <span id="validRePassword" class="validation validRePassword"></span>
                             
@@ -148,9 +149,8 @@
         
     </div>
         
-        <script type="module" src="./js/scriptforget.js"></script>
 
-    </body>
+</body>
 
 
 

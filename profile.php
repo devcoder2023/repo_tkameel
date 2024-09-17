@@ -85,7 +85,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../style/styleprofile.css">
-    <link rel="icon" href="./files/logo/icn_ar.png">
+    <link rel="icon" href="../files/logo/icn_ar.png">
+    <script defer type="module" src="../js/scriptprofile.js"></script>
     <title>الملف الشخصي</title>
 </head>
 <body>
@@ -95,7 +96,7 @@
         <div class="divheader">
             
             <div class="divlogo" align="center">
-                <img id="imagelogo" class="imagelogo" src="https://www.tkameel.com/web/files/logo/logo_ar_light.png" />
+                <img id="imagelogo" class="imagelogo" src="../files/logo/logo_ar_light.png" />
             </div>
             
             <nav id="navbar" class="navbar">
@@ -141,7 +142,7 @@
                             
                             <div class="userImage">
                                 <div class="containerImage">
-                                    <img id="userimgmenu" src="https://www.tkameel.com/web/files/photoProfile/user_anonymous.png">
+                                    <img id="userimgmenu" src="../files/photoProfile/user_anonymous.png">
                                 </div>
                             </div>
                             
@@ -173,7 +174,7 @@
 
     <div id="wrapper" class="wrapper">
         
-        <article ids="divmain" class="divmain">
+        <main ids="divmain" class="divmain">
             
             <div class="widget widgetOne">
                 
@@ -195,7 +196,7 @@
                                 
                                 <div class="userImage">
                                     <div class="containerImage">
-                                        <img id="carduserimg" src="https://www.tkameel.com/web/files/photoProfile/user_anonymous.png">
+                                        <img id="carduserimg" src="../files/photoProfile/user_anonymous.png">
                                     </div>
                                 </div>
                                 
@@ -286,7 +287,7 @@
                     <h3>المؤهلات :</h3>
                 </div>
 
-                <div class="widgetBody widgetTowBody">
+                <div class="widgetBody widgetTowBody grid">
                     <!--<div class="inner">-->
                         
                         <div id="cardCertificate" class=" card cardList cardCertificate">
@@ -438,7 +439,7 @@
             
             
 
-        </article>
+        </main>
         
         <footer>
             <div class="containerFooter">
@@ -446,7 +447,7 @@
                 <div class="container containerTop">
                         
                         <div class="divlogo" align="center">
-                            <img id="imagelogo" class="imagelogo" src="https://www.tkameel.com/web/files/logo/logo_ar_light.png" />
+                            <img id="imagelogo" class="imagelogo" src="../files/logo/logo_ar_light.png" />
                         </div>
                         
                 </div>
@@ -486,13 +487,13 @@
                         
                         <a href="">
                             <div class="footerImageX" align="center">
-                                <img id="imagelogo" class="imagelogo" src="https://www.tkameel.com/web/files/logo/logo_F_White.png" />
+                                <img id="imagelogo" class="imagelogo" src="../files/logo/logo_F_White.png" />
                             </div>
                         </a>
                         
                         <a href="https://x.com/prog2023">
                             <div class="footerImageX" align="center">
-                                <img id="imagelogo" class="imagelogo" src="https://www.tkameel.com/web/files/logo/logo_X_White.png" />
+                                <img id="imagelogo" class="imagelogo" src="../files/logo/logo_X_White.png" />
                             </div>
                         </a>
                     
@@ -669,8 +670,6 @@
     
     
     
-    <!--<script src="js/scriptprofile.js"></script>-->
-    <script type="module" src="../js/scriptprofile.js"></script>
     
 </body>
 </html>

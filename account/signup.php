@@ -1,14 +1,15 @@
 
 <!DOCTYPE html >
 <html lang="en" dir="rtl">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="./style/styleaccount.css">
-        <link rel="icon" href="./files/logo/icn_ar.png">
-        <title>مستخدم جديد</title>
-    </head>
-    <body>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style/styleaccount.css">
+    <link rel="icon" href="./files/logo/icn_ar.png">
+    <script defer type="module" src="./js/scriptsign.js"></script>
+    <title>مستخدم جديد</title>
+</head>
+<body>
     
     <div class="wrapper">
         
@@ -122,9 +123,8 @@
         
     </div>
         
-    <script type="module" src="./js/scriptsign.js"></script>
 
-    </body>
+</body>
 
 
 

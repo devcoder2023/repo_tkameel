@@ -84,7 +84,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../style/styleworkproject.css">
-    <link rel="icon" href="./files/logo/icn_ar.png">
+    <link rel="icon" href="../../files/logo/icn_ar.png">
+    <script defer type="module" src="../../js/scriptworkproject.js"></script>
     <title>صفحة العضو</title>
 </head>
 
@@ -95,7 +96,7 @@
         <div class="divheader">
             
             <div class="divlogo" align="center">
-                <img id="imagelogo" class="imagelogo" src="https://www.tkameel.com/web/files/logo/logo_ar_light.png" />
+                <img id="imagelogo" class="imagelogo" src="../../files/logo/logo_ar_light.png" />
             </div>
             
             <nav id="navbar" class="navbar">
@@ -141,7 +142,7 @@
                             
                             <div class="userImage">
                                 <div class="containerImage">
-                                    <img id="userimgmenu" src="https://www.tkameel.com/web/files/photoProfile/user_anonymous.png">
+                                    <img id="userimgmenu" src="../../files/photoProfile/user_anonymous.png">
                                 </div>
                             </div>
                             
@@ -174,7 +175,7 @@
 
     <div id="wrapper" class="wrapper">
 
-        <div id="covermain" class="covermain">
+        <main id="covermain" class="covermain">
                 
             <article id="divmain" class="divmain">
                 
@@ -219,7 +220,7 @@
                                     
                                     <div class="card cardDetailsImage">
                                         <div class="header">
-                                            <img src="https://www.tkameel.com/web/files/images/boarding/boarding1.png">
+                                            <img src="../../files/images/boarding/boarding1.png">
                                         </div>
                                         <div class="body">
                                             <p id="skilldescription">
@@ -269,7 +270,7 @@
                     </div>
                     
                     
-                    <div class="widgetBody widgetTasksBody">
+                    <div class="widgetBody widgetTasksBody grid">
                     
                         <div class="card cardList cardTaskAll">
                             <div class="header">
@@ -331,27 +332,7 @@
                     </div>
                     
                     
-                    <div class="widgetBody widgetMembersBody">
-                    
-                        <div class="card cardList">
-                            <div class="header">
-                                <h3></h3>
-                            </div>
-                            <div class="body">
-                                
-                            </div>
-                        </div>
-                        
-                    
-                        <div class="card cardList">
-                            <div class="header">
-                                <h3></h3>
-                            </div>
-                            <div class="body">
-                                
-                            </div>
-                        </div>
-                        
+                    <div class="widgetBody widgetMembersBody grid">
                     
                         <div class="card cardList cardMemberTeam">
                             <div class="header">
@@ -462,7 +443,7 @@
                 
             </div>
 
-        </div>
+        </main>
         
         <footer>
             <div class="containerFooter">
@@ -470,7 +451,7 @@
                 <div class="container containerTop">
                         
                         <div class="divlogo" align="center">
-                            <img id="imagelogo" class="imagelogo" src="https://www.tkameel.com/web/files/logo/logo_ar_light.png" />
+                            <img id="imagelogo" class="imagelogo" src="../../files/logo/logo_ar_light.png" />
                         </div>
                         
                 </div>
@@ -510,13 +491,13 @@
                         
                         <a href="">
                             <div class="footerImageX" align="center">
-                                <img id="imagelogo" class="imagelogo" src="https://www.tkameel.com/web/files/logo/logo_F_White.png" />
+                                <img id="imagelogo" class="imagelogo" src="../../files/logo/logo_F_White.png" />
                             </div>
                         </a>
                         
                         <a href="https://x.com/prog2023">
                             <div class="footerImageX" align="center">
-                                <img id="imagelogo" class="imagelogo" src="https://www.tkameel.com/web/files/logo/logo_X_White.png" />
+                                <img id="imagelogo" class="imagelogo" src="../../files/logo/logo_X_White.png" />
                             </div>
                         </a>
                     
@@ -844,10 +825,6 @@ M12,6a1,1,0,0,0-1,1v5a1,1,0,0,0,.293.707l3,3a1,1,0,0,0,1.414-1.414L13,11.586V7A1
     
     
     
-    
-    <script type="module" src="../../js/scriptworkproject.js"></script>
-    <!--<script type="module" src="../js/scriptmyproject.js"></script>-->
-    <!--<script src="../js/scriptmyproject.js"></script>-->
     
 </body>
 </html>

@@ -30,7 +30,7 @@
     margin: 35px 0px 0px 0px;
     
     /*font-family: "almarai";*/
-    font-size: 28px;
+    font-size: var(--font-size-divlog); 
     font-weight: bold;
     color: var(--color-primary);
     align-self: center;
@@ -78,7 +78,7 @@
     
     /*background-color: transparent;*/
     color: #fff;
-    font-size: 12px;
+    font-size: var(--font-size-xmid);
     /*border: 2px solid #f00;*/
     border-radius: var(--radius-mid);
 }

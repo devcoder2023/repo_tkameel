@@ -29,12 +29,9 @@ export default function Notification( data ) {
     this.codeStatusApproveJoin = data["codeStatusApproveJoin"] ;
     this.codeStatusApproveTask = data["codeStatusApproveTask"] ;
     
-    
-    
 }
 
 export function NotificationList() {
-    
     
     this.listNotification = [];
     this.lastIdNotification = 0;
@@ -116,7 +113,6 @@ export function NotificationList() {
     
     
 }
-
 
 
 

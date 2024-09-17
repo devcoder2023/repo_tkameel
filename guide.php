@@ -6,13 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style/styleguide.css">
     <link rel="icon" href="./files/logo/icn_ar.png">
+    <script defer type="module" src="./js/scriptguide.js"></script>
     <title>الإرشادات</title>
 </head>
 <body>
     
     <div class="wrapper">
         
-        <div id="divmain" class="divmain">
+        <main id="divmain" class="divmain">
             
             <div class="widget widgetGuideUp">
                 
@@ -260,7 +261,7 @@
             
             
         
-        </div>
+        </main>
         
         <footer>
             <div class="containerFooter">
@@ -268,7 +269,7 @@
                 <div class="container containerTop">
                         
                         <div class="divlogo" align="center">
-                            <img id="imagelogo" class="imagelogo" src="https://www.tkameel.com/web/files/logo/logo_ar_light.png" />
+                            <img id="imagelogo" class="imagelogo" src="./files/logo/logo_ar_light.png" />
                         </div>
                         
                 </div>
@@ -308,13 +309,13 @@
                         
                         <a href="">
                             <div class="footerImageX" align="center">
-                                <img id="imagelogo" class="imagelogo" src="https://www.tkameel.com/web/files/logo/logo_F_White.png" />
+                                <img id="imagelogo" class="imagelogo" src="./files/logo/logo_F_White.png" />
                             </div>
                         </a>
                         
                         <a href="https://x.com/prog2023">
                             <div class="footerImageX" align="center">
-                                <img id="imagelogo" class="imagelogo" src="https://www.tkameel.com/web/files/logo/logo_X_White.png" />
+                                <img id="imagelogo" class="imagelogo" src="./files/logo/logo_X_White.png" />
                             </div>
                         </a>
                     
@@ -1085,6 +1086,5 @@ M12,6a1,1,0,0,0-1,1v5a1,1,0,0,0,.293.707l3,3a1,1,0,0,0,1.414-1.414L13,11.586V7A1
         
     </div>
 
-    <script type="module" src="./js/scriptguide.js"></script>
 </body>
 </html>

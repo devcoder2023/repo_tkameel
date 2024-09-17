@@ -31,13 +31,6 @@
         exit();
     }
     
-    
-    if( isset($_GET["codeproject"])) {
-        setcookie("codeproject", $_GET["codeproject"]);
-    } else {
-        setcookie("codeproject", "", time() - 3600);
-    }
-    
     if( isset($_SESSION["id"]) )
     {
         $id = $_SESSION['id'] ;
@@ -82,10 +75,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../style/stylemyproject.css">
-    <link rel="icon" href="../files/logo/icn_ar.png">
-    <script defer type="module" src="../js/scriptmyproject.js"></script>
-    <title>إدارة المشروع</title>
+    <link rel="stylesheet" href="./style/stylemyactivities.css">
+    <link rel="icon" href="./files/logo/icn_ar.png">
+    <script defer type="module" src="./js/scriptmyactivities.js"></script>
+    <title>أنشطتي</title>
 </head>
 
 <body>
@@ -95,7 +88,7 @@
         <div class="divheader">
             
             <div class="divlogo" align="center">
-                <img id="imagelogo" class="imagelogo" src="../files/logo/logo_ar_light.png" />
+                <img id="imagelogo" class="imagelogo" src="./files/logo/logo_ar_light.png" />
             </div>
             
             <nav id="navbar" class="navbar">
@@ -141,7 +134,7 @@
                             
                             <div class="userImage">
                                 <div class="containerImage">
-                                    <img id="userimgmenu" src="../files/photoProfile/user_anonymous.png">
+                                    <img id="userimgmenu" src="./files/photoProfile/user_anonymous.png">
                                 </div>
                             </div>
                             
@@ -176,255 +169,6 @@
 
         <main id="divmain" class="divmain">
             
-            <div class="widget widgetView">
-                
-                
-                <div class="widgetHeader widgetViewHeader">
-                    <h3>تفاصيل المشروع :</h3>
-                    
-                    <!--<div class="containerButtonAndSwitch">-->
-                    <div class="containerButtonsWidgetHeader">
-                        
-                        <div class="containerVisitorProject">
-                            <label>عدد الزيارات :</label>
-                            <h3 id="visitorProject">
-                                
-                            </h3>
-                        </div>
-                        
-                        <div class="containerSwitchStatusProject">
-                            <label>طلب الإنضمام :</label>
-                            <div id="switchProjectStatus" class="containerSwitch waitting" data-status="0">
-                                <div id="buttonSwitch" class="buttonSwitch">
-                                    ...
-                                </div>
-                            </div>
-                            
-                        </div>
-                        
-                        <div id="buttonGoToLive" class="buttons">
-                         المساحة العامة
-                        </div>
-                        
-                    </div>
-
-                    
-                </div>
-                
-                
-
-                <div class="widgetBody widgetViewBody">
-                    
-                    <div class="containerDetailes">
-                            
-                        <div class="inner">
-    
-                            <div id="griddetailes" class="griddetailes">
-    
-                                <div class="card cardDetailsText">
-                                    <div class="header">
-                                        <label>اسم المشروع :</label>
-                                        
-                                        <!--<div id="buttonEditName" class="buttons icon elaveted hide">-->
-                                            
-                                            <div id="buttonEditName" class="divsvg elaveted hide">
-                                                <svg class="svgfill hilight">
-                                                    <use xlink:href="#svgedit"/>
-                                                </svg>
-                                            </div>
-                                            
-                                        <!--</div>-->
-                                        
-                                    </div>
-                                    
-                                    <div class="body">
-                                        <h3 id="projectname"></h3>
-                                    </div>
-                                    
-                                </div>
-                                <div class="card cardDetailsText">
-                                    <div class="header">
-                                        <label>تصنيف المشروع :</label>
-                                        
-                                        <!--<div id="buttonEditCategory" class="buttons icon elaveted hide">-->
-                                            
-                                            <div id="buttonEditCategory" class="divsvg elaveted hide">
-                                                <svg class="svgfill hilight">
-                                                    <use xlink:href="#svgedit"/>
-                                                </svg>
-                                            </div>
-                                        <!--</div>-->
-                                    </div>
-                                    
-                                    <div class="body">
-                                        <h3 id="projectcategory"></h3>
-                                    </div>
-                                    
-                                </div>
-                                <div class="card cardDetailsText">
-                                        <div class="header">
-                                        <label>نوع المشروع :</label>
-                                        
-                                        <!--<div id="buttonEditType" class="buttons icon elaveted hide">-->
-                                            
-                                            <div id="buttonEditType" class="divsvg elaveted hide">
-                                                <svg class="svgfill hilight">
-                                                    <use xlink:href="#svgedit"/>
-                                                </svg>
-                                            </div>
-                                            
-                                        <!--</div>-->
-                                    </div>
-                                    
-                                    <div class="body">
-                                        <h3 id="projecttype"></h3>
-                                    </div>
-                                    
-                                </div>
-                                
-                                <div class="card cardDetailsImage">
-                                    <div class="header">
-                                        <img src="../files/images/boarding/boarding1.png">
-                                    </div>
-                                    <div class="body">
-                                        
-                                        <!--<div id="buttonEditDescription" class="buttons icon elaveted hide">-->
-                                            
-                                            <div id="buttonEditDescription" class="divsvg elaveted hide">
-                                                <svg class="svgfill hilight hide">
-                                                    <use xlink:href="#svgedit"/>
-                                                </svg>
-                                            </div>
-                                        
-                                        <!--</div>-->
-                                        
-                                        <p id="projectdescription">
-                                            
-                                        </p>
-                                        
-                                    </div>
-                                </div>
-                                <div class="card cardDetailsImage">
-                                    <div class="header">
-                                        <img src="../files/images/boarding/boarding2.png">
-                                    </div>
-                                    <div class="body">
-                                        
-                                        <!--<div id="buttonEditGoals" class="buttons icon elaveted hide">-->
-                                            
-                                            <div id="buttonEditGoals" class="divsvg elaveted hide">
-                                                <svg class="svgfill hilight hide">
-                                                    <use xlink:href="#svgedit"/>
-                                                </svg>
-                                            </div>
-                                            
-                                        <!--</div>-->
-                                        
-                                        <p id="projectgoals">
-                                            
-                                        </p>
-                                        
-                                    </div>
-                                </div>
-                                
-                            </div>
-                            
-                        </div>
-                        
-                    </div>
-            
-                    <div class="containerSkills">
-                        
-                        <div id="cardSkill" class="card cardList cardDetailsList cardSkill">
-                            <div class="header">
-                                
-                                <h3>المهارات المطلوبة :</h3>
-                                
-                                <div class="containerButtonsWidgetHeader">
-                                    
-                                    <div id="btnAddSkill" class="buttons btnAdd icon">
-                                        <div id="" class="divsvg">
-                                            <svg class="svgfill">
-                                                <use xlink:href="#svgadd"/>
-                                            </svg>
-                                        </div>
-                                    </div>
-                                    
-                                    <div id="buttonViewDirect" class="buttons neg free">
-                                    التوجيهات
-                                        <div id="" class="divsvg">
-                                            <svg class="svgfill">
-                                                <use xlink:href="#svgnavL"/>
-                                            </svg>
-                                        </div>
-                                    </div>
-                                    
-                                </div>
-                            </div>
-                            <div class="body">
-                                
-                                <div class="containerList">
-                                    <ul id="listSkill" class="listItem listSkill">
-                                        
-                                    </ul>
-                                </div>
-                                
-                            </div>
-                        </div>
-                        
-                        
-                        <div id="cardDirect" class="card cardList cardDirect hide">
-                            
-                            <div class="header">
-                                
-                                <h3> التوجيهات:</h3>
-                                
-                                <div class="containerButtonsWidgetHeader">
-                                    
-                                    <div id="btnAddDirect" class="buttons btnAdd icon">
-                                        <div id="" class="divsvg">
-                                            <svg class="svgfill">
-                                                <use xlink:href="#svgdirect"/>
-                                            </svg>
-                                        </div>
-                                    </div>
-                                    
-                                    <!--<div id="buttonViewSkill" class="buttons neg">-->
-                                    <!--المهارات-->
-                                    <!--</div>-->
-                                    
-                                    <div id="buttonViewSkill" class="buttons neg free">
-                                    المهارات
-                                        <div id="" class="divsvg">
-                                            <svg class="svgfill">
-                                                <use xlink:href="#svgnavL"/>
-                                            </svg>
-                                        </div>
-                                    </div>
-                                    
-                                </div>
-                                
-                            </div>
-                            
-                            <div class="body">
-                                
-                                <div class="containerList">
-                                    <ul id="listDirect" class="listDirect">
-                                        
-                                    </ul>
-                                </div>
-                            </div>
-                            
-                        </div>
-                        
-                    </div>
-                    
-                    
-                </div>
-                
-
-            </div>
-            
             <div class="widget widgetDashboard">
                 
                 <div class="widgetHeader widgetDashboardHeader">
@@ -433,16 +177,35 @@
                     
                 </div>
                 
-                <div class="widgetBody widgetDashboardBody grid">
+                <div class="widgetBody widgetDashboardBody">
+                    
+                    <div id="cardCount" class="card cardCount">
+                        
+                        <div class="header">
+                            <h2>
+                                المهام الحالية
+                            </h2>
+                        </div>
+                        
+                        <div id="displayCountTaskWorking" class="body displaynumber">
+                            
+                        </div>
+                        <div class="footer">
+                            <h6>
+                                
+                            </h6>
+                        </div>
+                        
+                    </div>
                     
                     <div class="card cardBoard cardBoardStatus">
                         
                         <div id="containerChartStatusPie" class="containerChart">
                             <div class="header">
-                                    <h2>
-                                        تقدم المهام
-                                    </h2>
-                                </div>
+                                <h2>
+                                    تقدم المهام
+                                </h2>
+                            </div>
                             <div class="body">
                                 <canvas id="canvasBoardStatusPie" width="200px" height="160px"></canvas>
                             </div>
@@ -491,23 +254,6 @@
                         
                     </div>
                     
-                    <div class="card cardBoard cardBoardSkillsInfo">
-                        
-                        <div id="containerChartSkillsInfo" class="containerChart">
-                            <div class="header">
-                                <h2>
-                                    إحصاءات المهارات
-                                </h2>
-                            </div>
-                            <div class="body">
-                                <canvas id="canvasBoardSkillsInfo" width="400px" height="200px"></canvas>
-                            </div>
-                            <div class="footer">
-                                
-                            </div>
-                        </div>
-                    </div>
-                    
                     <!--<div class="card cardBoard cardBoardMembers2">-->
                         
                     <!--    <div id="containerChart" class="containerChart">-->
@@ -531,281 +277,79 @@
                 
             </div>
             
-            <div class="widget widgetMembers">
-            
-                <div class="widgetHeader widgetMembersHeader">
-                    <h3>إدارة الطلبات والأعضاء :</h3>
+            <div class="widget widgetActivities">
+                
+                <div class="widgetHeader widgetActivitiesHeader">
+                    <h3> الأنشطة الحالية :</h3>
                 </div>
                 
-                
-                <div class="widgetBody widgetMembersBody grid">
-                
-                    <div class="card cardList cardMemberRequest">
-                        <div class="header">
-                            <h3>الطلبات :</h3>
-                            
-                            <div class="containerButtonsWidgetHeader">
-                                
-                                
-                                <div class="continerselect">
-                                    <select id="selectMemberSkillAll" name="selectMember" class="selectbox selectSkill" required>
-                                        <option value="0">الكل</option>
-                                    </select>
-                                    <div class="divsvg">
-                                        <svg id="divsvgdown" class="svgstroke">
-                                            <use xlink:href="#svgdown"/>
-                                        </svg>
-                                    </div>
-                                </div>
-                                
-                                <div class="continerselect">
-                                    <select id="selectMemberStatus" name="selectMemberStatus" class="selectbox selectTaskStatus" required>
-                                        <option value="0">الكل</option>
-                                    </select>
-                                    <div class="divsvg">
-                                        <svg id="divsvgdown" class="svgstroke">
-                                            <use xlink:href="#svgdown"/>
-                                        </svg>
-                                    </div>
-                                </div>
-                                
-                                
-                            </div>
-                            
-                        </div>
-                        <div class="body">
-                            
-                            <div class="containerList">
-                                <ul id="listMemberAll" class="listItem listMemberAll">
-                                    
-                                </ul>
-                            </div>
-                            
-                        </div>
-                    </div>
+                <div class="widgetBody widgetActivitiesBody">
                     
-                
-                    <div class="card cardList cardMemberFilter">
+                    <div id="cardProjectMy" class="card cardList cardProjectMy">
                         <div class="header">
-                            <h3>المرشحين :</h3>
-                            
-                            <div class="containerButtonsWidgetHeader">
-                                
-                                
-                                <div class="continerselect">
-                                    <select id="selectMemberSkillFilter" name="selectMember" class="selectbox selectSkill" required>
-                                        <option value="0">الكل</option>
-                                    </select>
-                                    <div class="divsvg">
-                                        <svg id="divsvgdown" class="svgstroke">
-                                            <use xlink:href="#svgdown"/>
-                                        </svg>
-                                    </div>
-                                </div>
-                                
-                            </div>
-                            
+                            <h3>مشاريعي النشطة :</h3>
                         </div>
+                        
                         <div class="body">
-                            
-                            <div class="containerList">
-                                <ul id="listMemberFilter" class="listItem listMemberFilter ">
-                                    
-                                </ul>
-                            </div>
-                            
-                        </div>
-                    </div>
-                    
-                
-                    <div class="card cardList cardMemberAccepted">
-                        <div class="header">
-                            <h3>المقبولين :</h3>
-                            
-                            <div class="containerButtonsWidgetHeader">
+                            <div id="navMyRight" class="navigation">
                                 
-                            
-                                <div id="buttonEvaluation" class="divsvg">
+                                <div class="divsvg circle">
                                     <svg class="svgfill">
-                                        <use xlink:href="#svgstarthalf"/>
+                                        <use xlink:href="#svgnavR"/>
                                     </svg>
                                 </div>
                                 
-                                <div class="continerselect">
-                                    <select id="selectMemberSkillDone" name="selectMember" class="selectbox selectSkill" required>
-                                        <option value="0">الكل</option>
-                                    </select>
-                                    <div class="divsvg">
-                                        <svg id="divsvgdown" class="svgstroke">
-                                            <use xlink:href="#svgdown"/>
-                                        </svg>
-                                    </div>
-                                </div>
+                            </div>
+                            
+                            <div id="containerListRowMy" class="containerListRow">
                                 
                             </div>
                             
-                        </div>
-                        <div class="body">
-                            
-                            <div class="containerList">
-                                <ul id="listMemberDone" class="listItem listMemberDone ">
-                                    
-                                </ul>
+                            <div id="navMyLeft" class="navigation">
+                                
+                                <div class="divsvg circle">
+                                    <svg class="svgfill">
+                                        <use xlink:href="#svgnavL"/>
+                                    </svg>
+                                </div>
+                                
                             </div>
-                            
                         </div>
                     </div>
-                
-                
-                </div>
                     
-                    
-            </div>
-
-            <div class="widget widgetTask">
-                
-                <div class="widgetHeader widgetTaskHeader">
-                    <h3>إدارة المهام :</h3>
-                    
-                </div>
-                
-                <div class="widgetBody widgetTaskBody grid">
-                    
-                    <div class="card cardList cardDetailsList bodyTaskAll">
+                    <div id="cardProjectJoin" class="card cardList cardProjectJoin">
                         <div class="header">
-                            <h3>الكل :</h3>
-                            
-                            <div class="containerButtonsWidgetHeader">
+                            <h3>المشاريع المشارك بها :</h3>
+                        </div>
+                        <div class="body">
+                            <div id="navJoinRight" class="navigation">
                                 
-                                
-                                <div class="continerselect">
-                                    <select id="selectTaskSkillAll" name="selectSkill" class="selectbox selectSkill" required>
-                                        <option value="0">الكل</option>
-                                    </select>
-                                    <div class="divsvg">
-                                        <svg id="divsvgdown" class="svgstroke">
-                                            <use xlink:href="#svgdown"/>
-                                        </svg>
-                                    </div>
+                                <div class="divsvg circle">
+                                    <svg class="svgfill">
+                                        <use xlink:href="#svgnavR"/>
+                                    </svg>
                                 </div>
-                                
-                                <div class="continerselect">
-                                    <select id="selectTaskStatus" name="selectTaskStatus" class="selectbox selectTaskStatus" required>
-                                        <option value="0">الكل</option>
-                                    </select>
-                                    <div class="divsvg">
-                                        <svg id="divsvgdown" class="svgstroke">
-                                            <use xlink:href="#svgdown"/>
-                                        </svg>
-                                    </div>
-                                </div>
-                                
                                 
                             </div>
                             
-                        </div>
-                        <div class="body">
+                            <div id="containerListRowJoin" class="containerListRow">
+                                
+                            </div>
                             
-                            <div class="containerList">
-                                <ul id="listTaskAll" class="containerListTaskAll">
-                                    
-                                </ul>
+                            <div id="navJoinLeft" class="navigation">
+                                
+                                <div class="divsvg circle">
+                                    <svg class="svgfill">
+                                        <use xlink:href="#svgnavL"/>
+                                    </svg>
+                                </div>
+                                
                             </div>
                             
                         </div>
                     </div>
-                    
-                    
-                    <div class="card cardList cardDetailsList bodyTaskFilter">
-                        <div class="header">
-                            <h3>بالإنتظار:</h3>
-                            
-                            <div class="containerButtonsWidgetHeader">
-                                
-                                
-                                <div class="continerselect">
-                                    <select id="selectTaskSkillFilter" name="selectSkill" class="selectbox selectSkill" required>
-                                        <option value="0">الكل</option>
-                                    </select>
-                                    <div class="divsvg">
-                                        <svg id="divsvgdown" class="svgstroke">
-                                            <use xlink:href="#svgdown"/>
-                                        </svg>
-                                    </div>
-                                </div>
-                                
-                                
-                            </div>
-                            
-                        </div>
-                        <div class="body">
-                            
-                            <div class="containerList">
-                                <ul id="listTaskFilter" class="containerListTaskFilter">
-                                    
-                                </ul>
-                            </div>
-                            
-                        </div>
-                    </div>
-                    
-                    
-                    <div class="card cardList cardDetailsList bodyTaskDone">
-                        <div class="header">
-                            <h3>المكتملة :</h3>
-                            
-                            <div class="containerButtonsWidgetHeader">
-                                
-                                
-                                <div class="continerselect">
-                                    <select id="selectTaskSkillDone" name="selectSkill" class="selectbox selectSkill" required>
-                                        <option value="0">الكل</option>
-                                    </select>
-                                    <div class="divsvg">
-                                        <svg id="divsvgdown" class="svgstroke">
-                                            <use xlink:href="#svgdown"/>
-                                        </svg>
-                                    </div>
-                                </div>
-                                
-                                
-                            </div>
-                        </div>
-                        <div class="body">
-                            
-                            <div class="containerList">
-                                <ul id="listTaskDone" class="containerListTaskDone">
-                                    
-                                </ul>
-                            </div>
-                            
-                        </div>
-                    </div>
-                    
                     
                 </div>
-                
-            </div>
-            
-            <div class="widget widgetBottom">
-                
-                
-                <div class="widgetHeader widgetBottomHeader">
-                    
-                    <div class="containerButtonsWidgetHeader">
-                        
-                        <div id="buttonFinishProject" class="buttons finish">
-                         إنتهاء المشروع
-                        </div>
-                        
-                        <div id="buttonDeleteProject" class="buttons delete">
-                         حذف المشروع
-                        </div>
-                        
-                    </div>
-                </div>
-                
-                
             </div>
             
             
@@ -818,7 +362,7 @@
                 <div class="container containerTop">
                         
                         <div class="divlogo" align="center">
-                            <img id="imagelogo" class="imagelogo" src="../files/logo/logo_ar_light.png" />
+                            <img id="imagelogo" class="imagelogo" src="./files/logo/logo_ar_light.png" />
                         </div>
                         
                 </div>
@@ -858,13 +402,13 @@
                         
                         <a href="">
                             <div class="footerImageX" align="center">
-                                <img id="imagelogo" class="imagelogo" src="../files/logo/logo_F_White.png" />
+                                <img id="imagelogo" class="imagelogo" src="./files/logo/logo_F_White.png" />
                             </div>
                         </a>
                         
                         <a href="https://x.com/prog2023">
                             <div class="footerImageX" align="center">
-                                <img id="imagelogo" class="imagelogo" src="../files/logo/logo_X_White.png" />
+                                <img id="imagelogo" class="imagelogo" src="./files/logo/logo_X_White.png" />
                             </div>
                         </a>
                     
@@ -1294,7 +838,6 @@
         
         
     </div>
-    
     
     
     

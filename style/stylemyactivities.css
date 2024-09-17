@@ -1,0 +1,230 @@
+@import url("stylemain.css");
+
+
+
+
+
+
+/*========================= DASHBOARD ================================*/
+
+.widgetDashboard {
+    grid-column: 1/13;
+}
+.widgetBottom {
+    grid-column: 1/13;
+}
+
+.widgetBottom .widgetBottomHeader {
+    justify-content: flex-end;
+}
+
+.card.cardCount {
+    height: 280px;
+    justify-content: flex-start;
+}
+.card.cardCount .header {
+    justify-content: center;
+}
+
+.card.cardCount .body {
+    height: 100%;
+    align-items: center;
+    /*font-size: var(--font-size-larg);*/
+}
+
+.card.cardCount .body.displaynumber {
+    max-height: unset;
+}
+/*============================ACTIVITEIS =============================*/
+
+.card {
+    border: 0px solid lightgray;
+}
+
+.widgetActivities {
+    min-height: 700px;
+    grid-column: 1/13;
+}
+.widgetActivities .widgetActivitiesBody {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.widgetActivities .widgetActivitiesBody .containerList {
+    /*width: 100%;*/
+    /*height: 100%;*/
+
+    display: flex;
+    flex-direction: row;
+    position: relative;
+    align-items: center;
+    justify-content: flex-start;
+    
+    background-image: url("https://www.skillslinked.com/web/files/photoProject/6875image8888.jpg");
+    overflow-x: scroll;
+}
+.containerList.row::-webkit-scrollbar {
+  display: visible;
+}
+.widgetActivities .widgetActivitiesBody .containerList ul {
+    width: unset;
+    height: 100%;
+    
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content:flex-start;
+    padding: 10px;
+    gap: 10px;
+    
+    list-style-type:none;
+    white-space:nowrap;
+}
+
+
+
+.containerListRow {
+    width: 100%;
+    height: 100%;
+    
+    display: flex;
+    padding: 20px;
+    gap: 70px;
+    overflow-x: auto;
+    
+    /*background-image: url("https://www.skillslinked.com/web/files/photoProject/6875image8888.jpg");*/
+    /*border: 1px solid green;*/
+    
+    scroll-snap-type: x mandatory; /* خاصية تخلي الإلتصاق فعال لطرف العنصر الداخلي  مايكون حر بالتحرك*/
+    scroll-padding-inline-start: 20px;/*هذا يخلي الإلتصاق يأخذ بعين الإعتبار حجم الهاش */
+    scroll-behavior: smooth; /*طبيعة حركة العناصر عند تحرك السكرول*/
+    scrollbar-width: 0;
+}
+.containerListRow.dragging {
+    scroll-snap-type: none;
+    scroll-behavior: auto;
+}
+.containerListRow .card{
+    scroll-snap-align: start;
+}
+.containerListRow.dragging .card{
+    cursor: grab;
+    user-select: none;
+}
+.containerListRow::-webkit-scrollbar {
+  display: none;
+}
+.navigation {
+    width: 40px;
+    height: 100%;
+    
+    display: flex;
+    position: relative;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    
+    /*border: 1px solid blue; */
+}
+.navigation .divsvg.circle {
+    border-radius: 50%;
+    border: 1px solid lightgray; 
+}
+
+.widgetActivities .widgetActivitiesBody .containerListRow .cardProject {
+    width: 300px;
+    min-width: 300px;
+    
+    backdrop-filter: blur(5px);
+    background-color: rgba(255, 255, 255, 0.5);
+    border: 1px solid lightgray; 
+}
+
+
+
+
+
+
+
+
+
+
+
+/*=========================================================*/
+
+.lightBoxCard.grid .divBody .containerfiled.icons {
+    flex-direction: row;
+}
+
+.lightBoxCard.grid .divBody .containerfiled.profile {
+    flex-direction: row;
+    
+    /*border: 1px solid lightgreen;*/
+}
+
+.lightBoxCard.grid .divBody .containerfiled .containerProfile {
+    width: 75%;
+    border: 1px solid lightgray;
+}
+
+
+
+
+
+@media (max-width: 1250px) {
+    
+    .widgetDashboard, .widgetActivities {
+        grid-column: 1/9;
+    }
+    
+    .containerListRow {
+        gap: 40px
+    }
+}
+
+@media (max-width: 900px) {
+    
+    .widgetDashboard, .widgetActivities {
+        grid-column: 1/5;
+    }
+    
+    .cardList .body {
+        overflow-y: visible;
+    }
+    
+    .widgetThree .widgetThreeBody .containerListRow .cardProject {
+        width: 200px;
+        min-width: 200px;
+    }
+    
+    
+    
+    
+    .widgetDashboard {
+        height: unset;
+    }
+    .widgetDashboardBody {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: flex-start;
+    }
+    
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -87,6 +87,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./style/stylehome.css">
     <link rel="icon" href="./files/logo/icn_ar.png">
+    <script defer type="module" src="./js/scripthome.js"></script>
     <title>الرئيسية</title>
 </head>
 <body>
@@ -96,7 +97,7 @@
         <div class="divheader">
             
             <div class="divlogo" align="center">
-                <img id="imagelogo" class="imagelogo" src="https://www.tkameel.com/web/files/logo/logo_ar_light.png" />
+                <img id="imagelogo" class="imagelogo" src="./files/logo/logo_ar_light.png" />
             </div>
             
             <nav id="navbar" class="navbar">
@@ -142,7 +143,7 @@
                             
                             <div class="userImage">
                                 <div class="containerImage">
-                                    <img id="userimgmenu" src="https://www.tkameel.com/web/files/photoProfile/user_anonymous.png">
+                                    <img id="userimgmenu" src="./files/photoProfile/user_anonymous.png">
                                 </div>
                             </div>
                             
@@ -151,8 +152,9 @@
                     </li>
                     
                     <li><a href="https://www.tkameel.com/web/home">الرئيسية</a></li>
-                    <li><a id="urlProfile" href="">الملف الشخصي</a></li>
+                    <li><a href="https://www.tkameel.com/web/myactivities">أنشطتي</a></li>
                     <li><a href="https://www.tkameel.com/web/new">جديد</a></li>
+                    <li><a id="urlProfile" href="">الملف الشخصي</a></li>
                     <li><a href="https://www.tkameel.com/web/logout">خروج</a></li>
                     
                 </ul>
@@ -175,7 +177,7 @@
         
     <div id="wrapper" class="wrapper">
 
-        <article id="divmain" class="divmain">
+        <main id="divmain" class="divmain">
 
                 <div class="widget widgetColumn widgetUser">
                     
@@ -293,7 +295,7 @@
                     </div>
                 </div>
                 
-        </article>
+        </main>
         
         <footer>
             <div class="containerFooter">
@@ -301,7 +303,7 @@
                 <div class="container containerTop">
                         
                         <div class="divlogo" align="center">
-                            <img id="imagelogo" class="imagelogo" src="https://www.tkameel.com/web/files/logo/logo_ar_light.png" />
+                            <img id="imagelogo" class="imagelogo" src="./files/logo/logo_ar_light.png" />
                         </div>
                         
                 </div>
@@ -341,13 +343,13 @@
                         
                         <a href="">
                             <div class="footerImageX" align="center">
-                                <img id="imagelogo" class="imagelogo" src="https://www.tkameel.com/web/files/logo/logo_F_White.png" />
+                                <img id="imagelogo" class="imagelogo" src="./files/logo/logo_F_White.png" />
                             </div>
                         </a>
                         
                         <a href="https://x.com/prog2023">
                             <div class="footerImageX" align="center">
-                                <img id="imagelogo" class="imagelogo" src="https://www.tkameel.com/web/files/logo/logo_X_White.png" />
+                                <img id="imagelogo" class="imagelogo" src="./files/logo/logo_X_White.png" />
                             </div>
                         </a>
                     
@@ -360,7 +362,7 @@
         </footer>
         
         
-        <div id="lightBox" class="lightBox close" onclick="clickBoxOut()">
+        <div id="lightBox" class="lightBox close">
             <div id="lightBoxCard" class="lightBoxCard" onclick="clickBox( event )">
                 
             </div>
@@ -501,7 +503,6 @@
     
     
 
-    <script type="module" src="./js/scripthome.js"></script>
     
     
 </body>

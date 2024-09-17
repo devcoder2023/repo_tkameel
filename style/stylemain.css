@@ -48,13 +48,16 @@
     --font-primary: "NotoKufi"; /* "almarai" "NotoKufi" شبيهه بس أكبر في الحجم */
     --font-secondry: "LiberationSans";
     
-    --font-size-xsm: 8px;
-    --font-size-sm: 10px;
-    --font-size-xmid: 12px;
-    --font-size-mid: 14px;
-    --font-size-mid2: 16px;
-    --font-size-larg: 18px;
-    --font-size-xlarg: 22px;
+    --font-size-xsm: 0.5rem; /*8px*/
+    --font-size-sm: 0.625rem; /*10px*/
+    --font-size-xmid: 0.75rem; /*12px*/
+    --font-size-mid: 0.875rem; /*14px*/
+    --font-size-mid2: 1rem; /*16px*/
+    --font-size-larg: 1.125rem;/*18px*/
+    --font-size-xlarg: 1.375rem; /*22px*/
+    --font-size-xxlarg: 1.5rem; /*24px*/
+    --font-size-divlog: 1.5rem; /*28px*/
+    --font-size-display-number: 6.25rem; /*100px*/
     --font-weight-sm: 400;
     --font-weight-mid: 800;
     
@@ -773,158 +776,6 @@ footer .containerFooter .footerSocial .footerImageX img {
 
 
 
-/*=================================================*/
-/* --------------------- MENU -------------------- */
-/*=================================================*/
-.wrapper .divmenu {
-    width: 200px;
-    height: 100%;
-
-    display: none;
-    
-    background-color: var(--color-primary);
-}
-/*.wrapper .divmenu img { display: none; } */
-
-.wrapper .divmenu .divprofile {
-    width: 100%;
-    /*aspect-ratio: 1 / 1;*/
-    height: 280px;
-    
-    display:flex;
-    flex-direction: column;
-    
-    background-color: var(--color-primary-light);
-    border-bottom-left-radius: var(--radius-xlarg);
-    border-bottom-right-radius: var(--radius-xlarg);
-    border: 4px solid var(--color-primary);
-    border-width: 0 4px 4px 4px;
-}
-
-.wrapper .divmenu .divimgprofile {
-    width: 100%;
-    aspect-ratio: 1 / 1;
-    
-    display:flex;
-    align-items: center;
-    justify-content: center;
-}
-.wrapper .divmenu .imgprofile {
-    width: 80%;
-    height: 80%;
-    padding: 0px 0px;
-    
-    border: 3px solid var(--color-primary);
-    border-radius: 50%;
-    
-}
-
-.wrapper .divmenu .divdataprofile {
-    width: 100%;
-    height: 62px;
-    
-    display:flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-.wrapper .divmenu .divnameprofile {
-    width: 80%;
-    height: 30px;
-    
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    
-    background-color: var(--color-primary);
-    border: 2px solid var(--color-primary);
-    border-radius: var(--radius-mid);
-    color: var(--font-color-primary);
-    font-weight: var(--font-weight-mid);
-}
-.wrapper .divmenu .divtypeprofile {
-    width: 80%;
-    height: 30px;
-    
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    
-    background-color: var(--color-primary-light);
-    border: 2px solid var(--color-primary);
-    border-radius: var(--radius-mid);
-    color: var(--font-color-primary-light);
-}
-
-
-
-.wrapper .divmenu ul {
-    width: 100%;
-    
-    position: relative;
-    display: inline-block;
-    margin-top: 30px;
-    
-    list-style-type: none;
-}
-.wrapper .divmenu ul li {
-    width: 96%;
-    
-    display: block;
-    position: relative;
-    margin: 0px 4px;
-    
-    border-radius: var(--radius-mid);
-    /* border: 1px solid red; */
-}
-.wrapper .divmenu ul li:hover {
-    background-color: var(--color-primary-light);
-}
-.wrapper .divmenu ul li:hover .title {
-    color: var(--font-color-primary-light);
-}
-.wrapper .divmenu ul li:hover .svgmenu {
-    fill: var(--color-primary);
-}
-
-.wrapper .divmenu ul li a {
-    width: 100%;
-    
-    display: flex;
-    position: relative;
-    align-items: center;
-    justify-content: start;
-    
-    text-decoration: none;
-}
-.wrapper .divmenu ul li a .title {
-    /*height: 50px;*/
-    /*line-height: 45px;*/
-    
-    display: flex;
-    position: relative;
-    padding: 0px 0px;
-    padding-right: 5px;
-    
-    color: var(--font-color-primary);
-    font-size: var(--font-size-larg);
-    text-align: start;
-    white-space: nowrap;
-}
-.wrapper .divmenu ul li a .divicon {
-    width: 50px;
-    min-width: 50px;
-    height: 50px;
-    
-    display: flex;
-    position: relative;
-    align-items: center;
-    justify-content: center;
-}
-.wrapper .divmenu ul li a .divicon img {
-    width: 35px;
-    height: 35px;
-}
 
 
 
@@ -1006,6 +857,26 @@ footer .containerFooter .footerSocial .footerImageX img {
     
     /*background-color: lightblue;*/
     /*border: 1px solid red; */
+}
+.widgetBody.grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    
+    /*grid-template-columns: repeat( 3 , minmax(100px,400px) );*/
+    /*grid-gap-columns: 10px;*/
+    
+    /*display: grid;*/
+    /*grid-template-columns: repeat( auto-fill , minmax( 200px , 1fr ) ); /* يعني يملئ الصف بعدد من العناصر بحيث لا يقل عرض العنصر عن 200 وعندما يزيد ينزله صف جديد*/
+    /*grid-template-columns: repeat( 12 , minmax(40px,40px) );*/
+    /*grid-gap-columns: 10px;*/
+    /*grid-auto-rows: minmax(50px, auto);*/
+    /*grid-auto-columns: minmax(150px, auto);*/
+    
+    /*grid-template-rows: auto auto;*/
+    /*grid-template-columns: repeat(2, 1fr);*/
+    /*grid-gap-columns: 0px;*/
+    /*grid-column: 1/3;*/
+    
 }
 .widgetFooter {
     width: 100%;
@@ -1112,7 +983,7 @@ footer .containerFooter .footerSocial .footerImageX img {
 .card .body.displaynumber {
     max-height: 140px;
     
-    font-size: 100px;
+    font-size: var(--font-size-display-number);
     line-height: 140px;
     /* line-height: 100%; */
 }
@@ -1385,6 +1256,10 @@ footer .containerFooter .footerSocial .footerImageX img {
     transition: all 0.3s linear;
     cursor: pointer;
     
+}
+.buttons:hover {
+    /*box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;*/
+    box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
 }
 
 .buttons.second {
@@ -3274,6 +3149,10 @@ containerSmallSkill
         align-items: flex-start;
     }
     
+    .widgetBody.grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+    }
     
     /*
     .widgetView .widgetViewBody .inner .griddetailes {
@@ -3340,6 +3219,10 @@ containerSmallSkill
         grid-column: 1/3;
     }
     
+    .widgetBody.grid {
+        display: grid;
+        grid-template-columns: repeat(1, 1fr);
+    }
 }
 
 
