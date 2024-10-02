@@ -8,7 +8,7 @@
         echo "
         <html>
         <head>
-            <link rel='stylesheet' href='../style/stylehome.css'>
+            <link rel='stylesheet' href='./style/stylehome.css'>
         </head>
         <body>
         <div class='wrapper'>
@@ -179,7 +179,7 @@
                 
                 <div class="widgetBody widgetDashboardBody">
                     
-                    <div id="cardCount" class="card cardCount">
+                    <div class="card cardCount">
                         
                         <div class="header">
                             <h2>
@@ -198,81 +198,25 @@
                         
                     </div>
                     
-                    <div class="card cardBoard cardBoardStatus">
+                    <div  class="card cardCount">
                         
-                        <div id="containerChartStatusPie" class="containerChart">
-                            <div class="header">
-                                <h2>
-                                    تقدم المهام
-                                </h2>
-                            </div>
-                            <div class="body">
-                                <canvas id="canvasBoardStatusPie" width="200px" height="160px"></canvas>
-                            </div>
-                            <div class="footer">
-                                <h6>
-                                    
-                                </h6>
-                            </div>
+                        <div class="header">
+                            <h2>
+                                عدد المشاريع
+                            </h2>
+                        </div>
+                        <div id="displayCountProjectJoin" class="body displaynumber">
+                            
+                        </div>
+                        <div class="footer">
+                            <h6>
+                                
+                            </h6>
                         </div>
                         
-                        <div id="containerChartStatusColumn" class="containerChart hide">
-                            <div class="header">
-                                    <h2>
-                                        تقدم المهام
-                                    </h2>
-                                </div>
-                            <div class="body">
-                                <canvas id="canvasBoardStatusColumn" width="200px" height="160px"></canvas>
-                            </div>
-                            <div class="footer">
-                                <h6>
-                                    A - B - C - D - E
-                                </h6>
-                            </div>
-                        </div>
                         
                     </div>
                     
-                    <div class="card cardBoard cardBoardMembers">
-                        
-                        <div id="containerChartMemberPie" class="containerChart">
-                            <div class="header">
-                                    <h2>
-                                        أنواع الأعضاء
-                                    </h2>
-                                </div>
-                            <div class="body">
-                                <canvas id="canvasBoardMembers" width="200px" height="160px"></canvas>
-                            </div>
-                            <div class="footer">
-                                <h6>
-                                    
-                                </h6>
-                            </div>
-                        </div>
-                        
-                    </div>
-                    
-                    <!--<div class="card cardBoard cardBoardMembers2">-->
-                        
-                    <!--    <div id="containerChart" class="containerChart">-->
-                    <!--        <div class="header">-->
-                    <!--                <h2>-->
-                    <!--                    أنواع الأعضاء-->
-                    <!--                </h2>-->
-                    <!--            </div>-->
-                    <!--        <div class="body">-->
-                    <!--            <canvas id="canvasBoardMembers2" width="200px" height="160px"></canvas>-->
-                    <!--        </div>-->
-                    <!--        <div class="footer">-->
-                    <!--            <h6>-->
-                    <!--                A - B - C - D - E-->
-                    <!--            </h6>-->
-                    <!--        </div>-->
-                    <!--    </div>-->
-                        
-                    <!--</div>-->
                 </div>
                 
             </div>
@@ -406,7 +350,7 @@
                             </div>
                         </a>
                         
-                        <a href="https://x.com/prog2023">
+                        <a href="https://x.com/devcoder2023">
                             <div class="footerImageX" align="center">
                                 <img id="imagelogo" class="imagelogo" src="./files/logo/logo_X_White.png" />
                             </div>

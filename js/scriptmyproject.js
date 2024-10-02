@@ -70,6 +70,9 @@ export function initApp( data ) {
     document.getElementById('containerChartStatusPie').addEventListener("click" , viewChartTaskStatusPieAndColum );
     document.getElementById('containerChartStatusColumn').addEventListener("click" , viewChartTaskStatusPieAndColum );
     
+    document.getElementById('containerChartMemberPie').addEventListener("click" , viewChartMemberPie );
+    document.getElementById('containerChartMemberJoinPie').addEventListener("click" , viewChartMemberPie );
+    
 }
 
 
@@ -117,38 +120,38 @@ function init_Project() {
     } ).catch( (reject) => {
         
         // Mode Error
-        
         const data = reject["data"];
         const codeError = data["codeError"];
         const textError = data["message"];
         
-        
+        let txt = "";
         if( codeError == 410 ) {
             
-            const msg = "خطأ في التحقق من هوية المستخدم !";
-            mainApp.codeWraning( msg , "login" );
+            txt = "خطأ في التحقق من هوية المستخدم !";
+            mainApp.codeWraning( txt , "login" );
             
         } else if( codeError == 420 ) {
             
-            const msg = "خطأ في البيانات المرسلة ! ";
-            mainApp.codeWraning( msg , "home" );
+            txt = "خطأ في البيانات المرسلة ! ";
+            mainApp.codeWraning( txt , "home" );
             
         } else if( codeError == 430 ) {
             
-            const msg = "خطأ هذا المشروع غير موجود ! ";
-            mainApp.codeWraning( msg , "home" );
+            txt = "خطأ هذا المشروع غير موجود ! ";
+            mainApp.codeWraning( txt , "home" );
             
         } else if( codeError == 440 ) {
             
-            const msg = "لست عضواً في هذا المشروع !";
-            mainApp.codeWraning( msg , "home" );
+            txt = "لست عضواً في هذا المشروع !";
+            mainApp.codeWraning( txt , "home" );
             
         } else {
             
-            const msg = "خطأ غير معروف !";
-            mainApp.codeWraning( msg , "home" );
+            txt = "خطأ غير معروف !";
+            mainApp.codeWraning( txt , "home" );
             
         }
+        
         
     });
     
@@ -255,6 +258,7 @@ function fillProjectSkills() {
         const codeSkill = myProjectSkills[i].codeSkill;
         const description = myProjectSkills[i].description;
         const codeStatusJoin = myProjectSkills[i].codeStatusJoin;
+        const countTask = myProjectSkills[i].countTask;
         
         let nameStatus ="...";
         let nameClassStatus = "";
@@ -381,7 +385,7 @@ function fillProjectSkills() {
         });
             
         document.getElementById( nameButtonSkillAdd ).addEventListener("click" , function () {
-            clickAddTask( code );
+            clickAddTask( code , countTask );
         });
         
         document.getElementById( nameButtonSkillRemove ).addEventListener("click" , function () {
@@ -411,7 +415,14 @@ function fillProjectCharts() {
     
     drawChartMembers( totalMembers , mapMembers );
     
+    let [ totalMembersJoin , mapMembersJoin ] = myProject.getListCountMemberJoin();
+    
+    drawChartMembersJoin( totalMembersJoin , mapMembersJoin );
+    
     /*------------*/
+    
+    console.log( myProject.getListProjectSkill() );
+    console.log( myProject.getListCountInfoSkill() );
     
     drawChartSkillsInfo( myProject.getListCountInfoSkill() );
     
@@ -471,6 +482,7 @@ function fillProjectMember() {
         let nameButtonMemberAccept = "buttonMemberAccept"+i; 
         let nameButtonMemberReject = "buttonMemberReject"+i; 
         let nameButtonMemberIgnore = "buttonMemberIgnore"+i; 
+        let nameButtonMemberTerminate = "buttonMemberTerminate"+i;
         let nameButtonMemberMore = "buttonMemberMore"+i;
 
         
@@ -596,9 +608,9 @@ function fillProjectMember() {
                     
                     <div id="${nameContainerButtonsEdit}" class="containerButtonsEdit hide">
                     
-                        <div id="${nameButtonMemberIgnore}" class="divsvg">
+                        <div id="${nameButtonMemberTerminate}" class="divsvg">
                             <svg class="svgfill">
-                                <use xlink:href="#svgignore"/>
+                                <use xlink:href="#svgterminate"/>
                             </svg>
                         </div>
                         
@@ -635,7 +647,7 @@ function fillProjectMember() {
             
             listMemberDone.insertAdjacentHTML("beforeend", codeoption);
             
-            creationStars( nameContainerButtonsEvaluation , code , nameButtonStar , mark );
+            creationStars( nameContainerButtonsEvaluation , codeUser , code , nameButtonStar , mark );
             
             document.getElementById( nameContainerButtons ).addEventListener("click" , function() {
                 event.stopPropagation();
@@ -663,11 +675,15 @@ function fillProjectMember() {
                 mainApp.goToProfile( codeUser );
             });
             
-            document.getElementById( nameButtonMemberIgnore ).addEventListener("click", function(){
-                clickMemberIgnore( code );
+            document.getElementById( nameButtonMemberTerminate ).addEventListener("click", function() {
+                
+                clickMemberTerminate( code , codeUser , mark );
             });
             
             
+        
+        } else if( codeStatus == myProject.getEnumStatusMember().Terminate || codeStatus == myProject.getEnumStatusMember().Leave ) {
+            // Not Show
         } else {
             
             if( codeStatus == myProject.getEnumStatusMember().Leave ) {
@@ -787,7 +803,7 @@ function fillProjectMember() {
     }
 }
 
-function creationStars( elementItem , codeMember , nameButtonStar , num ) {
+function creationStars( elementItem , codeUser , codeMember , nameButtonStar , num ) {
     let el = document.getElementById( elementItem );
     
     
@@ -838,23 +854,23 @@ function creationStars( elementItem , codeMember , nameButtonStar , num ) {
         
         document.getElementById( buttonStart_1 ).addEventListener("click", function(){
             event.stopPropagation();
-            clickEvaluationMemberStar( codeMember , 1 );
+            clickEvaluationMemberStar( codeUser , codeMember , 1 );
         });
         document.getElementById( buttonStart_2 ).addEventListener("click", function(){
             event.stopPropagation();
-            clickEvaluationMemberStar( codeMember , 2 );
+            clickEvaluationMemberStar( codeUser , codeMember , 2 );
         });
         document.getElementById( buttonStart_3 ).addEventListener("click", function(){
             event.stopPropagation();
-            clickEvaluationMemberStar( codeMember , 3 );
+            clickEvaluationMemberStar( codeUser , codeMember , 3 );
         });
         document.getElementById( buttonStart_4 ).addEventListener("click", function(){
             event.stopPropagation();
-            clickEvaluationMemberStar( codeMember , 4 );
+            clickEvaluationMemberStar( codeUser , codeMember , 4 );
         });
         document.getElementById( buttonStart_5 ).addEventListener("click", function(){
             event.stopPropagation();
-            clickEvaluationMemberStar( codeMember , 5 );
+            clickEvaluationMemberStar( codeUser , codeMember , 5 );
         });
     
 }
@@ -1043,7 +1059,7 @@ function insertListButtons( i, idElement, code, codeUser, codeStatus, note ) {
             clickEditTask( code );
         });
         document.getElementById( nameButtonTaskRemove ).addEventListener("click", function(){
-            clickRemoveTask( code );
+            clickRemoveTask( code , codeStatus );
         });
         
         
@@ -1065,7 +1081,7 @@ function insertListButtons( i, idElement, code, codeUser, codeStatus, note ) {
             containerButtons.insertAdjacentHTML("beforeend", codeItem);
             
             document.getElementById( nameButtonTaskLeave ).addEventListener("click", function(){
-                clickTaskLeave( code );
+                clickTaskLeave( code , codeUser );
             });
             
         } else if( codeStatus == myProject.getEnumStatusTask().WaitingApproval ) {
@@ -1119,10 +1135,10 @@ function insertListButtons( i, idElement, code, codeUser, codeStatus, note ) {
             
             
             document.getElementById( nameButtonTaskExclamation ).addEventListener("click", function(){
-                clickTaskEditNote( code , note );
+                clickTaskEditNote( code , codeUser , note );
             });
             document.getElementById( nameButtonTaskLeave ).addEventListener("click", function(){
-                clickTaskLeave( code );
+                clickTaskLeave( code , codeUser );
             });
             
             
@@ -1230,7 +1246,7 @@ function drawChartTaskStatusPie( numTask , numTaskWork , numTaskDone ) {
     
     const canvasStatus = document.getElementById("canvasBoardStatusPie");
     const ctx = canvasStatus.getContext("2d");
-    
+    ctx.clearRect(0, 0, canvasStatus.width, canvasStatus.height);
 
 
     //nums
@@ -1281,6 +1297,7 @@ function drawChartStatusColumn( total , mapTask ) {
     
     const canvasStatus = document.getElementById("canvasBoardStatusColumn");
     const ctx = canvasStatus.getContext("2d");
+    ctx.clearRect(0, 0, canvasStatus.width, canvasStatus.height);
     
 }
 
@@ -1289,6 +1306,78 @@ function drawChartMembers( totalMembers , arrayMembers ) {
     //
     const canvasType = document.getElementById("canvasBoardMembers"); // canvasPermitStatus
     const ctx = canvasType.getContext("2d");
+    ctx.clearRect(0, 0, canvasType.width, canvasType.height);
+    
+    //nums
+    const pointcenter = 50;
+    const pointx = canvasType.width/2;
+    const pointy = canvasType.height/2;
+    const red = 80 ;
+    
+    let drawStart = 0;
+    let drawEnd = 180;
+    
+    let currentAngle = 0;
+    
+    // draw
+    let i = 0;
+    for(const [key, value] of arrayMembers) {
+        
+        let sumType = value / totalMembers;
+        let startAngel = sumType * (2*Math.PI) ;
+        let colors = "white";
+        
+        if(i==0)
+        {
+            colors = "#053B50";
+        }
+        else if(i==1)
+        {
+            colors = "#445069";
+        }
+        else if(i==2)
+        {
+            colors = "#5B9A8B";
+        }
+        else if(i==3)
+        {
+            colors = "#F7E987";
+        }
+        else if(i==4)
+        {
+            colors = "#64CCC5";
+        }
+        else if(i==5)
+        {
+            colors = "#821a63";
+        }
+        else
+        {
+            colors = "white";
+        }
+        
+        
+        // draw
+        ctx.beginPath();
+        
+        ctx.arc(pointx, pointy, red, currentAngle, currentAngle+startAngel);
+        currentAngle += startAngel;
+        ctx.lineTo(pointx, pointy);
+        
+        ctx.fillStyle = colors;
+        ctx.fill();
+        
+        i++;
+    }
+    
+}
+
+function drawChartMembersJoin( totalMembers , arrayMembers ) {
+    
+    //
+    const canvasType = document.getElementById("canvasBoardMembersJoin"); // canvasPermitStatus
+    const ctx = canvasType.getContext("2d");
+    ctx.clearRect(0, 0, canvasType.width, canvasType.height);
     
     //nums
     const pointcenter = 50;
@@ -1358,6 +1447,7 @@ function drawChartSkillsInfo( listInfoSkill ) {
     
     const canvasSkillsInfo = document.getElementById("canvasBoardSkillsInfo");
     const ctx = canvasSkillsInfo.getContext("2d");
+    ctx.clearRect(0, 0, canvasSkillsInfo.width, canvasSkillsInfo.height);
     
     const widthCanvas = 400;
     const heightCanvas = 200;
@@ -1422,9 +1512,10 @@ function drawChartSkillsInfo( listInfoSkill ) {
         
         let lenColumn = ( numTask / percentLen ) ;
         
+        //rgba(67, 91, 102, 1) | old rgba(50,150,255,0.5)
         ctx.beginPath()
         // ctx.moveTo(10,50);
-        ctx.strokeStyle = "rgba(50,150,255,0.5)";
+        ctx.strokeStyle = "rgba(67,91,102, 0.5)";
         ctx.lineWidth = 1;
         ctx.strokeRect( 
             ( ((i+1)*spcBetween) + (i * widthColumn) ) + offset, 
@@ -1435,7 +1526,7 @@ function drawChartSkillsInfo( listInfoSkill ) {
         ctx.stroke();
         
         ctx.moveTo(10,50);
-        ctx.fillStyle = "rgba(50,150,255,0.2)";
+        ctx.fillStyle = "rgba(67,91,102,0.5)";
         ctx.fillRect(
             ( ((i+1)*spcBetween) + (i * widthColumn) ) + offset, 
             ( (maxLength-lenColumn) + offset ) , 
@@ -1454,9 +1545,10 @@ function drawChartSkillsInfo( listInfoSkill ) {
         
         let lenColumnMember = ( numMember / percentLen ) ;
         
+        //rgba(139, 171, 186, 1) rgba(0, 169, 147, 1) rgba(91, 154, 139, 1) | old rgba(150, 50, 125, 0.5)
         ctx.beginPath()
         ctx.moveTo(10,50);
-        ctx.strokeStyle = "rgba(150, 50, 125, 0.5)";
+        ctx.strokeStyle = "rgba(91,154,139, 0.5)";
         ctx.lineWidth = 1;
         ctx.strokeRect( 
             ( ((i+1)*spcBetween) + (i * widthColumn) ) + (offset+offsetAnotherColumn), 
@@ -1467,7 +1559,7 @@ function drawChartSkillsInfo( listInfoSkill ) {
         ctx.stroke();
         
         ctx.moveTo(10,50);
-        ctx.fillStyle = "rgba(150, 50, 125, 0.2)";
+        ctx.fillStyle = "rgba(91,154,139, 0.5)";
         ctx.fillRect(
             ( ((i+1)*spcBetween) + (i * widthColumn) ) + (offset+offsetAnotherColumn), 
             ( (maxLength-lenColumnMember) + offset ) , 
@@ -1485,6 +1577,12 @@ function viewChartTaskStatusPieAndColum() {
     
     document.getElementById('containerChartStatusPie').classList.toggle("hide");
     document.getElementById('containerChartStatusColumn').classList.toggle("hide");
+}
+
+function viewChartMemberPie() {
+    
+    document.getElementById('containerChartMemberPie').classList.toggle("hide");
+    document.getElementById('containerChartMemberJoinPie').classList.toggle("hide");
 }
 
 
@@ -1798,11 +1896,58 @@ function updateProject( act , val) {
     
     myProject.updateDataProject( moduleUserLog.getUser().userCode , act , val ).then( (result) => {
         
+        if( act == "image" ) {
+            
+            myProject.imageProfile = val;
+            
+        } else if( act == "name" ) {
+            
+            myProject.name = val;
+            
+            let projectname = document.getElementById("projectname");
+            projectname.textContent = val;
+            
+        } else if( act == "description" ) {
+            
+            myProject.description = val;
+            
+            let projectdescription = document.getElementById("projectdescription");
+            projectdescription.textContent = val;
+            
+        } else if( act == "goals" ) {
+            
+            myProject.goals = val;
+            
+            let projectgoals = document.getElementById("projectgoals");
+            projectgoals.textContent = val;
+            
+        } else if( act == "category" ) {
+            
+            myProject.codeCategory = val;
+            myProject.nameCategory = myProject.getNameGategory( val );
+            
+            let projectcategory = document.getElementById("projectcategory");
+            projectcategory.textContent = myProject.nameCategory;
+            
+        } else if( act == "type" ) {
+            
+            myProject.codeType =  val;
+            myProject.nameType = myProject.getNameType( val );
+            
+            let projecttype = document.getElementById("projecttype");
+            projecttype.textContent = myProject.nameType;
+            
+        } else {
+            
+        }
+        
         cancel();
+        mainApp.codeWraningNotification( "تم تحديث بيانات المشروع", "success" );
         
     } ).then( (result) => {
 
     } ).catch( (reject) => {
+        
         // Mode Error
         const data = reject["data"];
         const codeError = data["codeError"];
@@ -1810,16 +1955,27 @@ function updateProject( act , val) {
         
         let txt = "";
         if(codeError == 410) {
+            
             txt = "انتهت الجلسة,";
+            mainApp.codeWraning( txt , "login" );
+            
         } else if(codeError == 420) {
-            txt = "الرجاء قم بلمئ كافة البيانات";
+            
+            txt = "خطأ, الرجاء قم بلمئ كافة البيانات";
+            mainApp.codeWraningNotification( txt , "error" );
+            
         } else if(codeError == 450) {
-            let txt = "خطأ غير معروف, حاول مرة أخرى";
+            
+            txt = "خطأ غير معروف, حاول مرة أخرى";
+            mainApp.codeWraningNotification( txt , "error" );
+            
         } else {
+            
             txt = "خطأ غير معروف !";
+            mainApp.codeWraningNotification( txt , "error" );
         }
         
-        alert(txt);
+        // alert(txt);
 
     } );
     
@@ -1831,6 +1987,41 @@ function clickAddSkill() {
     
     let box = document.getElementById("lightBox");
     box.classList.remove("close");
+    
+    let elementLightBox = document.getElementById("lightBoxCard");
+    elementLightBox.classList.add("grid");
+    
+    const countSkills = myProject.getListProjectSkill().length;
+    
+    if( countSkills >= myProject.limitCountSkills ) {
+        
+        let txtNotifi = "لقد وصلت للحد المسموح به لعدد المهارات في المشروع !";
+        let codeNoti = `
+            <div class="divHeader">
+                <h2>إضافة مهارة</h2>
+            </div>
+            <div class="divBody">
+                <div class="containerText">${txtNotifi}</div>
+            </div>
+            <div class="divFooter">
+                <div id="buttonAddSkillCancel" class="buttons btnCancel neg">إلغاء</div>
+            </div>
+        `;
+        
+        elementLightBox.classList.add("notification");
+        elementLightBox.innerHTML = codeNoti;
+        
+        document.getElementById("buttonAddSkillCancel").addEventListener("click", cancel );
+        
+        return;
+    }
+    
+    
+    
+    
+    
+    
+    
     
 
     let code = `
@@ -1906,8 +2097,6 @@ function clickAddSkill() {
     `;
     
     
-    let elementLightBox = document.getElementById("lightBoxCard");
-    elementLightBox.classList.add("grid");
     elementLightBox.innerHTML = code;
     
 
@@ -1941,8 +2130,10 @@ function addSkill() {
     
     myProject.addSkill( codeSkill , descriptionSkill ).then( (result) => {
         
-        refreshListSkillsAndTasks();
+        refreshListSkillAndAll();
+        
         cancel();
+        mainApp.codeWraningNotification( "تم إضافة المهارة", "success" );
         
     } ).then( (result) => {
 
@@ -1955,16 +2146,33 @@ function addSkill() {
         
         let txt = "";
         if(codeError == 410) {
-            txt = "انتهت الجلسة,";
+            
+            txt = "انتهت الجلسة.";
+            mainApp.codeWraning( txt , "login" );
+            
         } else if(codeError == 420) {
-            txt = "الرجاء قم بلمئ كافة البيانات";
+            
+            txt = "خطأ, الرجاء قم بلمئ كافة البيانات";
+            mainApp.codeWraningNotification( txt , "error" );
+            
         } else if(codeError == 450) {
-            let txt = "خطأ غير معروف, حاول مرة أخرى";
+            
+            txt = "خطأ غير معروف, حاول مرة أخرى";
+            mainApp.codeWraningNotification( txt , "error" );
+            
+        } else if(codeError == 451) {
+            
+            txt = "خطأ, تخطيت الحد المسموح لعدد المهارات في المشروع.";
+            mainApp.codeWraningNotification( txt , "error" );
+            
         } else {
+            
             txt = "خطأ غير معروف !";
+            mainApp.codeWraningNotification( txt , "error" );
+            
         }
         
-        alert(txt);
+        // alert(txt);
         
     } );
     
@@ -2059,7 +2267,7 @@ function clickEditSkill( codeProjectSkill ) {
     fillSelectSkills();
     
     let selectSkills = document.getElementById("selectskills");
-    selectSkills.value = codeSkill;
+    selectSkills.value = (codeSkill) ? codeSkill : -1 ;
     
     
 }
@@ -2079,8 +2287,10 @@ function editSkill( codeProjectSkill ) {
     
     myProject.editSkill( codeProjectSkill , description ).then( (result) => {
         
-        refreshListSkillsAndTasks();
+        refreshListSkillAndAll();
+        
         cancel();
+        mainApp.codeWraningNotification( "تم تحديث بيانات المهارة", "success" );
         
     } ).catch( (reject) => {
 
@@ -2091,25 +2301,58 @@ function editSkill( codeProjectSkill ) {
         
         let txt = "";
         if(codeError == 410) {
-            txt = "انتهت الجلسة,";
+            
+            txt = "انتهت الجلسة.";
+            mainApp.codeWraning( txt , "login" );
+            
         } else if(codeError == 420) {
-            txt = "الرجاء قم بلمئ كافة البيانات";
+            
+            txt = "خطأ, الرجاء قم بلمئ كافة البيانات";
+            mainApp.codeWraningNotification( txt , "error" );
+            
         } else if(codeError == 450) {
-            let txt = "خطأ غير معروف, حاول مرة أخرى";
+            
+            txt = "خطأ غير معروف, حاول مرة أخرى";
+            mainApp.codeWraningNotification( txt , "error" );
+            
         } else {
+            
             txt = "خطأ غير معروف !";
+            mainApp.codeWraningNotification( txt , "error" );
+            
         }
         
-        alert(txt);
+        // alert(txt);
+        
     } );
     
 }
 
 function clickRemoveSkill( codeProjectSkill ) {
     
+    const myProjectMembers = myProject.getListProjectMember();
+    
+    let countMemberMe = myProjectMembers.length;
+    let countMemberAccepted = 0;
+    let countMemberNotEvaluation = 0;
+    
+    for(var i=0; i<myProjectMembers.length; i++) 
+    {
+        const codeStatus = myProjectMembers[i].codeStatus;
+        const mark = myProjectMembers[i].mark;
+        
+        if( codeStatus == myProject.getEnumStatusMember().Accepted && mark == 0 ) {
+            countMemberAccepted += 1;
+            countMemberNotEvaluation = countMemberNotEvaluation + 1;
+        }
+        
+    }
+    
+    
     const myProjectTasks = myProject.getListProjectTask();
-
-    let countTaskSkill = 0;
+    
+    let countTaskSkillAll = 0;
+    let countTaskSkillDone = 0;
     
     for(var i=0; i<myProjectTasks.length; i++) 
     {
@@ -2117,24 +2360,31 @@ function clickRemoveSkill( codeProjectSkill ) {
         const _codeProjectSkill = myProjectTasks[i].codeProjectSkill;
         
         if( _codeProjectSkill == codeProjectSkill ) {
-            countTaskSkill = countTaskSkill + 1;
+            
+            countTaskSkillAll = countTaskSkillAll + 1;
+            
+            if( codeStatus == myProject.getEnumStatusTask().Delivered ) {
+                countTaskSkillDone += 1;
+            }
         }
         
     }
     
-    let txtRemove = `لديك عدد ${countTaskSkill} مهمة مرتبطة بهذه المهارة </br>
-    هل بالتأكيد تريد حذف المهارة والمهام المرتبطة بها ؟
+    let txtRemove = `لديك عدد ${countTaskSkillAll} مهمة مرتبطة بهذه المهارة </br>
+    منها ${countTaskSkillDone} مهام مكتملة !</br>
+    لديك عدد ${countMemberAccepted} عضو منضم للمهارة !</br>
+    هل بالتأكيد تريد حذف المهارة والمهام المرتبطة بها والأعضاء المنضمين ؟
     `
     let box = document.getElementById("lightBox");
     box.classList.remove("close");
     
     let code = `
         <div class="divHeader">
-            <h2>حذف المهارة</h2>
+            <h2>حذف مهارة المشروع</h2>
         </div>
         <div class="divBody">
             
-            ${txtRemove}
+            <div class="containerText">هل بالتأكيد تريد حذف المهارة ؟</div>
             
         </div>
         
@@ -2152,8 +2402,60 @@ function clickRemoveSkill( codeProjectSkill ) {
     elementLightBox.innerHTML = code;
     
     document.getElementById("buttonAddSkillRemove").addEventListener("click" , function() {
+        if( countMemberAccepted > 0 ) {
+            
+            let txtRemoveSkillError = `لا يمكنك حذف مهارة المشروع لوجود عدد ${countMemberAccepted} عضو منضم للمهارة.`;
+            
+            
+            let code = `
+                <div class="divHeader">
+                    <h2>حذف مهارة المشروع</h2>
+                </div>
+                <div class="divBody">
+                    
+                    <div class="containerText">${txtRemoveSkillError}</div>
+                        
+                </div>
+                
+                <div class="divFooter">
+                    <div id="buttonAddSkillCancel" class="buttons btnCancel neg"">إلغاء</div>
+                </div>
+            `;
+            elementLightBox.innerHTML = code;
+            document.getElementById("buttonAddSkillCancel").addEventListener("click", cancel );
+            
+        } else if( countTaskSkillDone > 0 ) {
+            
+            
+            let txtRemoveSkillError = `لا يمكنك حذف مهارة المشروع لوجود عدد ${countTaskSkillDone} مهام مكتملة!`;
+            
+            
+            let code = `
+                <div class="divHeader">
+                    <h2>حذف مهارة المشروع</h2>
+                </div>
+                <div class="divBody">
+                    
+                    <div class="containerText">${txtRemoveSkillError}</div>
+                        
+                </div>
+                
+                <div class="divFooter">
+                    <div id="buttonAddSkillCancel" class="buttons btnCancel neg"">إلغاء</div>
+                </div>
+            `;
+            elementLightBox.innerHTML = code;
+            document.getElementById("buttonAddSkillCancel").addEventListener("click", cancel );
+            
+        } else if( countTaskSkillAll > 0 ) {
+            
+        } else {
+            
+            removeSkill( codeProjectSkill ) ;
+            
+        }
         
-        removeSkill( codeProjectSkill ) ;
+        
         
     });
     document.getElementById("buttonAddSkillCancel").addEventListener("click", cancel );
@@ -2162,31 +2464,64 @@ function removeSkill( codeProjectSkill ) {
     
     myProject.removeSkill( codeProjectSkill ).then( (result) => {
         
-        refreshListSkillsAndTasks();
+        refreshListSkillAndAll();
+        
         cancel();
+        mainApp.codeWraningNotification( "تم حذف المهارة", "success" );
         
     } ).catch( (reject) => {
-
-        // Mode Error
         
+        
+        // Mode Error
         const data = reject["data"];
         const codeError = data["codeError"];
         const textError = data["message"];
         
         let txt = "";
         if(codeError == 410) {
-            txt = "انتهت الجلسة,";
+            
+            txt = "انتهت الجلسة.";
+            mainApp.codeWraning( txt , "login" );
+            
         } else if(codeError == 420) {
-            txt = "الرجاء قم بلمئ كافة البيانات";
+            
+            txt = "خطأ, الرجاء قم بلمئ كافة البيانات";
+            mainApp.codeWraningNotification( txt , "error" );
+            
         } else if(codeError == 450) {
-            let txt = "خطأ غير معروف, حاول مرة أخرى";
+            
+            txt = "خطأ غير معروف, حاول مرة أخرى";
+            mainApp.codeWraningNotification( txt , "error" );
+            
         } else if(codeError == 451) {
-            let txt = "خطأ غير معروف, حاول مرة أخرى !!";
+            
+            txt = "خطأ, لديك أعضاء منضمون في المهارة !!";
+            mainApp.codeWraningNotification( txt , "error" );
+            
+        } else if(codeError == 452) {
+            
+            txt = "خطأ, لديك مهام تم إنجازها في المهارة !!";
+            mainApp.codeWraningNotification( txt , "error" );
+            
+        } else if(codeError == 453) {
+            
+            txt = "خطأ, حاول مرة أخرى !!!";
+            mainApp.codeWraningNotification( txt , "error" );
+            
+        } else if(codeError == 454) {
+            
+            txt = "خطأ غير معروف, حاول مرة أخرى !!!!";
+            mainApp.codeWraningNotification( txt , "error" );
+            
         } else {
+            
             txt = "خطأ غير معروف !";
+            mainApp.codeWraningNotification( txt , "error" );
+            
         }
         
-        alert(txt);
+        // alert(txt);
+        
     } );
 }
 
@@ -2208,6 +2543,9 @@ function fillSelectSkills() {
 
         selectSkills.insertAdjacentHTML("beforeend", codeoption);
     }
+    
+    let codeoptionselect = `<option value='-1'>-أخرى-</option>`;
+    selectSkills.insertAdjacentHTML("beforeend", codeoptionselect);
     
     
 }
@@ -2310,8 +2648,10 @@ function addDirect() {
     
     myProject.addDirect( content , selectDirect ).then( (result) => {
         
-        refreshListSkillsAndTasks();
+        refreshListDirect();
+        
         cancel();
+        mainApp.codeWraningNotification( "تم إضافة التوجيه", "success" );
         
     } ).then( (result) => {
 
@@ -2324,16 +2664,29 @@ function addDirect() {
         
         let txt = "";
         if(codeError == 410) {
+            
             txt = "انتهت الجلسة,";
+            mainApp.codeWraning( txt , "login" );
+            
         } else if(codeError == 420) {
-            txt = "الرجاء قم بلمئ كافة البيانات";
+            
+            txt = "خطأ, الرجاء قم بلمئ كافة البيانات";
+            mainApp.codeWraningNotification( txt , "error" );
+            
         } else if(codeError == 450) {
-            let txt = "خطأ غير معروف, حاول مرة أخرى";
+            
+            txt = "خطأ غير معروف, حاول مرة أخرى";
+            mainApp.codeWraningNotification( txt , "error" );
+            
         } else {
+            
             txt = "خطأ غير معروف !";
+            mainApp.codeWraningNotification( txt , "error" );
+            
         }
         
-        alert(txt);
+        // alert(txt);
+        
         
     } );
     
@@ -2458,8 +2811,10 @@ function editDirect( codeDirect ) {
     
     myProject.editDirect( codeDirect , content , selectDirect ).then( (result) => {
         
-        refreshListSkillsAndTasks();
+        refreshListDirect();
+        
         cancel();
+        mainApp.codeWraningNotification( "تم تحديث بيانات التوجيه", "success" );
         
     } ).catch( (reject) => {
 
@@ -2470,16 +2825,29 @@ function editDirect( codeDirect ) {
         
         let txt = "";
         if(codeError == 410) {
+            
             txt = "انتهت الجلسة,";
+            mainApp.codeWraning( txt , "login" );
+            
         } else if(codeError == 420) {
-            txt = "الرجاء قم بلمئ كافة البيانات";
+            
+            txt = "خطأ, الرجاء قم بلمئ كافة البيانات";
+            mainApp.codeWraningNotification( txt , "error" );
+            
         } else if(codeError == 450) {
-            let txt = "خطأ غير معروف, حاول مرة أخرى";
+            
+            txt = "خطأ غير معروف, حاول مرة أخرى";
+            mainApp.codeWraningNotification( txt , "error" );
+            
         } else {
+            
             txt = "خطأ غير معروف !";
+            mainApp.codeWraningNotification( txt , "error" );
+            
         }
         
-        alert(txt);
+        // alert(txt);
+        
     } );
 }
 
@@ -2520,8 +2888,10 @@ function removeDirect( codeDirect ) {
     
     myProject.removeDirect( codeDirect ).then( (result) => {
         
-        refreshListSkillsAndTasks();
+        refreshListDirect();
+        
         cancel();
+        mainApp.codeWraningNotification( "تم حذف التوجيه", "success" );
         
     } ).catch( (reject) => {
 
@@ -2532,18 +2902,29 @@ function removeDirect( codeDirect ) {
         
         let txt = "";
         if(codeError == 410) {
+            
             txt = "انتهت الجلسة,";
+            mainApp.codeWraning( txt , "login" );
+            
         } else if(codeError == 420) {
-            txt = "الرجاء قم بلمئ كافة البيانات";
+            
+            txt = "خطأ, الرجاء قم بلمئ كافة البيانات";
+            mainApp.codeWraningNotification( txt , "error" );
+            
         } else if(codeError == 450) {
-            let txt = "خطأ غير معروف, حاول مرة أخرى";
-        } else if(codeError == 451) {
-            let txt = "خطأ غير معروف, حاول مرة أخرى !!";
+            
+            txt = "خطأ غير معروف, حاول مرة أخرى";
+            mainApp.codeWraningNotification( txt , "error" );
+            
         } else {
+            
             txt = "خطأ غير معروف !";
+            mainApp.codeWraningNotification( txt , "error" );
+            
         }
         
-        alert(txt);
+        // alert(txt);
+        
     } );
 }
 
@@ -2554,10 +2935,37 @@ function removeDirect( codeDirect ) {
 
 
 
-function clickAddTask( codeProjectSkill ) {
+function clickAddTask( codeProjectSkill , countTask ) {
     
     let box = document.getElementById("lightBox");
     box.classList.remove("close");
+    
+    let elementLightBox = document.getElementById("lightBoxCard");
+    elementLightBox.classList.add("grid");
+    
+    
+    if( countTask >= myProject.limitCountTasks ) {
+        
+        let txtNotifi = "لقد وصلت للحد المسموح به لعدد المهام ضمن المهارة !";
+        let codeNoti = `
+            <div class="divHeader">
+                <h2>إضافة مهمة</h2>
+            </div>
+            <div class="divBody">
+                <div class="containerText">${txtNotifi}</div>
+            </div>
+            <div class="divFooter">
+                <div id="buttonAddTaskCancel" class="buttons btnCancel neg">إلغاء</div>
+            </div>
+        `;
+        
+        elementLightBox.classList.add("notification");
+        elementLightBox.innerHTML = codeNoti;
+        
+        document.getElementById("buttonAddTaskCancel").addEventListener("click", cancel );
+        
+        return;
+    }
     
 
     let code = `
@@ -2574,7 +2982,7 @@ function clickAddTask( codeProjectSkill ) {
                     <label>اسم المهمة :</label>
                 </div>
                 
-                <input id="nameTask" name="descriptionSkill" class="inputs" placeholder="المهمة .." requred></input>
+                <input id="nameTask" name="descriptionTask" class="inputs" placeholder="المهمة .." requred></input>
                 
             </div>
             
@@ -2584,7 +2992,7 @@ function clickAddTask( codeProjectSkill ) {
                     <label>اضف مزيداً من التفاصيل حول المهمة :</label>
                 </div>
                 
-                <textarea id="descriptionTask" name="descriptionSkill" class="inputs area" placeholder="تفاصيل حول المهمة .." requred></textarea>
+                <textarea id="descriptionTask" name="descriptionTask" class="inputs area" placeholder="تفاصيل حول المهمة .." requred></textarea>
                 
             </div>
             </div>
@@ -2596,10 +3004,6 @@ function clickAddTask( codeProjectSkill ) {
         </div>
     `;
     
-    
-    
-    let elementLightBox = document.getElementById("lightBoxCard");
-    elementLightBox.classList.add("grid");
     elementLightBox.innerHTML = code;
 
     document.getElementById("buttonAddTaskAdd").addEventListener("click" , function() {
@@ -2611,7 +3015,6 @@ function clickAddTask( codeProjectSkill ) {
     document.getElementById("buttonAddTaskCancel").addEventListener("click", cancel );
     
 }
-
 function addTask( codeProjectSkill ) {
     
     const name = document.getElementById("nameTask").value;
@@ -2635,8 +3038,10 @@ function addTask( codeProjectSkill ) {
     
     myProject.addTask( codeProjectSkill , name , description ).then( (result) => {
         
-        refreshListSkillsAndTasks();
+        refreshListTask();
+        
         cancel();
+        mainApp.codeWraningNotification( "تم إضافة المهمة", "success" );
         
     } ).then( (result) => {
 
@@ -2649,16 +3054,34 @@ function addTask( codeProjectSkill ) {
         
         let txt = "";
         if(codeError == 410) {
+            
             txt = "انتهت الجلسة,";
+            mainApp.codeWraning( txt , "login" );
+            
         } else if(codeError == 420) {
-            txt = "الرجاء قم بلمئ كافة البيانات";
+            
+            txt = "خطأ, الرجاء قم بلمئ كافة البيانات";
+            mainApp.codeWraningNotification( txt , "error" );
+            
         } else if(codeError == 450) {
-            let txt = "خطأ غير معروف, حاول مرة أخرى";
+            
+            txt = "خطأ غير معروف, حاول مرة أخرى";
+            mainApp.codeWraningNotification( txt , "error" );
+            
+        } else if(codeError == 451) {
+            
+            txt = "خطأ, تخطيت الحد المسموح لعدد المهام.";
+            mainApp.codeWraningNotification( txt , "error" );
+            
         } else {
+            
             txt = "خطأ غير معروف !";
+            mainApp.codeWraningNotification( txt , "error" );
+            
         }
         
-        alert(txt);
+        // alert(txt);
+        
     } );
     
 }
@@ -2759,8 +3182,10 @@ function editTask( codeTask ) {
     
     myProject.editTask( codeTask , name , description ).then( (result) => {
         
-        refreshListSkillsAndTasks();
+        refreshListTask();
+        
         cancel();
+        mainApp.codeWraningNotification( "تم تحديث بيانات المهمة", "success" );
         
     } ).catch( (reject) => {
 
@@ -2771,22 +3196,35 @@ function editTask( codeTask ) {
         
         let txt = "";
         if(codeError == 410) {
+            
             txt = "انتهت الجلسة,";
+            mainApp.codeWraning( txt , "login" );
+            
         } else if(codeError == 420) {
-            txt = "الرجاء قم بلمئ كافة البيانات";
+            
+            txt = "خطأ, الرجاء قم بلمئ كافة البيانات";
+            mainApp.codeWraningNotification( txt , "error" );
+            
         } else if(codeError == 450) {
-            let txt = "خطأ غير معروف, حاول مرة أخرى";
+            
+            txt = "خطأ غير معروف, حاول مرة أخرى";
+            mainApp.codeWraningNotification( txt , "error" );
+            
         } else {
+            
             txt = "خطأ غير معروف !";
+            mainApp.codeWraningNotification( txt , "error" );
+            
         }
         
-        alert(txt);
+        // alert(txt);
+        
     } );
     
 }
 
 
-function clickRemoveTask( codeTask ) {
+function clickRemoveTask( codeTask , codeStatus ) {
     
     let box = document.getElementById("lightBox");
     box.classList.remove("close");
@@ -2797,13 +3235,14 @@ function clickRemoveTask( codeTask ) {
         </div>
         <div class="divBody">
             
-            هل بالتأكيد تريد حذف المهمة ؟
+            
+            <div class="containerText">هل بالتأكيد تريد حذف المهمة ؟</div>
             
         </div>
         
         <div class="divFooter">
             <div id="buttonAddTaskRemove" class="buttons btnUpdate"">حذف</div>
-            <div id="buttonAddSkillCancel" class="buttons btnCancel neg"">إلغاء</div>
+            <div id="buttonAddTaskCancel" class="buttons btnCancel neg"">إلغاء</div>
         </div>
     `;
     
@@ -2816,19 +3255,77 @@ function clickRemoveTask( codeTask ) {
     
     document.getElementById("buttonAddTaskRemove").addEventListener("click" , function() {
         
-        removeTask( codeTask );
+        if( codeStatus == myProject.getEnumStatusTask().New ) {
+            
+            removeTask( codeTask );
+            
+        } else {
+            
+            if( codeStatus == myProject.getEnumStatusTask().Delivered ) {
+                
+                let code = `
+                    <div class="divHeader">
+                        <h2>حذف المهمة</h2>
+                    </div>
+                    <div class="divBody">
+                        
+                        <div class="containerText">هذه المهمة أنجزت, لا يمكن حذفها !</div>
+                        
+                    </div>
+                    
+                    <div class="divFooter">
+                        <div id="buttonAddTaskCancel" class="buttons btnCancel neg"">إلغاء</div>
+                    </div>
+                `;
+                
+                elementLightBox.innerHTML = code;
+                document.getElementById("buttonAddTaskCancel").addEventListener("click", cancel );
+                
+            } else {
+                
+                let txtcode = `هذه المهمة يتم العمل عليها من قبل أحد الأعضاء</br>هل تريد بالتأكيد إزالتها ؟`;
+                let code = `
+                    <div class="divHeader">
+                        <h2>حذف المهمة</h2>
+                    </div>
+                    <div class="divBody">
+                        
+                        ${txtcode}
+                        
+                    </div>
+                    
+                    <div class="divFooter">
+                        <div id="buttonAddTaskRemove" class="buttons btnUpdate"">حذف</div>
+                        <div id="buttonAddTaskCancel" class="buttons btnCancel neg"">إلغاء</div>
+                    </div>
+                `;
+                
+                elementLightBox.innerHTML = code;
+                
+                document.getElementById("buttonAddTaskRemove").addEventListener("click" , function() {
+                    
+                    removeTask( codeTask );
+                    
+                });
+                document.getElementById("buttonAddTaskCancel").addEventListener("click", cancel );
+            }
+            
+        }
+        
         
     });
     
-    document.getElementById("buttonAddSkillCancel").addEventListener("click", cancel );
+    document.getElementById("buttonAddTaskCancel").addEventListener("click", cancel );
     
 }
 function removeTask( codeTask ) {
     
     myProject.removeTask( codeTask ).then( (result) => {
         
-        refreshListSkillsAndTasks();
+        refreshListTask();
+        
         cancel();
+        mainApp.codeWraningNotification( "تم حذف المهمة", "success" );
         
     } ).catch( (reject) => {
 
@@ -2839,18 +3336,34 @@ function removeTask( codeTask ) {
         
         let txt = "";
         if(codeError == 410) {
+            
             txt = "انتهت الجلسة,";
+            mainApp.codeWraning( txt , "login" );
+            
         } else if(codeError == 420) {
-            txt = "الرجاء قم بلمئ كافة البيانات";
+            
+            txt = "خطأ, الرجاء قم بلمئ كافة البيانات";
+            mainApp.codeWraningNotification( txt , "error" );
+            
         } else if(codeError == 450) {
-            let txt = "خطأ غير معروف, حاول مرة أخرى";
+            
+            txt = "خطأ غير معروف, حاول مرة أخرى";
+            mainApp.codeWraningNotification( txt , "error" );
+            
         } else if(codeError == 451) {
-            let txt = "خطأ غير معروف, حاول مرة أخرى !!";
+            
+            txt = "خطأ, هذه المهارة تم إنجازها !!";
+            mainApp.codeWraningNotification( txt , "error" );
+            
         } else {
+            
             txt = "خطأ غير معروف !";
+            mainApp.codeWraningNotification( txt , "error" );
+            
         }
         
-        alert(txt);
+        // alert(txt);
+        
     } );
 }
 
@@ -2867,11 +3380,41 @@ function clickMemberAccepted( codeMember ) {
     myProject.acceptMember( codeMember ).then( (result) => {
         
         refreshListMember();
+        
         cancel();
+        mainApp.codeWraningNotification( "تم ترشيح العضو مبدئياً.", "success" );
         
     } ).then( (result) => {
         
     } ).catch( (reject) => {
+        
+        // Mode Error
+        const data = reject["data"];
+        const codeError = data["codeError"];
+        const textError = data["message"];
+        
+        let txt = "";
+        if(codeError == 410) {
+            
+            txt = "انتهت الجلسة,";
+            mainApp.codeWraning( txt , "login" );
+            
+        } else if(codeError == 420) {
+            
+            txt = "خطأ, الرجاء قم بلمئ كافة البيانات";
+            mainApp.codeWraningNotification( txt , "error" );
+            
+        } else if(codeError == 450) {
+            
+            txt = "خطأ غير معروف, حاول مرة أخرى";
+            mainApp.codeWraningNotification( txt , "error" );
+            
+        } else {
+            
+            txt = "خطأ غير معروف !";
+            mainApp.codeWraningNotification( txt , "error" );
+            
+        }
         
     } );
     
@@ -2881,12 +3424,42 @@ function clickMemberRejected( codeMember , codeUser ) {
     myProject.rejectMember( codeMember , codeUser ).then( (result) => {
         
         refreshListMember();
+        
         cancel();
+        mainApp.codeWraningNotification( "تم رفض طلب العضو.", "success" );
         
     } ).then( (result) => {
 
     } ).catch( (reject) => {
 
+        // Mode Error
+        const data = reject["data"];
+        const codeError = data["codeError"];
+        const textError = data["message"];
+        
+        let txt = "";
+        if(codeError == 410) {
+            
+            txt = "انتهت الجلسة,";
+            mainApp.codeWraning( txt , "login" );
+            
+        } else if(codeError == 420) {
+            
+            txt = "خطأ, الرجاء قم بلمئ كافة البيانات";
+            mainApp.codeWraningNotification( txt , "error" );
+            
+        } else if(codeError == 450) {
+            
+            txt = "خطأ غير معروف, حاول مرة أخرى";
+            mainApp.codeWraningNotification( txt , "error" );
+            
+        } else {
+            
+            txt = "خطأ غير معروف !";
+            mainApp.codeWraningNotification( txt , "error" );
+            
+        }
+        
     } );
     
 }
@@ -2895,27 +3468,365 @@ function clickMemberIgnore( codeMember ) {
     myProject.ignoreMember( codeMember ).then( (result) => {
         
         refreshListMember();
+        
         cancel();
+        mainApp.codeWraningNotification( "تم تجاهل طلب العضو.", "success" );
         
     } ).then( (result) => {
 
     } ).catch( (reject) => {
 
+        // Mode Error
+        const data = reject["data"];
+        const codeError = data["codeError"];
+        const textError = data["message"];
+        
+        let txt = "";
+        if(codeError == 410) {
+            
+            txt = "انتهت الجلسة,";
+            mainApp.codeWraning( txt , "login" );
+            
+        } else if(codeError == 420) {
+            
+            txt = "خطأ, الرجاء قم بلمئ كافة البيانات";
+            mainApp.codeWraningNotification( txt , "error" );
+            
+        } else if(codeError == 450) {
+            
+            txt = "خطأ غير معروف, حاول مرة أخرى";
+            mainApp.codeWraningNotification( txt , "error" );
+            
+        } else {
+            
+            txt = "خطأ غير معروف !";
+            mainApp.codeWraningNotification( txt , "error" );
+            
+        }
+        
     } );
     
 }
 
 function clickMemberFilterAccepted( codeMember , codeUser ) {
     
+    
+    const myProjectMembers = myProject.getListProjectMember();
+
+    let countMemberAccept = 0;
+    
+    for(var i=0; i<myProjectMembers.length; i++) 
+    {
+        if( countMemberAccept >= 4 ) {
+            break;
+        }
+        const codeStatus = myProjectMembers[i].codeStatus;
+        
+        if( codeStatus == myProject.getEnumStatusMember().Accepted ) {
+            countMemberAccept++;
+        }
+        
+    }
+    
+    
+    let box = document.getElementById("lightBox");
+    box.classList.remove("close");
+    
+    let elementLightBox = document.getElementById("lightBoxCard");
+    elementLightBox.classList.add("grid");
+    
+    if( countMemberAccept >= 4 ) {
+        
+        let txtNotifi = "لقد وصلت للحد المسموح به لعدد الأعضاء في المشروع !";
+        let codeNoti = `
+            <div class="divHeader">
+                <h2>قبول العضوية</h2>
+            </div>
+            <div class="divBody">
+                <div class="containerText">${txtNotifi}</div>
+            </div>
+            <div class="divFooter">
+                <div id="buttonAddTaskCancel" class="buttons btnCancel neg">إلغاء</div>
+            </div>
+        `;
+        
+        elementLightBox.classList.add("notification");
+        elementLightBox.innerHTML = codeNoti;
+        
+        document.getElementById("buttonAddTaskCancel").addEventListener("click", cancel );
+        
+        return;
+    }
+    
+    
+    
+    
+    
+    
     myProject.acceptMemberFilter( codeMember , codeUser ).then( (result) => {
         
         refreshListMember();
+        
         cancel();
+        mainApp.codeWraningNotification( "تم قبول طلب العضو.", "success" );
         
     } ).then( (result) => {
 
     } ).catch( (reject) => {
 
+        // Mode Error
+        const data = reject["data"];
+        const codeError = data["codeError"];
+        const textError = data["message"];
+        
+        let txt = "";
+        if(codeError == 410) {
+            
+            txt = "انتهت الجلسة,";
+            mainApp.codeWraning( txt , "login" );
+            
+        } else if(codeError == 420) {
+            
+            txt = "خطأ, الرجاء قم بلمئ كافة البيانات";
+            mainApp.codeWraningNotification( txt , "error" );
+            
+        } else if(codeError == 450) {
+            
+            txt = "خطأ غير معروف, حاول مرة أخرى";
+            mainApp.codeWraningNotification( txt , "error" );
+            
+        } else if(codeError == 451) {
+            
+            txt = "خطأ, تخطيت الحد المسموح لعدد الاعضاء المنضمين في المشروع.";
+            mainApp.codeWraningNotification( txt , "error" );
+            
+        } else {
+            
+            txt = "خطأ غير معروف !";
+            mainApp.codeWraningNotification( txt , "error" );
+            
+        }
+        
+    } );
+    
+}
+
+function clickMemberTerminate( codeMember , codeUser , mark ) {
+    
+    const myProjectTasks = myProject.getListProjectTask();
+    
+    let countTaskSkillAllForMember = 0;
+    let countTaskSkillDoneForMember = 0;
+    
+    for(var i=0; i<myProjectTasks.length; i++) 
+    {
+        const codeStatus = myProjectTasks[i].codeStatus;
+        const _codeUser = myProjectTasks[i].codeUser;
+        const _codeProjectSkill = myProjectTasks[i].codeProjectSkill;
+        
+        if( _codeUser == codeUser ) {
+            
+            countTaskSkillAllForMember += 1;
+            
+            if( codeStatus == myProject.getEnumStatusTask().Delivered ) {
+                countTaskSkillDoneForMember += 1;
+            }
+        }
+        
+    }
+    
+    
+    
+    let box = document.getElementById("lightBox");
+    box.classList.remove("close");
+    
+    let code = `
+        <div class="divHeader">
+            <h2>حذف العضو</h2>
+        </div>
+        <div class="divBody">
+            
+            <div class="containerText">هل بالتأكيد تريد حذف العضو ؟</div>
+        </div>
+        
+        <div class="divFooter">
+            <div id="buttonAddMemberRemove" class="buttons btnUpdate"">حذف</div>
+            <div id="buttonAddMemberCancel" class="buttons btnCancel neg"">إلغاء</div>
+        </div>
+    `;
+    
+    
+    
+    let elementLightBox = document.getElementById("lightBoxCard");
+    elementLightBox.classList.add("notification");
+    elementLightBox.classList.add("grid");
+    elementLightBox.innerHTML = code;
+    
+    document.getElementById("buttonAddMemberRemove").addEventListener("click" , function() {
+        
+    if( countTaskSkillAllForMember > 0 ) {
+        
+        let txtTerminate = `هذا العضو لديه عدد ${countTaskSkillAllForMember} مهام</br>
+        منها ${countTaskSkillDoneForMember} مهام مكتملة !</br>
+        سيتم إعادة تهيئة حالة المهام التي يعمل عليها الان</br>
+        هل بالتأكيد تريد حذف العضو ؟
+        `;
+        
+        let box = document.getElementById("lightBox");
+        box.classList.remove("close");
+        
+        let code = `
+            <div class="divHeader">
+                <h2>حذف العضو</h2>
+            </div>
+            <div class="divBody">
+                
+                <div class="containerText">${txtTerminate}</div>
+                
+            </div>
+            
+            <div class="divFooter">
+                <div id="buttonAddMemberRemove" class="buttons btnUpdate"">حذف</div>
+                <div id="buttonAddMemberCancel" class="buttons btnCancel neg"">إلغاء</div>
+            </div>
+        `;
+        
+        
+        
+        let elementLightBox = document.getElementById("lightBoxCard");
+        elementLightBox.classList.add("notification");
+        elementLightBox.classList.add("grid");
+        elementLightBox.innerHTML = code;
+        
+        document.getElementById("buttonAddMemberRemove").addEventListener("click" , function() {
+            
+            if( mark == 0 ) {
+                
+                let txtTerminate = `يجب تقييم العضو قبل الحذف !`;
+                
+                let code = `
+                    <div class="divHeader">
+                        <h2>حذف العضو</h2>
+                    </div>
+                    <div class="divBody">
+                        
+                        <div class="containerText">${txtTerminate}</div>
+                        
+                    </div>
+                    
+                    <div class="divFooter">
+                        <div id="buttonAddMemberCancel" class="buttons btnCancel neg"">إلغاء</div>
+                    </div>
+                `;
+                
+                elementLightBox.innerHTML = code;
+                
+                document.getElementById("buttonAddMemberCancel").addEventListener("click", cancel );
+                
+            } else {
+                
+                memberTerminate( codeMember , codeUser );
+                
+            }
+            
+            
+            
+        });
+        
+        document.getElementById("buttonAddMemberCancel").addEventListener("click", cancel );
+        
+        
+    } else {
+        
+        if( mark == 0 ) {
+            
+            let txtTerminate = `يجب تقييم العضو قبل الحذف !`;
+            
+            let code = `
+                <div class="divHeader">
+                    <h2>حذف العضو</h2>
+                </div>
+                <div class="divBody">
+                    
+                    <div class="containerText">${txtTerminate}</div>
+                    
+                </div>
+                
+                <div class="divFooter">
+                    <div id="buttonAddMemberCancel" class="buttons btnCancel neg"">إلغاء</div>
+                </div>
+            `;
+            
+            elementLightBox.innerHTML = code;
+            
+            document.getElementById("buttonAddMemberCancel").addEventListener("click", cancel );
+            
+        } else {
+            
+            memberTerminate( codeMember , codeUser );
+            
+        }
+        
+        memberTerminate( codeMember , codeUser )
+        
+    }
+    
+    });
+    document.getElementById("buttonAddMemberCancel").addEventListener("click", cancel );
+    
+}
+
+function memberTerminate( codeMember , codeUser ) {
+
+    myProject.terminateMember( codeMember , codeUser ).then( (result) => {
+        
+        refreshListMember();
+        
+        cancel();
+        mainApp.codeWraningNotification( "تم إنهاء خدمة العضو في المشروع.", "success" );
+        
+    } ).then( (result) => {
+        
+    } ).catch( (reject) => {
+        
+        // Mode Error
+        const data = reject["data"];
+        const codeError = data["codeError"];
+        const textError = data["message"];
+        
+        let txt = "";
+        if(codeError == 410) {
+            
+            txt = "انتهت الجلسة,";
+            mainApp.codeWraning( txt , "login" );
+            
+        } else if(codeError == 420) {
+            
+            txt = "خطأ, الرجاء قم بلمئ كافة البيانات";
+            mainApp.codeWraningNotification( txt , "error" );
+            
+        } else if(codeError == 450) {
+            
+            txt = "خطأ غير معروف, حاول مرة أخرى";
+            mainApp.codeWraningNotification( txt , "error" );
+            
+        } else if(codeError == 451) {
+            
+            txt = "خطأ, لم يتم تقييم العضو !";
+            mainApp.codeWraningNotification( txt , "error" );
+            
+        } else if(codeError == 452) {
+            
+            txt = "خطأ غير معروف, حاول مرة أخرى !!";
+            mainApp.codeWraningNotification( txt , "error" );
+            
+        } else {
+            
+            txt = "خطأ غير معروف !";
+            mainApp.codeWraningNotification( txt , "error" );
+            
+        }
+        
     } );
     
 }
@@ -2930,14 +3841,44 @@ function clickMemberMore( idBig ) {
 
 function clickTaskAccepted( codeTask , codeUser ) {
     
-    myProject.acceptTask( moduleUserLog.getUser().userCode , codeTask , codeUser ).then( (result) => {
+    myProject.acceptTask( codeTask , codeUser ).then( (result) => {
         
-        refreshListSkillsAndTasks();
+        refreshListTask();
+        
         cancel();
+        mainApp.codeWraningNotification( "تم إعتماد المهمة.", "success" );
         
     } ).then( (result) => {
 
     } ).catch( (reject) => {
+
+        // Mode Error
+        const data = reject["data"];
+        const codeError = data["codeError"];
+        const textError = data["message"];
+        
+        let txt = "";
+        if(codeError == 410) {
+            
+            txt = "انتهت الجلسة,";
+            mainApp.codeWraning( txt , "login" );
+            
+        } else if(codeError == 420) {
+            
+            txt = "خطأ, الرجاء قم بلمئ كافة البيانات";
+            mainApp.codeWraningNotification( txt , "error" );
+            
+        } else if(codeError == 450) {
+            
+            txt = "خطأ غير معروف, حاول مرة أخرى";
+            mainApp.codeWraningNotification( txt , "error" );
+            
+        } else {
+            
+            txt = "خطأ غير معروف !";
+            mainApp.codeWraningNotification( txt , "error" );
+            
+        }
 
     } );
     
@@ -2959,9 +3900,8 @@ function clickTaskReturn( codeTask , codeUser ) {
                 <div class="containerLabel">
                     <label>الأسباب :</label>
                 </div>
-    
-                <textarea id="inputNote" name="note" class="inputs area" placeholder="اذكر أسباب أعادة المهمة .." requred>
-                </textarea>
+                
+                <textarea id="inputNote" name="note" class="inputs area" placeholder="اذكر أسباب أعادة المهمة .." requred></textarea>
                 
             </div>
             
@@ -3000,20 +3940,50 @@ function taskReturn( codeTask , codeUser ) {
         
     }
     
-    myProject.returnTask( moduleUserLog.getUser().userCode , codeTask , codeUser , note ).then( (result) => {
+    myProject.returnTask( codeTask , codeUser , note ).then( (result) => {
         
-        refreshListSkillsAndTasks();
+        refreshListTask();
+        
         cancel();
+        mainApp.codeWraningNotification( "تم إعادة المهمة.", "success" );
         
     } ).then( (result) => {
 
     } ).catch( (reject) => {
-
+        
+        // Mode Error
+        const data = reject["data"];
+        const codeError = data["codeError"];
+        const textError = data["message"];
+        
+        let txt = "";
+        if(codeError == 410) {
+            
+            txt = "انتهت الجلسة,";
+            mainApp.codeWraning( txt , "login" );
+            
+        } else if(codeError == 420) {
+            
+            txt = "خطأ, الرجاء قم بلمئ كافة البيانات";
+            mainApp.codeWraningNotification( txt , "error" );
+            
+        } else if(codeError == 450) {
+            
+            txt = "خطأ غير معروف, حاول مرة أخرى";
+            mainApp.codeWraningNotification( txt , "error" );
+            
+        } else {
+            
+            txt = "خطأ غير معروف !";
+            mainApp.codeWraningNotification( txt , "error" );
+            
+        }
+        
     } );
     
 }
 
-function clickTaskEditNote( codeTask , note ) {
+function clickTaskEditNote( codeTask , codeUser , note ) {
     
     let box = document.getElementById("lightBox");
     box.classList.remove("close");
@@ -3049,14 +4019,14 @@ function clickTaskEditNote( codeTask , note ) {
     
     document.getElementById("buttonAddTaskNoteUpdate").addEventListener("click" , function() {
         
-        taskNoteUpdate( codeTask );
+        taskNoteUpdate( codeTask , codeUser );
         
     });
     
     document.getElementById("buttonAddSkillCancel").addEventListener("click", cancel );
     
 }
-function taskNoteUpdate( codeTask ) {
+function taskNoteUpdate( codeTask , codeUser ) {
     
     let note = document.getElementById("inputNote").value;
     
@@ -3068,31 +4038,95 @@ function taskNoteUpdate( codeTask ) {
         
     }
     
-    myProject.updateNoteTask( moduleUserLog.getUser().userCode , codeTask , note ).then( (result) => {
+    myProject.updateNoteTask( codeTask , codeUser , note ).then( (result) => {
         
-        refreshListSkillsAndTasks();
+        refreshListTask();
+        
         cancel();
+        mainApp.codeWraningNotification( "تم تحديث ملاحظة المهمة.", "success" );
         
     } ).then( (result) => {
 
     } ).catch( (reject) => {
-
+        
+        // Mode Error
+        const data = reject["data"];
+        const codeError = data["codeError"];
+        const textError = data["message"];
+        
+        let txt = "";
+        if(codeError == 410) {
+            
+            txt = "انتهت الجلسة,";
+            mainApp.codeWraning( txt , "login" );
+            
+        } else if(codeError == 420) {
+            
+            txt = "خطأ, الرجاء قم بلمئ كافة البيانات";
+            mainApp.codeWraningNotification( txt , "error" );
+            
+        } else if(codeError == 450) {
+            
+            let txt = "خطأ غير معروف, حاول مرة أخرى";
+            mainApp.codeWraningNotification( txt , "error" );
+            
+        } else {
+            
+            txt = "خطأ غير معروف !";
+            mainApp.codeWraningNotification( txt , "error" );
+            
+        }
+        
     } );
     
 }
 
 
-function clickTaskLeave( codeTask ) {
+function clickTaskLeave( codeTask , codeUser ) {
     
-    myProject.leaveTask( moduleUserLog.getUser().userCode , codeTask ).then( (result) => {
+    myProject.leaveTask( codeTask , codeUser ).then( (result) => {
         
-        refreshListSkillsAndTasks();
+        refreshListTask();
+        
         cancel();
+        mainApp.codeWraningNotification( "تم إقصاء العضو من المهمة.", "success" );
         
     } ).then( (result) => {
 
     } ).catch( (reject) => {
-
+        // Mode Error
+        const data = reject["data"];
+        const codeError = data["codeError"];
+        const textError = data["message"];
+        
+        let txt = "";
+        if(codeError == 410) {
+            
+            txt = "انتهت الجلسة,";
+            mainApp.codeWraning( txt , "login" );
+            
+        } else if(codeError == 420) {
+            
+            txt = "خطأ, الرجاء قم بلمئ كافة البيانات";
+            mainApp.codeWraningNotification( txt , "error" );
+            
+        } else if(codeError == 450) {
+            
+            txt = "خطأ غير معروف, حاول مرة أخرى";
+            mainApp.codeWraningNotification( txt , "error" );
+            
+        } else if(codeError == 451) {
+            
+            txt = "خطأ, هذه المهمة تم إنجازها لا يمكن تهيئتها";
+            mainApp.codeWraningNotification( txt , "error" );
+            
+        } else {
+            
+            txt = "خطأ غير معروف !";
+            mainApp.codeWraningNotification( txt , "error" );
+            
+        }
+        
     } );
     
 }
@@ -3142,6 +4176,7 @@ function clickSwitchSkillStatus( codeProjectSkill , idElementSwitch ) {
         }
         
         
+        mainApp.codeWraningNotification( "تم تحديث حالة الإنضمام إلى المهارة.", "success" );
         
     } ).then( (result) => {
         
@@ -3166,16 +4201,28 @@ function clickSwitchSkillStatus( codeProjectSkill , idElementSwitch ) {
         
         let txt = "";
         if(codeError == 410) {
+            
             txt = "انتهت الجلسة,";
+            mainApp.codeWraning( txt , "login" );
+            
         } else if(codeError == 420) {
-            txt = "الرجاء قم بلمئ كافة البيانات";
+            
+            txt = "خطأ, الرجاء قم بلمئ كافة البيانات";
+            mainApp.codeWraningNotification( txt , "error" );
+            
         } else if(codeError == 450) {
-            let txt = "خطأ غير معروف, حاول مرة أخرى";
+            
+            txt = "خطأ غير معروف, حاول مرة أخرى";
+            mainApp.codeWraningNotification( txt , "error" );
+            
         } else {
+            
             txt = "خطأ غير معروف !";
+            mainApp.codeWraningNotification( txt , "error" );
+            
         }
         
-        alert(txt);
+        // alert(txt);
         
     } );
     
@@ -3242,6 +4289,8 @@ function clickSwitchProjectStatus() {
         
         setSwitchStatusComponent( "switchProjectStatus" , codeProjectStatusJoinNew );
         
+        mainApp.codeWraningNotification( "تم تحديث حالة الإنضمام إلى المشروع.", "success" );
+        
     } ).then( (result) => {
         
 
@@ -3256,16 +4305,28 @@ function clickSwitchProjectStatus() {
         
         let txt = "";
         if(codeError == 410) {
+            
             txt = "انتهت الجلسة,";
+            mainApp.codeWraning( txt , "login" );
+            
         } else if(codeError == 420) {
-            txt = "الرجاء قم بلمئ كافة البيانات";
+            
+            txt = "خطأ, الرجاء قم بلمئ كافة البيانات";
+            mainApp.codeWraningNotification( txt , "error" );
+            
         } else if(codeError == 450) {
-            let txt = "خطأ غير معروف, حاول مرة أخرى";
+            
+            txt = "خطأ غير معروف, حاول مرة أخرى";
+            mainApp.codeWraningNotification( txt , "error" );
+            
         } else {
+            
             txt = "خطأ غير معروف !";
+            mainApp.codeWraningNotification( txt , "error" );
+            
         }
         
-        alert(txt);
+        // alert(txt);
         
     } );
 }
@@ -3303,16 +4364,28 @@ function clickDeleteProject() {
 
     let countTaskMe = myProjectTasks.length;
     let countMemberMe = myProjectMembers.length;
+    let countMemberNotEvaluation = 0;
+    
+    for(var i=0; i<myProjectMembers.length; i++) 
+    {
+        const codeStatus = myProjectMembers[i].codeStatus;
+        const mark = myProjectMembers[i].mark;
+        
+        if( codeStatus == myProject.getEnumStatusMember().Accepted && mark == 0 ) {
+            countMemberNotEvaluation = countMemberNotEvaluation + 1;
+        }
+        
+    }
     
     
     let txtLeave = `هل بالتأكيد تريد حذف المشروع؟`;
     
-    if(countMemberMe > 0) {
-        txtLeave += `</br> لديك ${countMemberMe} أعضاء`;
-    }
-    
     if(countTaskMe > 0) {
         txtLeave += `</br> لديك ${countTaskMe} مهام`;
+    }
+    
+    if(countMemberMe > 0) {
+        txtLeave += `</br> لديك ${countMemberMe} أعضاء`;
     }
     
     
@@ -3343,7 +4416,36 @@ function clickDeleteProject() {
     elementLightBox.classList.add("grid");
     elementLightBox.innerHTML = code;
     
-    document.getElementById("buttonProjectDelete").addEventListener("click", deletePoject );
+    document.getElementById("buttonProjectDelete").addEventListener("click", () => {
+        
+        if( countMemberNotEvaluation > 0 ) {
+            
+            let txtFinishError = "لا يمكنك حذف المشروع دون تقييم كافة أعضاء المشروع!";
+            txtFinishError += `</br> لديك ${countMemberNotEvaluation} أعضاء لم تقم بتقييمهم بعد !`;
+            
+            let code = `
+                <div class="divHeader">
+                    <h2>حذف المشروع</h2>
+                </div>
+                <div class="divBody">
+                    
+                    <div class="containerText">${txtFinishError}</div>
+                        
+                </div>
+                
+                <div class="divFooter">
+                    <div id="buttonProjectCancel" class="buttons btnCancel neg"">إلغاء</div>
+                </div>
+            `;
+            elementLightBox.innerHTML = code;
+            document.getElementById("buttonProjectCancel").addEventListener("click", cancel );
+            
+        } else {
+            
+            deletePoject();
+            
+        }
+    });
     document.getElementById("buttonProjectCancel").addEventListener("click", cancel );
     
 }
@@ -3353,6 +4455,7 @@ function deletePoject() {
     myProject.deleteProject().then( (result) => {
         
         cancel();
+        mainApp.codeWraningNotification( "تم حذف المشروع.", "success" );
         
     } ).then( (result) => {
         
@@ -3365,16 +4468,33 @@ function deletePoject() {
         
         let txt = "";
         if(codeError == 410) {
+            
             txt = "انتهت الجلسة,";
+            mainApp.codeWraning( txt , "login" );
+            
         } else if(codeError == 420) {
-            txt = "الرجاء قم بلمئ كافة البيانات";
+            
+            txt = "خطأ, الرجاء قم بلمئ كافة البيانات";
+            mainApp.codeWraningNotification( txt , "error" );
+            
         } else if(codeError == 450) {
-            let txt = "خطأ غير معروف, حاول مرة أخرى";
+            
+            txt = "خطأ غير معروف, حاول مرة أخرى";
+            mainApp.codeWraningNotification( txt , "error" );
+            
+        } else if(codeError == 451) {
+            
+            txt = "خطأ, لديك أعضاء لم يتم تقييمهم بعد.";
+            mainApp.codeWraningNotification( txt , "error" );
+            
         } else {
+            
             txt = "خطأ غير معروف !";
+            mainApp.codeWraningNotification( txt , "error" );
+            
         }
         
-        alert(txt);
+        // alert(txt);
         
     } );
     
@@ -3424,6 +4544,7 @@ function clickFinishProject() {
     
     
     
+    
     let box = document.getElementById("lightBox");
     box.classList.remove("close");
     
@@ -3452,6 +4573,8 @@ function clickFinishProject() {
     document.getElementById("buttonProjectFinish").addEventListener("click", () => {
         if(countMemberNotEvaluation > 0) {
             let txtFinishError = "لا يمكنك إنهاء المشروع دون تقييم كافة أعضاء المشروع!";
+            txtFinishError += `</br> لديك ${countMemberNotEvaluation} أعضاء لم تقم بتقييمهم بعد !`;
+            
             
             let code = `
                 <div class="divHeader">
@@ -3492,6 +4615,7 @@ function finishPoject() {
     myProject.finishProject().then( (result) => {
         
         cancel();
+        mainApp.codeWraningNotification( "تم إنهاء المشروع.", "success" );
         
     } ).then( (result) => {
         
@@ -3504,16 +4628,33 @@ function finishPoject() {
         
         let txt = "";
         if(codeError == 410) {
+            
             txt = "انتهت الجلسة,";
+            mainApp.codeWraning( txt , "login" );
+            
         } else if(codeError == 420) {
-            txt = "الرجاء قم بلمئ كافة البيانات";
+            
+            txt = "خطأ, الرجاء قم بلمئ كافة البيانات";
+            mainApp.codeWraningNotification( txt , "error" );
+            
         } else if(codeError == 450) {
-            let txt = "خطأ غير معروف, حاول مرة أخرى";
+            
+            txt = "خطأ غير معروف, حاول مرة أخرى";
+            mainApp.codeWraningNotification( txt , "error" );
+            
+        } else if(codeError == 451) {
+            
+            txt = "خطأ, لديك أعضاء لم يتم تقييمهم بعد.";
+            mainApp.codeWraningNotification( txt , "error" );
+            
         } else {
+            
             txt = "خطأ غير معروف !";
+            mainApp.codeWraningNotification( txt , "error" );
+            
         }
         
-        alert(txt);
+        // alert(txt);
         
     } );
 }
@@ -3539,6 +4680,7 @@ function clickEvaluationMemberStar( codeMember , numberStar ) {
     myProject.evaluationMember( codeMember , numberStar ).then( (result) => {
         
         refreshListMember();
+        mainApp.codeWraningNotification( "تم تقييم العضو.", "success" );
         
     } ).then( (result) => {
         
@@ -3552,16 +4694,28 @@ function clickEvaluationMemberStar( codeMember , numberStar ) {
         
         let txt = "";
         if(codeError == 410) {
+            
             txt = "انتهت الجلسة,";
+            mainApp.codeWraning( txt , "login" );
+            
         } else if(codeError == 420) {
-            txt = "الرجاء قم بلمئ كافة البيانات";
+            
+            txt = "خطأ, الرجاء قم بلمئ كافة البيانات";
+            mainApp.codeWraningNotification( txt , "error" );
+            
         } else if(codeError == 450) {
-            let txt = "خطأ غير معروف, حاول مرة أخرى";
+            
+            txt = "خطأ غير معروف, حاول مرة أخرى";
+            mainApp.codeWraningNotification( txt , "error" );
+            
         } else {
+            
             txt = "خطأ غير معروف !";
+            mainApp.codeWraningNotification( txt , "error" );
+            
         }
         
-        alert(txt);
+        // alert(txt);
         
         
     } );
@@ -3763,7 +4917,17 @@ function fillSelectSkillForMemberAndTask() {
     for(var i=0; i<myProjectSkills.length; i++)
     {
         const codeProjectSkill = myProjectSkills[i].code;
-        const nameSkill = myProjectSkills[i].nameSkill;
+        const codeSkill = myProjectSkills[i].codeSkill;
+        const description = myProjectSkills[i].description;
+        let nameSkill = myProjectSkills[i].nameSkill;
+        
+        if( codeSkill == null ) {
+            
+            let subs = description.substr(0, 10);
+            nameSkill = "أخرى-"+subs;
+        } else {
+            nameSkill = myProjectSkills[i].nameSkill;
+        }
 
         let codeoption = `<option value="${codeProjectSkill}">${nameSkill}</option>`;
         
@@ -4106,14 +5270,12 @@ function viewSkillAndDirect() {
 
 
 
-function refreshListSkillsAndTasks() {
+function refreshListSkillAndAll() {
     
-    let formData = new FormData();
-    formData.append("codeProject", myProject.code );
-    
-    myProject.refreshAllData( formData ).then( (result) => {
+    myProject.refreshAllData().then( (result) => {
         
         myProject.fillAllData( result );
+        myProject.fillDataManagerDashboard( result );
         
         fillProjectSkills();
         fillProjectTask();
@@ -4136,27 +5298,85 @@ function refreshListSkillsAndTasks() {
         
         let txt = "";
         if(codeError == 410) {
+            
             txt = "انتهت الجلسة,";
+            mainApp.codeWraning( txt , "login" );
+            
         } else if(codeError == 420) {
-            txt = "الرجاء قم بلمئ كافة البيانات";
+            
+            txt = "خطأ, الرجاء قم بلمئ كافة البيانات";
+            mainApp.codeWraningNotification( txt , "error" );
+            
         } else if(codeError == 450) {
-            let txt = "خطأ غير معروف, حاول مرة أخرى";
+            
+            txt = "خطأ غير معروف, حاول مرة أخرى";
+            mainApp.codeWraningNotification( txt , "error" );
+            
         } else {
+            
             txt = "خطأ غير معروف !";
+            mainApp.codeWraningNotification( txt , "error" );
+            
         }
         
-        alert(txt);
+        // alert(txt);
+        
+    } );
+}
+
+function refreshListTask() {
+    
+    myProject.refreshDataTask().then( (result) => {
+        
+        myProject.fillProjectTask( result );
+        myProject.fillDataManagerDashboardTask( result );
+        
+        fillProjectTask();
+        fillProjectCharts();
+        
+    } ).then( (result) => {
+
+    } ).catch( (reject) => {
+
+        // Mode Error
+        const data = reject["data"];
+        const codeError = data["codeError"];
+        const textError = data["message"];
+        
+        let txt = "";
+        if(codeError == 410) {
+            
+            txt = "انتهت الجلسة,";
+            mainApp.codeWraning( txt , "login" );
+            
+        } else if(codeError == 420) {
+            
+            txt = "خطأ, الرجاء قم بلمئ كافة البيانات";
+            mainApp.codeWraningNotification( txt , "error" );
+            
+        } else if(codeError == 450) {
+            
+            txt = "خطأ غير معروف, حاول مرة أخرى";
+            mainApp.codeWraningNotification( txt , "error" );
+            
+        } else {
+            
+            txt = "خطأ غير معروف !";
+            mainApp.codeWraningNotification( txt , "error" );
+            
+        }
+        
+        // alert(txt);
+        
     } );
 }
 
 function refreshListMember() {
     
-    let formData = new FormData();
-    formData.append("codeProject", myProject.code );
-    
-   myProject.refreshDataMember( formData ).then( (result) => {
+   myProject.refreshDataMember().then( (result) => {
         
         myProject.fillProjectMember( result );
+        myProject.fillDataManagerDashboardMember( result );
         
         fillProjectMember();
         fillProjectCharts();
@@ -4174,16 +5394,74 @@ function refreshListMember() {
         
         let txt = "";
         if(codeError == 410) {
+            
             txt = "انتهت الجلسة,";
+            mainApp.codeWraning( txt , "login" );
+            
         } else if(codeError == 420) {
-            txt = "الرجاء قم بلمئ كافة البيانات";
+            
+            txt = "خطأ, الرجاء قم بلمئ كافة البيانات";
+            mainApp.codeWraningNotification( txt , "error" );
+            
         } else if(codeError == 450) {
-            let txt = "خطأ غير معروف, حاول مرة أخرى";
+            
+            txt = "خطأ غير معروف, حاول مرة أخرى";
+            mainApp.codeWraningNotification( txt , "error" );
+            
         } else {
+            
             txt = "خطأ غير معروف !";
+            mainApp.codeWraningNotification( txt , "error" );
+            
         }
         
-        alert(txt);
+        // alert(txt);
+        
+    } );
+}
+
+function refreshListDirect() {
+    
+    myProject.refreshDataDirect().then( (result) => {
+        
+        myProject.fillProjectDirect( result );
+        
+        fillProjectDirect();
+        
+    } ).then( (result) => {
+
+    } ).catch( (reject) => {
+
+        // Mode Error
+        const data = reject["data"];
+        const codeError = data["codeError"];
+        const textError = data["message"];
+        
+        let txt = "";
+        if(codeError == 410) {
+            
+            txt = "انتهت الجلسة,";
+            mainApp.codeWraning( txt , "login" );
+            
+        } else if(codeError == 420) {
+            
+            txt = "خطأ, الرجاء قم بلمئ كافة البيانات";
+            mainApp.codeWraningNotification( txt , "error" );
+            
+        } else if(codeError == 450) {
+            
+            txt = "خطأ غير معروف, حاول مرة أخرى";
+            mainApp.codeWraningNotification( txt , "error" );
+            
+        } else {
+            
+            txt = "خطأ غير معروف !";
+            mainApp.codeWraningNotification( txt , "error" );
+            
+        }
+        
+        // alert(txt);
+        
     } );
 }
 

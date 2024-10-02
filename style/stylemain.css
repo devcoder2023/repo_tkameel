@@ -14,8 +14,10 @@
       
     */
     --color-primary: #2C3A4A ;/* #2C3A4A; /* الخلفية داكن الهيدر */
-    --color-primary-light: #F2F6FF; /* الخلفية فاتح المحتوى */ /* D1DBE8 */
-    --color-primary-mid: #DDE; /* d4dae7 بين الرئيسي والرئيسي الفاتح */
+    --color-primary-light: #EBF1FF; /* الخلفية فاتح المحتوى */ /* D1DBE8 */
+    --color-primary-light2: #F2F6FF;
+    --color-primary-mid: #DAE5FF; /* d4dae7 بين الرئيسي والرئيسي الفاتح */
+    --color-primary-mid2: #DDE;
     --color-secondry: #FEFEFE; /* أبيض */
     --color-spaceupload: #6990f2; /* سماوي فاتح*/
     --color-star: #ffc242;
@@ -1812,41 +1814,54 @@ footer .containerFooter .footerSocial .footerImageX img {
 
 
 .processnotification {
-    width: 25%;
+    width: 20%; 
     
     display: flex;
     position: fixed;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     padding: 25px;
     gap: 20px;
     
-    top: 80px;
+    top: 70px;
     /*bottom: 0;*/
     /*left: 50%;*/
-    right: 38%;
+    right: 30px;
     
     border-radius: var(--radius-xlarg);
 }
 .processnotification.success {
     background-color: #90ee9099;
-    border: 1px solid green;
+    /*border: 1px solid green;*/
 }
 .processnotification.warning {
     background-color: #ffd19099;
-    border: 1px solid orange;
+    /*border: 1px solid orange;*/
 }
 .processnotification.error {
     background-color: #ff9ca299;
-    border: 1px solid red;
+    /*border: 1px solid red;*/
+}
+.processnotification.info {
+    background-color: #ff9ca299;
+    /*border: 1px solid red;*/
 }
 
-.processnotification img {
+.processnotification .divsvg {
     width: 60px;
     height: 60px;
     
     object-fit: cover;
     object-position: center center;
+}
+
+.processnotification .divsvg svg {
+    width: 60px;
+    min-width: 60px;
+    max-width: 60px;
+    height: 60px;
+    min-height: 60px;
+    max-height: 60px;
 }
 
 .processnotification .textNotification {
@@ -1960,7 +1975,7 @@ footer .containerFooter .footerSocial .footerImageX img {
     margin-top: 5px;
     
     background-color: var(--color-secondry);
-    border: 1px solid var(--color-primary-mid);
+    border: 1px solid var(--color-primary-light);
     border-radius: var(--radius-mid);
     /*border: 2px solid green;*/
 }
@@ -2715,6 +2730,43 @@ containerSmallSkill
     font-size: var(--font-size-mid);
 }
 
+.containerItemPost .menu {
+    width: 150px;
+    /*min-height: 100px;*/
+    /*max-height: 400px;*/
+    
+    display: flex;
+    position: absolute;
+    top: 45px;
+    left: 0px;
+    z-index: 2;
+    padding: 0px;
+    
+    background-color: var(--color-secondry);
+    border-radius: var(--radius-mid); 
+    border: 1px solid var(--color-primary-light);
+    
+}
+.containerItemPost .menu .body {
+    width: 100%;
+}
+.containerItemPost .menu ul {
+    list-style-type: none;
+    /*padding: 0px;*/
+}
+.containerItemPost .menu ul li {
+    width: 100%;
+    padding: 10px 10px;
+    /*float: right;*/
+    font-size: var(--font-size-mid);
+    color: var(--color-primary);
+}
+.containerItemPost .menu ul li .itemMenu.itemMenuRemove {
+    color: red;
+}
+.containerItemPost .menu ul li:hover {
+    background-color: var(--color-primary-light);
+}
 
 
 
@@ -2732,6 +2784,7 @@ containerSmallSkill
 
     /* flex: 1 1 auto; */
 
+    border: 1px solid var(--color-primary-light);
     border-radius: var(--radius-mid);
 }
 .cardProject .header {

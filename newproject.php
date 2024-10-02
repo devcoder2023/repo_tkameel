@@ -318,7 +318,7 @@
                             </div>
                         </a>
                         
-                        <a href="https://x.com/prog2023">
+                        <a href="https://x.com/devcoder2023">
                             <div class="footerImageX" align="center">
                                 <img id="imagelogo" class="imagelogo" src="./files/logo/logo_X_White.png" />
                             </div>

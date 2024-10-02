@@ -238,6 +238,33 @@ function clickCreateProject() {
         
     }).catch( (reject) => {
         
+        // Mode Error
+        const data = reject["data"];
+        const codeError = data["codeError"];
+        const textError = data["message"];
+        
+        let txt = "";
+        if(codeError == 410) {
+            
+            txt = "انتهت الجلسة,";
+            mainApp.codeWraning( txt , "login" );
+            
+        } else if(codeError == 420) {
+            
+            txt = "خطأ, الرجاء قم بلمئ كافة البيانات";
+            mainApp.codeWraningNotification( txt , "error" );
+            
+        } else if(codeError == 450) {
+            
+            let txt = "خطأ غير معروف, حاول مرة أخرى";
+            mainApp.codeWraningNotification( txt , "error" );
+            
+        } else {
+            
+            txt = "خطأ غير معروف !";
+            mainApp.codeWraningNotification( txt , "error" );
+            
+        }
         
     });
     

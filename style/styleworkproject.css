@@ -54,7 +54,7 @@
 /*===================== WIDGET TASKS =====================*/
 
 .widgetTasks {
-    min-height: 500px; /*650*/
+    /*min-height: 500px; /*650*/
     grid-column: 1/13;
 }
 

@@ -359,12 +359,23 @@ function fillJoinSkills() {
     for(var i=0; i<myProjectSkills.length; i++)
     {
         let codeProjectSkill = myProjectSkills[i].code;
+        let codeSkill = myProjectSkills[i].codeSkill;
         let nameSkill = myProjectSkills[i].nameSkill;
+        let description = myProjectSkills[i].description;
         let codeStatusJoin = myProjectSkills[i].codeStatusJoin;
         
         if( codeStatusJoin != myProject.getEnumStatusJoin().Enable ) {
             // break ;
         } else {
+            
+            
+            if( codeSkill == null ) {
+                
+                let subs = description.substr(0, 10);
+                nameSkill = "أخرى-"+subs ;
+            } else {
+                nameSkill = myProjectSkills[i].nameSkill;
+            }
             
             let codeoption = `
                 <option value="${codeProjectSkill}">
@@ -382,7 +393,7 @@ function fillJoinSkills() {
     const codeoptionLast = `
             <option value="-1">
                 <div class="optionskill">
-                    اخرى
+                    -اخرى-
                 </div>
             </option>`;
     skillsoption.insertAdjacentHTML("beforeend", codeoptionLast);
@@ -444,7 +455,7 @@ function requestJoin() {
     
     myProject.requestJoin( codeProjectSkill , messageJoin ).then( (result) => {
         
-        myProject.fillMembers( result );
+        myProject.fillProjectMember( result );
         cancel();
         
     } ).then( (result) => {
@@ -452,22 +463,38 @@ function requestJoin() {
     } ).catch( (reject) => {
         
         // Mode Error
+        const data = reject["data"];
+        const codeError = data["codeError"];
+        const textError = data["message"];
         
-        let txt = "انتهت الجلسة,";
-        var elementLightBox = document.getElementById("lightBoxCard");
-        elementLightBox.classList.add("notification");
+        let txt = "";
+        if(codeError == 410) {
+            
+            txt = "انتهت الجلسة,";
+            mainApp.codeWraning( txt , "login" );
+            
+        } else if(codeError == 420) {
+            
+            txt = "خطأ, الرجاء قم بلمئ كافة البيانات";
+            mainApp.codeWraningNotification( txt , "error" );
+            
+        } else if(codeError == 450) {
+            
+            let txt = "خطأ غير معروف, حاول مرة أخرى";
+            mainApp.codeWraningNotification( txt , "error" );
+            
+        } else if(codeError == 451) {
+            
+            let txt = "خطأ, لديك طلبات مسبقة على هذا المشروع يرجي إنتظار الرد !";
+            mainApp.codeWraningNotification( txt , "error" );
+            
+        } else {
+            
+            txt = "خطأ غير معروف !";
+            mainApp.codeWraningNotification( txt , "error" );
+            
+        }
         
-        var body = document.getElementById("divBodyJoin");
-        
-        var code = `
-            <div class="containerwarning">
-                <p id="warningtext" class="containerwarningtext">
-                    ${txt}
-                </p>
-            </div>
-        `;
-        
-        body.insertAdjacentHTML("beforeend", code);
         
     } );
 

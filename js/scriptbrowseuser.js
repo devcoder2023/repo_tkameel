@@ -245,22 +245,26 @@ function goToPaginiation( numberPage ) {
     } ).catch( (reject) => {
         
         // Mode Error
-        
         const data = reject["data"];
         const codeError = data["codeError"];
         const textError = data["message"];
         
-        
-        if( codeError == 410 ) {
+        let txt = "";
+        if(codeError == 410) {
             
-            widgetErrorSession();
+            txt = "انتهت الجلسة,";
+            mainApp.codeWraning( txt , "login" );
             
-        } else if( codeError == 430 ) {
+        } else if(codeError == 430) {
             
-            widgetErrorDataEmpty();
+            txt = "خطأ, لا يوجد بيانات مطابقة";
+            mainApp.codeWraningNotification( txt , "error" );
             
         } else {
-            widgetErrorNon();
+            
+            txt = "خطأ غير معروف !";
+            mainApp.codeWraningNotification( txt , "error" );
+            
         }
         
     });
@@ -314,22 +318,26 @@ function searchUsers() {
     } ).catch( (reject) => {
         
         // Mode Error
-        
         const data = reject["data"];
         const codeError = data["codeError"];
         const textError = data["message"];
         
-        
-        if( codeError == 410 ) {
+        let txt = "";
+        if(codeError == 410) {
             
-            widgetErrorSession();
+            txt = "انتهت الجلسة,";
+            mainApp.codeWraning( txt , "login" );
             
-        } else if( codeError == 430 ) {
+        } else if(codeError == 430) {
             
-            widgetErrorDataEmpty();
+            txt = "خطأ, لا يوجد بيانات مطابقة";
+            mainApp.codeWraningNotification( txt , "error" );
             
         } else {
-            widgetErrorNon();
+            
+            txt = "خطأ غير معروف !";
+            mainApp.codeWraningNotification( txt , "error" );
+            
         }
         
     });
@@ -364,22 +372,26 @@ function fillterUsers() {
     } ).catch( (reject) => {
         
         // Mode Error
-        
         const data = reject["data"];
         const codeError = data["codeError"];
         const textError = data["message"];
         
-        
-        if( codeError == 410 ) {
+        let txt = "";
+        if(codeError == 410) {
             
-            widgetErrorSession();
+            txt = "انتهت الجلسة,";
+            mainApp.codeWraning( txt , "login" );
             
-        } else if( codeError == 430 ) {
+        } else if(codeError == 430) {
             
-            widgetErrorDataEmpty();
+            txt = "خطأ, لا يوجد بيانات مطابقة";
+            mainApp.codeWraningNotification( txt , "error" );
             
         } else {
-            widgetErrorNon();
+            
+            txt = "خطأ غير معروف !";
+            mainApp.codeWraningNotification( txt , "error" );
+            
         }
         
     });

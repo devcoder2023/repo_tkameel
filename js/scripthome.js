@@ -378,11 +378,15 @@ function fillPost() {
         let urlImage = mainApp.checkUrlImage( imageProfile );
         
         
-        let nameIdPostLike = "idPostLike"+i; 
+        let nameIdPostContainer = "idPostContainer"+i;
+        let nameIdPostComment = "idPostComment"+i;
+        let nameIdPostShare = "idPostShare"+i;
+        let nameIdPostLike = "idPostLike"+i;
+        let nameIdPostOption = "idPostOption"+i
         
         let codeoption = `
             <li>
-                <div class="containerItem containerItemPost">
+                <div id="${nameIdPostContainer}"class="containerItem containerItemPost">
                     <div class="containerSmall containerSmallPost">
                         
                         <div class="containerProfile">
@@ -408,13 +412,13 @@ function fillPost() {
                         
                         <div class="containerButtons">
                         
-                            <div id="${nameIdPostLike}" class="divsvg">
+                            <div id="${nameIdPostComment}" class="divsvg">
                                 <svg class="svgstroke hilight">
                                     <use xlink:href="#svgcomment"/>
                                 </svg>
                             </div>
                             
-                            <div id="${nameIdPostLike}" class="divsvg">
+                            <div id="${nameIdPostShare}" class="divsvg">
                                 <svg class="svgstroke hilight">
                                     <use xlink:href="#svgretweet"/>
                                 </svg>
@@ -426,7 +430,7 @@ function fillPost() {
                                 </svg>
                             </div>
                             
-                            <div id="${nameIdPostLike}" class="divsvg">
+                            <div id="${nameIdPostOption}" class="divsvg">
                                 <svg class="svgfull hilight">
                                     <use xlink:href="#svgoptions"/>
                                 </svg>
@@ -448,6 +452,23 @@ function fillPost() {
     
         listPost.insertAdjacentHTML("beforeend", codeoption);
         
+        document.getElementById( nameIdPostComment ).addEventListener("click" , function() {
+            
+        });
+        document.getElementById( nameIdPostShare ).addEventListener("click" , function() {
+            
+        });
+        document.getElementById( nameIdPostLike ).addEventListener("click" , function() {
+            
+        });
+        document.getElementById( nameIdPostOption ).addEventListener("click" , function() {
+            
+            event.stopPropagation();
+            
+            viewPostOption( nameIdPostContainer , code , codeUser );
+            
+        });
+        
     }
     
     let codemore = `
@@ -466,6 +487,134 @@ function fillPost() {
     });
     
 }
+function viewPostOption( nameIdPostContainer , codePost , codeUserPost ) {
+    
+    let containerPost = document.getElementById( nameIdPostContainer );
+    
+    let menuPostOption = document.getElementById( "menuPostOption" );
+    
+    if( document.contains(menuPostOption) ) {
+        
+        menuPostOption.remove();
+        
+        return;
+    }
+    
+    let code = ``;
+    
+    if( moduleUserLog.getUser().userCode == codeUserPost ) {
+        
+        const code = `
+            
+            <div id="menuPostOption" class="menu">
+                <div class="body bodyMenu">
+                <ul>
+                    
+                    <li>
+                        <div id="menuPostOptionEdit" class="itemMenu">تعديل</div>
+                    </li>
+    
+                    <li>
+                        <div id="menuPostOptionRemove" class="itemMenu itemMenuRemove">حذف</div>
+                    </li>
+                    
+                </ul>
+                </div>
+            </div>
+            
+        `;
+        
+        containerPost.insertAdjacentHTML("beforeend", code);
+        
+        document.getElementById( "menuPostOptionEdit" ).addEventListener("click" , function() {
+            
+            
+            
+        });
+        
+        
+        document.getElementById( "menuPostOptionRemove" ).addEventListener("click" , function() {
+            
+            removePost( codePost , codeUserPost );
+            
+        });
+        
+    } else {
+        
+        const code = `
+            
+            <div id="menuPostOption" class="menu">
+                <div class="body bodyMenu">
+                <ul>
+                    
+                    <li>
+                        <div id="menuPostOptionReport" class="itemMenu">الإبلاغ</div>
+                    </li>
+                    
+                </ul>
+                </div>
+            </div>
+        
+        `;
+        
+        containerPost.insertAdjacentHTML("beforeend", code);
+        
+        document.getElementById( "menuPostOptionReport" ).addEventListener("click" , function() {
+            
+            
+            
+        });
+        
+        
+    }
+    
+}
+
+function removePost( codePost , codeUserPost ) {
+    
+    myHome.removePost( codePost , codeUserPost ).then( (result) => {
+        
+        refreshPosts();
+        
+    }).catch( (reject) => {
+        
+        // Mode Error
+        const data = reject["data"];
+        const codeError = data["codeError"];
+        const textError = data["message"];
+        
+        let txt = "";
+        if(codeError == 410) {
+            
+            txt = "انتهت الجلسة,";
+            mainApp.codeWraning( txt , "login" );
+            
+        } else if(codeError == 420) {
+            
+            txt = "خطأ, الرجاء قم بلمئ كافة البيانات";
+            mainApp.codeWraningNotification( txt , "error" );
+            
+        } else if(codeError == 450) {
+            
+            txt = "خطأ غير معروف, حاول مرة أخرى";
+            mainApp.codeWraningNotification( txt , "error" );
+            
+        } else if(codeError == 451) {
+            
+            txt = "خطأ غير معروف, حاول مرة أخرى !";
+            mainApp.codeWraningNotification( txt , "error" );
+            
+        } else {
+            txt = "خطأ غير معروف !";
+            mainApp.codeWraningNotification( txt , "error" );
+        }
+        
+        // alert(txt);
+        
+    });
+    
+}
+
 function fillProject() {
     
     
@@ -551,64 +700,6 @@ function fillProject() {
     
 }
 
-
-function clickMenu() {
-    
-    mainApp.clickMenu();
-    
-}
-
-function clickMenuNotification() {
-    
-    mainApp.clickNotification();
-    
-}
-
-
-function clickPublish() {
-
-    let content = document.getElementById("inputPublish").value;
-    let validContent = document.getElementById("validContent");
-    
-    let [status,textError] = mainApp.validationInput( content , "text" );
-    if( !status ) {
-        validContent.textContent = textError;
-        return;
-    } else {
-        validContent.textContent = "";
-    }
-    
-    
-    
-    myHome.publishPost( content , moduleUserLog.getUser().userCode ).then( (result) => {
-        
-        document.getElementById("inputPublish").value = "";
-        
-        refreshPosts();
-        
-    }).catch( (reject) => {
-        
-        // Mode Error
-        const data = reject["data"];
-        const codeError = data["codeError"];
-        const textError = data["message"];
-        
-        let txt = "";
-        if(codeError == 410) {
-            txt = "انتهت الجلسة,";
-        } else if(codeError == 420) {
-            txt = "الرجاء قم بلمئ كافة البيانات";
-        } else if(codeError == 450) {
-            let txt = "خطأ غير معروف, حاول مرة أخرى";
-        } else {
-            txt = "خطأ غير معروف !";
-        }
-        
-        alert(txt);
-        
-    });
-    
-}
 
 
 function fillMorePost() {
@@ -718,6 +809,19 @@ function fillMorePost() {
 }
 
 
+function clickMenu() {
+    
+    mainApp.clickMenu();
+    
+}
+
+function clickMenuNotification() {
+    
+    mainApp.clickNotification();
+    
+}
+
+
 
 
 
@@ -727,7 +831,9 @@ function clickFollowUser( codeFollow ) {
     
     myHome.followUser( moduleUserLog.getUser().userCode , codeFollow ).then( (result) => {
         
+        
         refreshFollower();
+        mainApp.codeWraningNotification( "تم متابعة المستخدم", "success" );
         
     }).catch( (reject) => {
         
@@ -738,16 +844,38 @@ function clickFollowUser( codeFollow ) {
         
         let txt = "";
         if(codeError == 410) {
+            
             txt = "انتهت الجلسة,";
+            mainApp.codeWraning( txt , "login" );
+            
         } else if(codeError == 420) {
-            txt = "الرجاء قم بلمئ كافة البيانات";
+            
+            txt = "خطأ, الرجاء قم بلمئ كافة البيانات";
+            mainApp.codeWraningNotification( txt , "error" );
+            
         } else if(codeError == 450) {
-            let txt = "خطأ غير معروف, حاول مرة أخرى";
+            
+            txt = "خطأ غير معروف, حاول مرة أخرى  ";
+            mainApp.codeWraningNotification( txt , "error" );
+            
+        } else if(codeError == 451) {
+            
+            txt = "خطأ, أنت تتابع هذا المستخدم بالفعل !";
+            mainApp.codeWraningNotification( txt , "error" );
+            
+        } else if(codeError == 452) {
+            
+            txt = "خطأ, أنت لا تتابع هذا المستخدم !";
+            mainApp.codeWraningNotification( txt , "error" );
+            
         } else {
+            
             txt = "خطأ غير معروف !";
+            mainApp.codeWraningNotification( txt , "error" );
+            
         }
         
-        alert(txt);
+        // alert(txt);
     });
     
     
@@ -771,20 +899,77 @@ function refreshFollower() {
         const codeError = data["codeError"];
         const textError = data["message"];
         
-        
+        let txt = "";
         if(codeError == 410) {
-            widgetErrorSession();
-        } else if(codeError == 420) {
-            widgetErrorDataPost();
-        } else if(codeError == 430) {
-            fillErrorFromData();
+            
+            txt = "انتهت الجلسة,";
+            mainApp.codeWraning( txt , "login" );
+            
         } else {
-            widgetErrorNon();
+            txt = "خطأ غير معروف !";
+            mainApp.codeWraningNotification( txt , "error" );
         }
         
         
     });
 }
+
+
+function clickPublish() {
+
+    let content = document.getElementById("inputPublish").value;
+    let validContent = document.getElementById("validContent");
+    
+    let [status,textError] = mainApp.validationInput( content , "text" );
+    if( !status ) {
+        validContent.textContent = textError;
+        return;
+    } else {
+        validContent.textContent = "";
+    }
+    
+    
+    
+    myHome.publishPost( content , moduleUserLog.getUser().userCode ).then( (result) => {
+        
+        document.getElementById("inputPublish").value = "";
+        
+        refreshPosts();
+        
+    }).catch( (reject) => {
+        
+        // Mode Error
+        const data = reject["data"];
+        const codeError = data["codeError"];
+        const textError = data["message"];
+        
+        let txt = "";
+        if(codeError == 410) {
+            
+            txt = "انتهت الجلسة,";
+            mainApp.codeWraning( txt , "login" );
+            
+        } else if(codeError == 420) {
+            
+            txt = "خطأ, الرجاء قم بلمئ كافة البيانات";
+            mainApp.codeWraningNotification( txt , "error" );
+            
+        } else if(codeError == 450) {
+            
+            txt = "خطأ غير معروف, حاول مرة أخرى";
+            mainApp.codeWraningNotification( txt , "error" );
+            
+        } else {
+            txt = "خطأ غير معروف !";
+            mainApp.codeWraningNotification( txt , "error" );
+        }
+        
+        // alert(txt);
+        
+    });
+    
+}
+
 
 function refreshPosts() {
     
@@ -803,17 +988,21 @@ function refreshPosts() {
         const codeError = data["codeError"];
         const textError = data["message"];
         
-        
+        let txt = "";
         if(codeError == 410) {
-            widgetErrorSession();
+            
+            txt = "انتهت الجلسة,";
+            mainApp.codeWraning( txt , "login" );
+            
         } else if(codeError == 420) {
-            widgetErrorDataPost();
-        } else if(codeError == 430) {
-            fillErrorFromData();
+            
+            txt = "خطأ, الرجاء قم بلمئ كافة البيانات";
+            mainApp.codeWraningNotification( txt , "error" );
+            
         } else {
-            widgetErrorNon();
+            txt = "خطأ غير معروف !";
+            mainApp.codeWraningNotification( txt , "error" );
         }
-        
         
     });
     
@@ -831,23 +1020,27 @@ function loadMorePosts() {
         fillMorePost();
         
     } ).catch( (reject) => {
-        // Mode Error
         
+        // Mode Error
         const data = reject["data"];
         const codeError = data["codeError"];
         const textError = data["message"];
         
-        
+        let txt = "";
         if(codeError == 410) {
-            widgetErrorSession();
+            
+            txt = "انتهت الجلسة,";
+            mainApp.codeWraning( txt , "login" );
+            
         } else if(codeError == 420) {
-            widgetErrorDataPost();
-        } else if(codeError == 430) {
-            fillErrorFromData();
+            
+            txt = "خطأ, الرجاء قم بلمئ كافة البيانات";
+            mainApp.codeWraningNotification( txt , "error" );
+            
         } else {
-            widgetErrorNon();
+            txt = "خطأ غير معروف !";
+            mainApp.codeWraningNotification( txt , "error" );
         }
-        
         
     });
     

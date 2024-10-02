@@ -76,9 +76,23 @@ export default class Home {
         
         let formData = new FormData();
         formData.append("countRow" , this.COUNT_ROW );
+        formData.append("within" , "home" );
         formData.append("numberPage" , numPage );
         
         return mainApp.send("POST", pathDataMorePost , headers , formData );
+    }
+    
+    removePost( codePost , codeUserPost ) {
+        
+        const pathDeletePost = mainApp.pathDomain + "api/deletePost.php";
+        
+        const headers = [];
+        
+        let formData = new FormData();
+        formData.append("codePost" , codePost );
+        formData.append("codeUserPost" , codeUserPost );
+        
+        return mainApp.send("POST", pathDeletePost , headers , formData );
     }
     
     

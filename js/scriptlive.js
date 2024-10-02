@@ -509,7 +509,33 @@ function clickPublish() {
             fillProjectChat();
             
         } ).catch( (reject) => {
+            
             // Mode Error
+            const data = reject["data"];
+            const codeError = data["codeError"];
+            const textError = data["message"];
+            
+            let txt = "";
+            if(codeError == 410) {
+                
+                txt = "انتهت الجلسة,";
+                mainApp.codeWraning( txt , "login" );
+                
+            } else if(codeError == 420) {
+                
+                txt = "خطأ, الرجاء قم بلمئ كافة البيانات";
+                mainApp.codeWraningNotification( txt , "error" );
+                
+            } else if(codeError == 450) {
+                
+                txt = "خطأ غير معروف, حاول مرة أخرى";
+                mainApp.codeWraningNotification( txt , "error" );
+                
+            } else {
+                txt = "خطأ غير معروف !";
+                mainApp.codeWraningNotification( txt , "error" );
+            }
+            
         });
         
     } else {
@@ -535,17 +561,21 @@ function refreshPosts() {
         const codeError = data["codeError"];
         const textError = data["message"];
         
-        
+        let txt = "";
         if(codeError == 410) {
-            widgetErrorSession();
+            
+            txt = "انتهت الجلسة,";
+            mainApp.codeWraning( txt , "login" );
+            
         } else if(codeError == 420) {
-            widgetErrorDataPost();
-        } else if(codeError == 430) {
-            fillErrorFromData();
+            
+            txt = "خطأ, الرجاء قم بلمئ كافة البيانات";
+            mainApp.codeWraningNotification( txt , "error" );
+            
         } else {
-            widgetErrorNon();
+            txt = "خطأ غير معروف !";
+            mainApp.codeWraningNotification( txt , "error" );
         }
-        
         
     });
     
@@ -571,17 +601,21 @@ function loadMoreChats() {
         const codeError = data["codeError"];
         const textError = data["message"];
         
-        
+        let txt = "";
         if(codeError == 410) {
-            widgetErrorSession();
+            
+            txt = "انتهت الجلسة,";
+            mainApp.codeWraning( txt , "login" );
+            
         } else if(codeError == 420) {
-            widgetErrorDataPost();
-        } else if(codeError == 430) {
-            fillErrorFromData();
+            
+            txt = "خطأ, الرجاء قم بلمئ كافة البيانات";
+            mainApp.codeWraningNotification( txt , "error" );
+            
         } else {
-            widgetErrorNon();
+            txt = "خطأ غير معروف !";
+            mainApp.codeWraningNotification( txt , "error" );
         }
-        
         
     });
     

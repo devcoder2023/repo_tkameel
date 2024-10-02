@@ -101,6 +101,11 @@
     /*overflow-y: auto;*/
 }
 
+.containerLoadMorePost {
+    height: auto;
+    padding: 10px 0px;
+    /*border: 1px solid red;*/
+}
 
 
 

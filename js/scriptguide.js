@@ -7,10 +7,6 @@ let mainApp = new Main();
 
 
 
-const COUNTS_ROW = 10;
-
-
-
 
 window.addEventListener("DOMContentLoaded", function () { 
     
@@ -40,29 +36,6 @@ function init_User() {
 }
 
 function init_pageBrowseProject() {
-    
-    const pathDataAbout = mainApp.pathDomain + "api/readDataAbout.php";
-    
-    
-    
-    const headers = [];
-    
-    let formData = new FormData();
-    formData.append("countRow" , COUNTS_ROW );
-    
-    mainApp.send("POST", pathDataAbout , headers , formData ).then( ( result ) => {
-        
-        
-    }).then( (result) => {
-        
-        
-        
-    } ).catch( (reject) => {
-        
-        // Mode Error
-        
-        
-    });
     
 }
 
@@ -155,6 +128,9 @@ function clickPublish() {
     
     mainApp.send("POST", pathCreateSupport , headers , formData ).then( ( result ) => {
         
+        document.getElementById("inputPublish").value = "";
+        mainApp.codeWraningNotification( "نشكرك على مشاركتك, آراءكم محل إهتمامنا.", "success" );
+        
     }).then( (result) => {
         
         
@@ -165,55 +141,27 @@ function clickPublish() {
         const codeError = data["codeError"];
         const textError = data["message"];
         
-        
+        let txt = "";
         if(codeError == 410) {
             
-            const msg = "خطأ في التحقق من هوية المستخدم !";
-            mainApp.codeWraning( msg , "login" );
+            txt = "انتهت الجلسة.";
+            mainApp.codeWraning( txt , "login" );
             
         } else if(codeError == 420) {
             
-            const msg = "خطأ في البيانات المرسلة ! ";
-            mainApp.codeWraning( msg , "home" );
+            txt = "خطأ, الرجاء قم بلمئ كافة البيانات";
+            mainApp.codeWraningNotification( txt , "error" );
             
         } else {
             
-            const msg = "خطأ غير معروف !";
-            mainApp.codeWraning( msg , "home" );
+            txt = "خطأ غير معروف !";
+            mainApp.codeWraningNotification( txt , "error" );
             
         }
         
         
     });
     
-    return;
-    mainApp.publishPost( "home" , content , moduleUserLog.getUser().userCode , 0 , 0 ).then( (result) => {
-        
-        document.getElementById("inputPublish").value = "";
-        
-        refreshPosts();
-        
-    }).catch( (reject) => {
-        
-        // Mode Error
-        const data = reject["data"];
-        const codeError = data["codeError"];
-        const textError = data["message"];
-        
-        let txt = "";
-        if(codeError == 410) {
-            txt = "انتهت الجلسة,";
-        } else if(codeError == 420) {
-            txt = "الرجاء قم بلمئ كافة البيانات";
-        } else if(codeError == 450) {
-            let txt = "خطأ غير معروف, حاول مرة أخرى";
-        } else {
-            txt = "خطأ غير معروف !";
-        }
-        
-        alert(txt);
-        
-    });
     
 }
 

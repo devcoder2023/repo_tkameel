@@ -35,32 +35,6 @@ export default class Project {
 }
 
 
-export class ProjectList extends Project {
-    constructor( data ) {
-        this.listProject = [];
-        
-        fillListProject( data );
-    }
-    
-    fillListProject( data ) {
-        
-        this.listProject = [];
-        
-        let dataProject = ( data["project"] === undefined) ? [] : data["project"] ;
-        
-        for( var i=0; i<dataProject.length; i++) {
-            
-            let objProject = new Project( dataProject[i] );
-            this.listProject.push( objProject );
-            
-        }
-    }
-    
-    getListProject() {
-        return this.listProject;
-    }
-}
-
 export class ProjectFull extends Project {
     constructor( data ) {
         
@@ -71,6 +45,60 @@ export class ProjectFull extends Project {
         this.fillAllData( data );
     }
     
+    
+    
+    /*=============== ACTION REFRESH ===============*/
+    
+    refreshAllData() {
+        
+        const pathReadProjectSkillsTasks = mainApp.pathDomain + "api/readDataProjectMySkillsAndAll.php";
+        
+        const headers = [];
+        
+        let formData = new FormData();
+        formData.append("codeProject", this.code );
+        
+        return mainApp.send( "POST", pathReadProjectSkillsTasks , headers, formData );
+    }
+    
+    refreshDataTask() {
+        
+        const pathReadProjectTask = mainApp.pathDomain + "api/readDataProjectMyTask.php";
+        
+        const headers = [];
+        
+        let formData = new FormData();
+        formData.append("codeProject", this.code );
+        
+        return mainApp.send( "POST", pathReadProjectTask , headers, formData );
+    }
+    refreshDataMember() {
+        
+        const pathReadProjectMember = mainApp.pathDomain + "api/readDataProjectMyMember.php";
+        
+        const headers = [];
+        
+        let formData = new FormData();
+        formData.append("codeProject", this.code );
+        
+        return mainApp.send( "POST", pathReadProjectMember , headers, formData );
+    }
+    refreshDataDirect() {
+        
+        const pathReadProjectDirect = mainApp.pathDomain + "api/readDataProjectMyDirect.php";
+        
+        const headers = [];
+        
+        let formData = new FormData();
+        formData.append("codeProject", this.code );
+        
+        return mainApp.send( "POST", pathReadProjectDirect , headers, formData );
+    }
+    
+    
+    
+    
+    /*=============== FILL DATA PROJECT ===============*/
     
     fillAllData( data ) {
         
@@ -142,23 +170,6 @@ export class ProjectFull extends Project {
     }
     
     
-    refreshAllData( form ) {
-        
-        const pathReadProjectSkillsTasks = mainApp.pathDomain + "api/readDataProjectMySkillsTasks.php";
-        
-        const headers = [];
-        
-        return mainApp.send( "POST", pathReadProjectSkillsTasks , headers, form );
-    }
-    refreshDataMember( form ) {
-        
-        const pathReadProjectMember = mainApp.pathDomain + "api/readDataProjectMyMember.php";
-        
-        const headers = [];
-        
-        return mainApp.send( "POST", pathReadProjectMember , headers, form );
-    }
-    
     
     
 }
@@ -166,6 +177,10 @@ export class ProjectFull extends Project {
 export class ProjectManager extends ProjectFull {
     constructor( data ) {
         super( data );
+        
+        this.limitCountSkills = 5;
+        this.limitCountTasks = 10;
+        this.limitCountMembers = 10;
         
         this.fillDataBasic( data );
         this.fillDataManager( data );
@@ -296,7 +311,7 @@ export class ProjectManager extends ProjectFull {
         formData.append("codeProject", this.code );
         formData.append("codeProjectSkill", codeProjectSkill );
         
-        return mainApp.send( "POST", pathUpdateSkill , headers, formData );
+        return mainApp.send( "POST", pathDeleteSkill , headers, formData );
     }
     
     
@@ -352,7 +367,7 @@ export class ProjectManager extends ProjectFull {
     
     addDirect( content , codeProjectSkill ) {
         
-        const pathCreateDirect= mainApp.pathDomain + "api/createDirect.php";
+        const pathCreateDirect= mainApp.pathDomain + "api/createProjectDirect.php";
         
         const headers = [];
         
@@ -453,8 +468,23 @@ export class ProjectManager extends ProjectFull {
         return mainApp.send( "POST", pathUpdateMemberStatus , headers, formData );
     }
     
+    terminateMember( codeMember , codeUser ) {
+        
+        const pathUpdateMemberStatus = mainApp.pathDomain + "api/updateMemberStatus.php";
+        
+        const headers = [];
+        
+        let formData = new FormData();
+        formData.append("codeProject", this.code );
+        formData.append("codeUserMember", codeUser );
+        formData.append("codeMember", codeMember );
+        formData.append("codeStatus", this.getEnumStatusMember().Terminate );
+        
+        return mainApp.send( "POST", pathUpdateMemberStatus , headers, formData );
+    }
     
-    evaluationMember( codeMember , numberStar ) {
+    
+    evaluationMember( codeUser , codeMember , numberStar ) {
         
         const pathUpdateMemberMark = mainApp.pathDomain + "api/updateMemberMark.php";
         
@@ -463,6 +493,7 @@ export class ProjectManager extends ProjectFull {
         let formData = new FormData();
         formData.append("codeProject", this.code );
         formData.append("codeMember", codeMember );
+        formData.append("codeUserMember", codeUser );
         formData.append("mark", numberStar );
         
         return mainApp.send( "POST", pathUpdateMemberMark , headers, formData );
@@ -472,7 +503,7 @@ export class ProjectManager extends ProjectFull {
     
     /*=============== ACTION TASK ===============*/
     
-    acceptTask( codeUser , codeTask , codeUserTask ) {
+    acceptTask( codeTask , codeUserTask ) {
         
         const pathUpdateTaskStatus = mainApp.pathDomain + "api/updateTaskStatus.php";
         
@@ -480,7 +511,6 @@ export class ProjectManager extends ProjectFull {
         
         let formData = new FormData();
         formData.append("codeProject", this.code );
-        formData.append("codeUser", codeUser );
         formData.append("codeTask", codeTask );
         formData.append("codeUserTask", codeUserTask );
         formData.append("codeStatus", this.getEnumStatusTask().Delivered );
@@ -488,7 +518,7 @@ export class ProjectManager extends ProjectFull {
         return mainApp.send( "POST", pathUpdateTaskStatus , headers, formData );
     }
     
-    leaveTask( codeUser , codeTask ) {
+    leaveTask( codeTask , codeUserTask ) {
         
         const pathUpdateTaskStatus = mainApp.pathDomain + "api/updateTaskStatus.php";
         
@@ -496,14 +526,14 @@ export class ProjectManager extends ProjectFull {
         
         let formData = new FormData();
         formData.append("codeProject", this.code );
-        formData.append("codeUser", codeUser );
         formData.append("codeTask", codeTask );
+        formData.append("codeUserTask", codeUserTask );
         formData.append("codeStatus", this.getEnumStatusTask().New );
         
         return mainApp.send( "POST", pathUpdateTaskStatus , headers, formData );
     }
     
-    returnTask( codeUser , codeTask , codeUserTask , note ) {
+    returnTask( codeTask , codeUserTask , note ) {
         
         const pathUpdateTaskStatus = mainApp.pathDomain + "api/updateTaskStatus.php";
         
@@ -511,7 +541,6 @@ export class ProjectManager extends ProjectFull {
         
         let formData = new FormData();
         formData.append("codeProject", this.code );
-        formData.append("codeUser", codeUser );
         formData.append("codeTask", codeTask );
         formData.append("codeUserTask", codeUserTask );
         formData.append("codeStatus", this.getEnumStatusTask().WaitingModification );
@@ -520,7 +549,7 @@ export class ProjectManager extends ProjectFull {
         return mainApp.send( "POST", pathUpdateTaskStatus , headers, formData );
     }
     
-    updateNoteTask( codeUser , codeTask , note ) {
+    updateNoteTask( codeTask , codeUserTask , note ) {
         
         const pathUpdateTaskStatus = mainApp.pathDomain + "api/updateTaskStatus.php";
         
@@ -528,7 +557,6 @@ export class ProjectManager extends ProjectFull {
         
         let formData = new FormData();
         formData.append("codeProject", this.code );
-        formData.append("codeUser", codeUser );
         formData.append("codeTask", codeTask );
         formData.append("codeStatus", this.getEnumStatusTask().WaitingModification );
         formData.append("note", note );
@@ -543,10 +571,29 @@ export class ProjectManager extends ProjectFull {
     
     fillDataManager( data ) {
         
+        this.fillDataManagerDashboard( data );
+    }
+    
+    fillDataManagerDashboard( data ) {
+        
         this.fillCountStatusTask( data );
         this.fillCountMemberSkill( data );
+        this.fillCountMemberSkillJoin( data );
         this.fillCountMemberAndTaskForSkill( data );
     }
+    
+    fillDataManagerDashboardMember( data ) {
+        
+        this.fillCountMemberSkillJoin( data );
+        this.fillCountMemberAndTaskForSkill( data );
+    }
+    
+    fillDataManagerDashboardTask( data ) {
+        
+        this.fillCountStatusTask( data );
+        this.fillCountMemberAndTaskForSkill( data );
+    }
+    
     
     fillCountStatusTask( data ) {
         
@@ -592,6 +639,22 @@ export class ProjectManager extends ProjectFull {
         });
         
     }
+    fillCountMemberSkillJoin( data ) {
+        
+        let objCountMemberSkillJoin = data["countMemberSkillJoin"];
+        
+        this.mapMembersJoin = new Map();
+        this.totalMembersJoin = 0;
+        
+        objCountMemberSkillJoin.forEach( (item) => {
+            
+            this.totalMembersJoin += item.countMember;
+            
+            this.mapMembersJoin.set( item.codeProjectSkill , item.countMember );
+            
+        });
+        
+    }
     fillCountMemberAndTaskForSkill( data ) {
         
         this.listInfoSkill = [];
@@ -599,7 +662,39 @@ export class ProjectManager extends ProjectFull {
         let objCountInfoSkill = data["countInfoSkill"];
         
         objCountInfoSkill.forEach( (item) => {
+            
             this.listInfoSkill.push( item );
+            
+            const codeProjectSkill = item.code;
+            
+            // Task
+            for( let j=0; j<this.listProjectSkills.length; j++) {
+                
+                const _codeProjectSkill = this.listProjectSkills[j].code;
+                
+                if( codeProjectSkill == _codeProjectSkill ) {
+                    
+                    this.listProjectSkills[j].countTask = item.countTask ;
+                    break;
+                    
+                }
+                
+            }
+            
+            // Member
+            for( let j=0; j<this.listProjectSkills.length; j++) {
+                
+                const _codeProjectSkill = this.listProjectSkills[j].code;
+                
+                if( codeProjectSkill == _codeProjectSkill ) {
+                    
+                    this.listProjectSkills[j].countMember = item.countMember ;
+                    break;
+                    
+                }
+                
+            }
+            
         });
         
     }
@@ -612,6 +707,9 @@ export class ProjectManager extends ProjectFull {
     }
     getListCountMember() {
         return [ this.totalMembers , this.mapMembers ];
+    }
+    getListCountMemberJoin() {
+        return [ this.totalMembersJoin , this.mapMembersJoin ];
     }
     getListCountInfoSkill() {
         return this.listInfoSkill;
@@ -690,6 +788,8 @@ export class ProjectManager extends ProjectFull {
     }
     
     
+    /*-------- GET LIST --------*/
+    
     getListProjectCategory() {
         return this.listProjectCategory;
     }
@@ -717,7 +817,7 @@ export class ProjectManager extends ProjectFull {
     }
     
     
-    /*-------- GET LIST --------*/
+    /*-------- GET LIST ENUM --------*/
     
     getEnumStatusJoin() {
         return this.enumStatusJoin;
@@ -756,7 +856,31 @@ export class ProjectManager extends ProjectFull {
         }
         return null;
     }
-
+    
+    /*-------- GET NAME --------*/
+    
+    getNameGategory( codeCategory ) {
+        for(var i=0; i<this.getListProjectCategory().length; ++i) {
+            
+            const codeCat = this.getListProjectCategory()[0].code;
+            if( codeCat == codeCategory ) {
+                return this.getListProjectCategory()[0].name;
+            }
+        }
+        
+        return null;
+    }
+    getNameType( codeType ) {
+        for(var i=0; i<this.getListProjectType().length; ++i) {
+            
+            const codeTyp = this.getListProjectType()[0].code;
+            if( codeTyp == codeType ) {
+                return this.getListProjectType()[0].name;
+            }
+        }
+        
+        return null;
+    }
     
     
     
@@ -767,22 +891,11 @@ export class ProjectTeam extends ProjectFull {
         super( data );
         
         this.COUNT_ROW = 5;
+        
         this.fillDataBasic( data );
         this.fillDataTeam( data );
     }
     
-    refreshDataTask() {
-        
-        const pathReadProjectSkillsTasks = mainApp.pathDomain + "api/readDataProjectWorkSkillsTasks.php";
-        
-        const headers = [];
-        
-        let formData = new FormData();
-        formData.append("codeProject", this.code );
-        formData.append("codeProjectSkill", this.listProjectSkills[0].code );
-        
-        return mainApp.send("POST", pathReadProjectSkillsTasks , headers , formData );
-    }
     
     
     /*=============== ACTION PROJECT ===============*/
@@ -795,6 +908,7 @@ export class ProjectTeam extends ProjectFull {
         
         let formData = new FormData();
         formData.append("codeProject", this.code );
+        formData.append("codeUserProject", this.codeUser );
         
         return mainApp.send( "POST", pathLeaveProject , headers, formData );
     }
@@ -803,7 +917,7 @@ export class ProjectTeam extends ProjectFull {
     
     /*=============== ACTION TASK ===============*/
     
-    takeTask( codeUser , codeTask ) {
+    takeTask( codeTask ) {
         
         const pathUpdateTaskStatus = mainApp.pathDomain + "api/updateTaskStatus.php";
         
@@ -812,13 +926,13 @@ export class ProjectTeam extends ProjectFull {
         let formData = new FormData();
         formData.append("codeProject", this.code );
         formData.append("codeTask", codeTask );
-        formData.append("codeUser", codeUser );
+        formData.append("codeUserProject", this.codeUser );
         formData.append("codeStatus", this.getEnumStatusTask().Underway );
         
         return mainApp.send( "POST", pathUpdateTaskStatus , headers, formData );
     }
     
-    leaveTask( codeUser , codeTask ) {
+    leaveTask( codeTask ) {
         
         const pathUpdateTaskStatus = mainApp.pathDomain + "api/updateTaskStatus.php";
         
@@ -827,13 +941,13 @@ export class ProjectTeam extends ProjectFull {
         let formData = new FormData();
         formData.append("codeProject", this.code );
         formData.append("codeTask", codeTask );
-        formData.append("codeUser", codeUser );
+        formData.append("codeUserProject", this.codeUser );
         formData.append("codeStatus", this.getEnumStatusTask().New );
         
         return mainApp.send( "POST", pathUpdateTaskStatus , headers, formData );
     }
     
-    doneTask( codeUser , codeTask ) {
+    doneTask( codeTask ) {
         
         const pathUpdateTaskStatus = mainApp.pathDomain + "api/updateTaskStatus.php";
         
@@ -842,7 +956,7 @@ export class ProjectTeam extends ProjectFull {
         let formData = new FormData();
         formData.append("codeProject", this.code );
         formData.append("codeTask", codeTask );
-        formData.append("codeUser", codeUser );
+        formData.append("codeUserProject", this.codeUser );
         formData.append("codeStatus", this.getEnumStatusTask().WaitingApproval );
         
         return mainApp.send( "POST", pathUpdateTaskStatus , headers, formData );
@@ -882,10 +996,10 @@ export class ProjectTeam extends ProjectFull {
         
         let formData = new FormData();
         formData.append("countRow" , this.COUNT_ROW );
-        formData.append("numberPage" , numPage );
-        formData.append("action" , "work" );
+        formData.append("within" , "work" );
         formData.append("codeProject" , this.code );
         formData.append("codeProjectSkill" , this.listProjectSkills[0].code );
+        formData.append("numberPage" , numPage );
         
         return mainApp.send("POST", pathDataMorePost , headers , formData );
     }
@@ -893,13 +1007,36 @@ export class ProjectTeam extends ProjectFull {
     
     
     
+    /*=============== ACTION REFRESH ===============*/
+    
+    refreshDataTask() {
+        
+        const pathReadProjectSkillsTasks = mainApp.pathDomain + "api/readDataProjectWorkTask.php";
+        
+        const headers = [];
+        
+        let formData = new FormData();
+        formData.append("codeProject", this.code );
+        formData.append("codeProjectSkill", this.listProjectSkills[0].code );
+        
+        return mainApp.send("POST", pathReadProjectSkillsTasks , headers , formData );
+    }
+    
+    
+    
     /*=============== FILL DATA TEAM ===============*/
     
     fillDataTeam( data ) {
         
-        this.fillCountStatusTask( data );
+        this.fillDataTeamDashboardTask( data );
         this.fillListPost( data );
     }
+    
+    fillDataTeamDashboardTask( data ) {
+        
+        this.fillCountStatusTask( data );
+    }
+    
     
     fillCountStatusTask( data ) {
         
@@ -997,6 +1134,7 @@ export class ProjectLive extends ProjectFull {
         super( data );
         
         this.COUNT_ROW = 5;
+        
         this.fillDataBasic( data );
         this.fillDataLive( data );
     }
@@ -1049,7 +1187,7 @@ export class ProjectLive extends ProjectFull {
         
         let formData = new FormData();
         formData.append("countRow" , this.COUNT_ROW );
-        formData.append("action" , "live" );
+        formData.append("within" , "live" );
         formData.append("codeProject" , this.code );
         formData.append("numberPage" , numPage );
         
@@ -1063,9 +1201,15 @@ export class ProjectLive extends ProjectFull {
     
     fillDataLive( data ) {
         
-        this.fillCountStatusTask( data );
+        this.fillDataLiveDashboardTask( data );
         this.fillListPost( data );
     }
+    
+    fillDataLiveDashboardTask( data ) {
+        
+        this.fillCountStatusTask( data );
+    }
+    
     
     fillCountStatusTask( data ) {
         
@@ -1173,7 +1317,7 @@ export class ProjectShow extends ProjectFull {
     
     requestJoin( codeProjectSkill , content ) {
         
-        const pathJoinMemberSkill = mainApp.pathDomain + "api/createJoinMemberSkill.php";
+        const pathJoinMemberSkill = mainApp.pathDomain + "api/createJoinMember.php";
         
         const headers = [];
         
@@ -1252,115 +1396,136 @@ export class ProjectShow extends ProjectFull {
 /*----------------------------*/
 
 
-export function ProjectCategory( data ) {
-    
-    this.id = data["id"] ;
-    this.code = data["code"] ;
-    this.name = data["name"] ;
-    this.description = data["description"] ;
+export class ProjectCategory {
+    constructor( data ) {
+        
+        this.id = data["id"] ;
+        this.code = data["code"] ;
+        this.name = data["name"] ;
+        this.description = data["description"] ;
+    }
 }
 
-export function ProjectType( data ) {
-    
-    this.id = data["id"] ;
-    this.code = data["code"] ;
-    this.name = data["name"] ;
-    this.description = data["description"] ;
-    this.color = data["color"] ;
+export class ProjectType {
+    constructor( data ) {
+        
+        this.id = data["id"] ;
+        this.code = data["code"] ;
+        this.name = data["name"] ;
+        this.description = data["description"] ;
+        this.color = data["color"] ;
+    }
 }
 
-export function ProjectStatus( data ) {
-    
-    this.id = data["id"] ;
-    this.code = data["code"] ;
-    this.name = data["name"] ;
-    this.description = data["description"] ;
+export class ProjectStatus {
+    constructor( data ) {
+        
+        this.id = data["id"] ;
+        this.code = data["code"] ;
+        this.name = data["name"] ;
+        this.description = data["description"] ;
+    }
 }
 
-export function JoinStatus( data ) {
-    
-    this.id = data["id"] ;
-    this.code = data["code"] ;
-    this.name = data["name"] ;
-    this.description = data["description"] ;
-}
-
-
-function ProjectSkill( data ) {
-    
-    this.id = data["id"] ;
-    this.code = data["code"] ;
-    this.codeProject = data["codeProject"] ;
-    this.codeSkill = data["codeSkill"] ;
-    this.description = data["description"] ;
-    this.codeStatusJoin = data["codeStatusJoin"] ;
-    this.nameSkill = data["nameSkill"] ;
-    
+export class JoinStatus {
+    constructor( data ) {
+        
+        this.id = data["id"] ;
+        this.code = data["code"] ;
+        this.name = data["name"] ;
+        this.description = data["description"] ;
+    }
 }
 
 
-function Task( data ) {
-    
-    this.id = data["id"] ;
-    this.code = data["code"] ;
-    this.name = data["name"] ;
-    this.description = data["description"] ;
-    this.codeProject = data["codeProject"] ;
-    this.codeProjectSkill = data["codeProjectSkill"] ;
-    this.codeStatus = data["codeStatus"] ;
-    this.codeUser = data["codeUser"] ;
-    this.note = data["note"] ;
-    
+export class ProjectSkill {
+    constructor( data ) {
+        
+        this.id = data["id"] ;
+        this.code = data["code"] ;
+        this.codeProject = data["codeProject"] ;
+        this.codeSkill = data["codeSkill"] ;
+        this.description = data["description"] ;
+        this.codeStatusJoin = data["codeStatusJoin"] ;
+        this.nameSkill = data["nameSkill"] ;
+        
+        this.countTask = 0;
+        this.countMember = 0;
+    }
 }
 
-function Member( data ) {
-    
-    this.id = data["id"] ;
-    this.code = data["code"] ;
-    this.codeUser = data["codeUser"] ;
-    this.codeProject = data["codeProject"] ;
-    this.codeProjectSkill = data["codeProjectSkill"] ;
-    this.message = data["message"] ;
-    this.dateRequest = data["dateRequest"] ;
-    this.dateJoin = data["dateJoin"] ;
-    this.mark = data["mark"] ;
-    this.codeStatus = data["codeStatus"] ;
-    
-    
-    this.firstName = data["firstName"] ;
-    this.lastName = data["lastName"] ;
-    this.about = data["about"] ;
-    this.imageProfile = data["imageProfile"] ;
-    
-    this.nameSkill = data["nameSkill"] ;
-    
+
+export class Task {
+    constructor( data ) {
+        
+        this.id = data["id"] ;
+        this.code = data["code"] ;
+        this.name = data["name"] ;
+        this.description = data["description"] ;
+        this.codeProject = data["codeProject"] ;
+        this.codeProjectSkill = data["codeProjectSkill"] ;
+        this.codeStatus = data["codeStatus"] ;
+        this.codeUser = data["codeUser"] ;
+        this.note = data["note"] ;
+    }
 }
 
-export function TaskStatus( data ) {
-    
-    this.id = data["id"] ;
-    this.code = data["code"] ;
-    this.name = data["name"] ;
-    this.description = data["description"] ;
-}
-export function MemberStatus( data ) {
-    
-    this.id = data["id"] ;
-    this.code = data["code"] ;
-    this.name = data["name"] ;
-    this.description = data["description"] ;
+export class Member {
+    constructor( data ) {
+        
+        this.id = data["id"] ;
+        this.code = data["code"] ;
+        this.codeUser = data["codeUser"] ;
+        this.codeProject = data["codeProject"] ;
+        this.codeProjectSkill = data["codeProjectSkill"] ;
+        this.message = data["message"] ;
+        this.dateRequest = data["dateRequest"] ;
+        this.dateJoin = data["dateJoin"] ;
+        this.mark = data["mark"] ;
+        this.codeStatus = data["codeStatus"] ;
+        
+        
+        this.firstName = data["firstName"] ;
+        this.lastName = data["lastName"] ;
+        this.about = data["about"] ;
+        this.imageProfile = data["imageProfile"] ;
+        
+        this.nameSkill = data["nameSkill"] ;
+    }
 }
 
-function ProjectDirect( data ) {
-    
-    this.id = data["id"] ;
-    this.code = data["code"] ;
-    this.content = data["content"] ;
-    this.dateDirect = data["dateDirect"] ;
-    this.codeProject = data["codeProject"] ;
-    this.codeProjectSkill = data["codeProjectSkill"] ;
-    this.codeUser = data["codeUser"] ;
-    this.nameSkill = data["nameSkill"];
+export class TaskStatus {
+    constructor( data ) {
+        
+        this.id = data["id"] ;
+        this.code = data["code"] ;
+        this.name = data["name"] ;
+        this.description = data["description"] ;
+    }
+}
+
+export class MemberStatus {
+    constructor( data ) {
+        
+        this.id = data["id"] ;
+        this.code = data["code"] ;
+        this.name = data["name"] ;
+        this.description = data["description"] ;
+    }
+}
+
+export class ProjectDirect {
+    constructor( data ) {
+        
+        this.id = data["id"] ;
+        this.code = data["code"] ;
+        this.content = data["content"] ;
+        this.dateDirect = data["dateDirect"] ;
+        this.codeProject = data["codeProject"] ;
+        this.codeProjectSkill = data["codeProjectSkill"] ;
+        this.codeUser = data["codeUser"] ;
+        this.nameSkill = data["nameSkill"];
+    }
 }
 
 

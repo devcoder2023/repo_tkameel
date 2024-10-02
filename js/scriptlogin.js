@@ -66,8 +66,10 @@ async function clickLogin() {
         
         document.cookie = "token="+result;
         
-        
         window.location.href = mainApp.pathDomain + "home";
+        
+        
+        
         
         
         }).catch( (reject) => {

@@ -272,28 +272,28 @@ function goToPaginiation( numberPage ) {
     } ).catch( (reject) => {
         
         // Mode Error
-        
         const data = reject["data"];
         const codeError = data["codeError"];
         const textError = data["message"];
         
-        
-        if( codeError == 410 ) {
+        let txt = "";
+        if(codeError == 410) {
             
-            const msg = "خطأ في التحقق من هوية المستخدم !";
-            mainApp.codeWraning( msg , "login" );
+            txt = "انتهت الجلسة,";
+            mainApp.codeWraning( txt , "login" );
             
-        } else if( codeError == 430 ) {
+        } else if(codeError == 430) {
             
-            const msg = "خطأ لا يوجد بيانات لعرضها ! ";
-            mainApp.codeWraning( msg , "home" );
+            txt = "خطأ, لا يوجد بيانات مطابقة";
+            mainApp.codeWraningNotification( txt , "error" );
             
         } else {
             
-            const msg = "خطأ غير معروف !";
-            mainApp.codeWraning( msg , "home" );
+            txt = "خطأ غير معروف !";
+            mainApp.codeWraningNotification( txt , "error" );
             
         }
+        
         
     });
     
@@ -430,26 +430,25 @@ function searchProjects() {
     } ).catch( (reject) => {
         
         // Mode Error
-        
         const data = reject["data"];
         const codeError = data["codeError"];
         const textError = data["message"];
         
-        
-        if( codeError == 410 ) {
+        let txt = "";
+        if(codeError == 410) {
             
-            const msg = "خطأ في التحقق من هوية المستخدم !";
-            mainApp.codeWraning( msg , "login" );
+            txt = "انتهت الجلسة,";
+            mainApp.codeWraning( txt , "login" );
             
-        } else if( codeError == 430 ) {
+        } else if(codeError == 430) {
             
-            // const msg = "خطأ لا يوجد بيانات لعرضها ! ";
-            // mainApp.codeWraning( msg , "home" );
+            txt = "خطأ, لا يوجد بيانات مطابقة";
+            mainApp.codeWraningNotification( txt , "error" );
             
         } else {
             
-            const msg = "خطأ غير معروف !";
-            mainApp.codeWraning( msg , "home" );
+            txt = "خطأ غير معروف !";
+            mainApp.codeWraningNotification( txt , "error" );
             
         }
         
@@ -491,21 +490,21 @@ function fillterProjects() {
         const codeError = data["codeError"];
         const textError = data["message"];
         
-        
-        if( codeError == 410 ) {
+        let txt = "";
+        if(codeError == 410) {
             
-            const msg = "خطأ في التحقق من هوية المستخدم !";
-            mainApp.codeWraning( msg , "login" );
+            txt = "انتهت الجلسة,";
+            mainApp.codeWraning( txt , "login" );
             
-        } else if( codeError == 430 ) {
+        } else if(codeError == 430) {
             
-            // const msg = "خطأ لا يوجد بيانات لعرضها ! ";
-            // mainApp.codeWraning( msg , "home" );
+            txt = "خطأ, لا يوجد بيانات مطابقة";
+            mainApp.codeWraningNotification( txt , "error" );
             
         } else {
             
-            const msg = "خطأ غير معروف !";
-            mainApp.codeWraning( msg , "home" );
+            txt = "خطأ غير معروف !";
+            mainApp.codeWraningNotification( txt , "error" );
             
         }
         

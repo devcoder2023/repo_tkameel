@@ -94,7 +94,7 @@ function init_Profile() {
         
         fillProfileCertificate();
         fillProfileExperience();
-        fillProfileSkills();
+        fillProfileUserSkill();
         
         fillProjectMy();
         fillProjectJoin();
@@ -472,7 +472,7 @@ function fillProfileExperience() {
     }
 
 }
-function fillProfileSkills() {
+function fillProfileUserSkill() {
 
     let containerSkill = document.getElementById("listSkill");
     containerSkill.innerHTML = "";
@@ -1219,6 +1219,8 @@ function followUser( follow ) {
         myProfile.toggleIsFriend();
         setButtonFollow();
         
+        mainApp.codeWraningNotification( "تم متابعة المستخدم", "success" );
+        
     } ).catch( (reject) => {
         
         // Mode Error
@@ -1228,18 +1230,38 @@ function followUser( follow ) {
         
         let txt = "";
         if(codeError == 410) {
+            
             txt = "انتهت الجلسة,";
+            mainApp.codeWraning( txt , "login" );
+            
         } else if(codeError == 420) {
-            txt = "الرجاء قم بلمئ كافة البيانات";
-        } else if(codeError == 421) {
-            txt = "أنت تتابع هذا المستخدم بالفعل";
+            
+            txt = "خطأ, الرجاء قم بلمئ كافة البيانات";
+            mainApp.codeWraningNotification( txt , "error" );
+            
         } else if(codeError == 450) {
-            let txt = "خطأ غير معروف, حاول مرة أخرى";
+            
+            txt = "خطأ غير معروف, حاول مرة أخرى  ";
+            mainApp.codeWraningNotification( txt , "error" );
+            
+        } else if(codeError == 451) {
+            
+            txt = "خطأ, أنت تتابع هذا المستخدم بالفعل !";
+            mainApp.codeWraningNotification( txt , "error" );
+            
+        } else if(codeError == 452) {
+            
+            txt = "خطأ, أنت لا تتابع هذا المستخدم !";
+            mainApp.codeWraningNotification( txt , "error" );
+            
         } else {
+            
             txt = "خطأ غير معروف !";
+            mainApp.codeWraningNotification( txt , "error" );
+            
         }
         
-        alert(txt);
+        // alert(txt);
         
     } );
     
@@ -1416,8 +1438,10 @@ function clickEditImage() {
         profileImage.src = urlImage ;
         
         cancel();
+        mainApp.codeWraningNotification( "تم تحديث صورة الملف الشخصي", "success" );
         
     }).catch( (reject) => {
+        
         // Mode Error
         const data = reject["data"];
         const codeError = data["codeError"];
@@ -1425,16 +1449,29 @@ function clickEditImage() {
         
         let txt = "";
         if(codeError == 410) {
+            
             txt = "انتهت الجلسة,";
+            mainApp.codeWraning( txt , "login" );
+            
         } else if(codeError == 420) {
-            txt = "الرجاء قم بلمئ كافة البيانات";
+            
+            txt = "خطأ, الرجاء قم بلمئ كافة البيانات";
+            mainApp.codeWraningNotification( txt , "error" );
+            
         } else if(codeError == 450) {
-            let txt = "خطأ غير معروف, حاول مرة أخرى";
+            
+            txt = "خطأ غير معروف, حاول مرة أخرى !!";
+            mainApp.codeWraningNotification( txt , "error" );
+            
         } else {
+            
             txt = "خطأ غير معروف !";
+            mainApp.codeWraningNotification( txt , "error" );
+            
         }
         
-        alert(txt);
+        // alert(txt);
+        
     });
 }
 
@@ -1530,9 +1567,11 @@ function clickEditName() {
         containerName.textContent = firstName+" "+lastName;
         
         cancel();
+        mainApp.codeWraningNotification( "تم اسم المستخدم", "success" );
         
         
     }).catch( (reject) => {
+        
         // Mode Error
         const data = reject["data"];
         const codeError = data["codeError"];
@@ -1540,16 +1579,29 @@ function clickEditName() {
         
         let txt = "";
         if(codeError == 410) {
+            
             txt = "انتهت الجلسة,";
+            mainApp.codeWraning( txt , "login" );
+            
         } else if(codeError == 420) {
-            txt = "الرجاء قم بلمئ كافة البيانات";
+            
+            txt = "خطأ, الرجاء قم بلمئ كافة البيانات";
+            mainApp.codeWraningNotification( txt , "error" );
+            
         } else if(codeError == 450) {
-            let txt = "خطأ غير معروف, حاول مرة أخرى";
+            
+            txt = "خطأ غير معروف, حاول مرة أخرى !!";
+            mainApp.codeWraningNotification( txt , "error" );
+            
         } else {
+            
             txt = "خطأ غير معروف !";
+            mainApp.codeWraningNotification( txt , "error" );
+            
         }
         
-        alert(txt);
+        // alert(txt);
+        
     });
 }
 
@@ -1614,9 +1666,12 @@ function clickEditAbout() {
     myProfile.updateAbout( about ).then( (result) => {
         
         prographAbout.textContent = about;
+        
         cancel();
+        mainApp.codeWraningNotification( "تم تحديث الملف الشخصي", "success" );
         
     }).catch( (reject) => {
+        
         // Mode Error
         const data = reject["data"];
         const codeError = data["codeError"];
@@ -1624,16 +1679,29 @@ function clickEditAbout() {
         
         let txt = "";
         if(codeError == 410) {
+            
             txt = "انتهت الجلسة,";
+            mainApp.codeWraning( txt , "login" );
+            
         } else if(codeError == 420) {
-            txt = "الرجاء قم بلمئ كافة البيانات";
+            
+            txt = "خطأ, الرجاء قم بلمئ كافة البيانات";
+            mainApp.codeWraningNotification( txt , "error" );
+            
         } else if(codeError == 450) {
-            let txt = "خطأ غير معروف, حاول مرة أخرى";
+            
+            txt = "خطأ غير معروف, حاول مرة أخرى !!";
+            mainApp.codeWraningNotification( txt , "error" );
+            
         } else {
+            
             txt = "خطأ غير معروف !";
+            mainApp.codeWraningNotification( txt , "error" );
+            
         }
         
-        alert(txt);
+        // alert(txt);
+        
     });
 }
 
@@ -1773,8 +1841,10 @@ function clickAddContact() {
         fillProfileContact();
         
         cancel();
+        mainApp.codeWraningNotification( "تم إضافة قناة الإتصال", "success" );
         
     }).catch( (reject) => {
+        
         // Mode Error
         const data = reject["data"];
         const codeError = data["codeError"];
@@ -1782,16 +1852,29 @@ function clickAddContact() {
         
         let txt = "";
         if(codeError == 410) {
+            
             txt = "انتهت الجلسة,";
+            mainApp.codeWraning( txt , "login" );
+            
         } else if(codeError == 420) {
-            txt = "الرجاء قم بلمئ كافة البيانات";
+            
+            txt = "خطأ, الرجاء قم بلمئ كافة البيانات";
+            mainApp.codeWraningNotification( txt , "error" );
+            
         } else if(codeError == 450) {
-            let txt = "خطأ غير معروف, حاول مرة أخرى";
+            
+            txt = "خطأ غير معروف, حاول مرة أخرى !!";
+            mainApp.codeWraningNotification( txt , "error" );
+            
         } else {
+            
             txt = "خطأ غير معروف !";
+            mainApp.codeWraningNotification( txt , "error" );
+            
         }
         
-        alert(txt);
+        // alert(txt);
+        
     });
 }
 function clickEditContact( idContact ) {
@@ -1827,8 +1910,10 @@ function clickEditContact( idContact ) {
         fillProfileContact();
         
         cancel();
+        mainApp.codeWraningNotification( "تم تحديث قناة الإتصال", "success" );
         
     }).catch( (reject) => {
+        
         // Mode Error
         const data = reject["data"];
         const codeError = data["codeError"];
@@ -1836,26 +1921,40 @@ function clickEditContact( idContact ) {
         
         let txt = "";
         if(codeError == 410) {
+            
             txt = "انتهت الجلسة,";
+            mainApp.codeWraning( txt , "login" );
+            
         } else if(codeError == 420) {
-            txt = "الرجاء قم بلمئ كافة البيانات";
+            
+            txt = "خطأ, الرجاء قم بلمئ كافة البيانات";
+            mainApp.codeWraningNotification( txt , "error" );
+            
         } else if(codeError == 450) {
-            let txt = "خطأ غير معروف, حاول مرة أخرى";
+            
+            txt = "خطأ غير معروف, حاول مرة أخرى !!";
+            mainApp.codeWraningNotification( txt , "error" );
+            
         } else {
+            
             txt = "خطأ غير معروف !";
+            mainApp.codeWraningNotification( txt , "error" );
+            
         }
         
-        alert(txt);
+        // alert(txt);
+        
     });
 }
 function clickRemoveContact( idContact ) {
     
     myProfile.removeContact( idContact ).then( (result) => {
         
-        myProfile.fillContact( result );
+        myProfile.fillProfileContact( result );
         fillProfileContact();
         
         cancel();
+        mainApp.codeWraningNotification( "تم حذف قناة الإتصال", "success" );
         
     }).catch( (reject) => {
         
@@ -1866,16 +1965,29 @@ function clickRemoveContact( idContact ) {
         
         let txt = "";
         if(codeError == 410) {
+            
             txt = "انتهت الجلسة,";
+            mainApp.codeWraning( txt , "login" );
+            
         } else if(codeError == 420) {
-            txt = "الرجاء قم بلمئ كافة البيانات";
+            
+            txt = "خطأ, الرجاء قم بلمئ كافة البيانات";
+            mainApp.codeWraningNotification( txt , "error" );
+            
         } else if(codeError == 450) {
-            let txt = "خطأ غير معروف, حاول مرة أخرى";
+            
+            txt = "خطأ غير معروف, حاول مرة أخرى !!";
+            mainApp.codeWraningNotification( txt , "error" );
+            
         } else {
+            
             txt = "خطأ غير معروف !";
+            mainApp.codeWraningNotification( txt , "error" );
+            
         }
         
-        alert(txt);
+        // alert(txt);
+        
     });
     
 }
@@ -2042,6 +2154,7 @@ function clickAddCertificate() {
         fillProfileCertificate();
         
         cancel();
+        mainApp.codeWraningNotification( "تم إضافة الشهادة", "success" );
         
     }).catch( (reject) => {
         
@@ -2052,16 +2165,28 @@ function clickAddCertificate() {
         
         let txt = "";
         if(codeError == 410) {
+            
             txt = "انتهت الجلسة,";
+            mainApp.codeWraning( txt , "login" );
+            
         } else if(codeError == 420) {
-            txt = "الرجاء قم بلمئ كافة البيانات";
+            
+            txt = "خطأ, الرجاء قم بلمئ كافة البيانات";
+            mainApp.codeWraningNotification( txt , "error" );
+            
         } else if(codeError == 450) {
-            let txt = "خطأ غير معروف, حاول مرة أخرى";
+            
+            txt = "خطأ غير معروف, حاول مرة أخرى !!";
+            mainApp.codeWraningNotification( txt , "error" );
+            
         } else {
+            
             txt = "خطأ غير معروف !";
+            mainApp.codeWraningNotification( txt , "error" );
+            
         }
         
-        alert(txt);
+        // alert(txt);
         
     });
     
@@ -2112,14 +2237,16 @@ function clickEditCertificate( idCertificate ) {
     }
     
 
-    myProfile.addCertificate( idCertificate , nameCertificate , nameOrganization , dateExport, duration ).then( (result) => {
+    myProfile.updateCertificate( idCertificate , nameCertificate , nameOrganization , dateExport, duration ).then( (result) => {
         
         myProfile.fillProfileCertificate( result );
         fillProfileCertificate();
         
         cancel();
+        mainApp.codeWraningNotification( "تم تحديث الشهادة", "success" );
         
     }).catch( (reject) => {
+        
         // Mode Error
         const data = reject["data"];
         const codeError = data["codeError"];
@@ -2127,27 +2254,41 @@ function clickEditCertificate( idCertificate ) {
         
         let txt = "";
         if(codeError == 410) {
+            
             txt = "انتهت الجلسة,";
+            mainApp.codeWraning( txt , "login" );
+            
         } else if(codeError == 420) {
-            txt = "الرجاء قم بلمئ كافة البيانات";
+            
+            txt = "خطأ, الرجاء قم بلمئ كافة البيانات";
+            mainApp.codeWraningNotification( txt , "error" );
+            
         } else if(codeError == 450) {
-            let txt = "خطأ غير معروف, حاول مرة أخرى";
+            
+            txt = "خطأ غير معروف, حاول مرة أخرى !!";
+            mainApp.codeWraningNotification( txt , "error" );
+            
         } else {
+            
             txt = "خطأ غير معروف !";
+            mainApp.codeWraningNotification( txt , "error" );
+            
         }
         
-        alert(txt);
+        // alert(txt);
+        
     });
     
 }
 function clickRemoveCertificate( idCertificate ) {
 
-    myProfile.addCertificate( idCertificate ).then( (result) => {
+    myProfile.removeCertificate( idCertificate ).then( (result) => {
         
         myProfile.fillProfileCertificate( result );
         fillProfileCertificate();
         
         cancel();
+        mainApp.codeWraningNotification( "تم حذف الشهادة", "success" );
         
     }).catch( (reject) => {
         
@@ -2158,16 +2299,29 @@ function clickRemoveCertificate( idCertificate ) {
         
         let txt = "";
         if(codeError == 410) {
+            
             txt = "انتهت الجلسة,";
+            mainApp.codeWraning( txt , "login" );
+            
         } else if(codeError == 420) {
-            txt = "الرجاء قم بلمئ كافة البيانات";
+            
+            txt = "خطأ, الرجاء قم بلمئ كافة البيانات";
+            mainApp.codeWraningNotification( txt , "error" );
+            
         } else if(codeError == 450) {
-            let txt = "خطأ غير معروف, حاول مرة أخرى";
+            
+            txt = "خطأ غير معروف, حاول مرة أخرى !!";
+            mainApp.codeWraningNotification( txt , "error" );
+            
         } else {
+            
             txt = "خطأ غير معروف !";
+            mainApp.codeWraningNotification( txt , "error" );
+            
         }
         
-        alert(txt);
+        // alert(txt);
+        
     });
     
 }
@@ -2330,8 +2484,10 @@ function clickAddExperience() {
         fillProfileExperience();
         
         cancel();
+        mainApp.codeWraningNotification( "تم إضافة الخبرة", "success" );
         
     }).catch( (reject) => {
+        
         // Mode Error
         const data = reject["data"];
         const codeError = data["codeError"];
@@ -2339,16 +2495,29 @@ function clickAddExperience() {
         
         let txt = "";
         if(codeError == 410) {
+            
             txt = "انتهت الجلسة,";
+            mainApp.codeWraning( txt , "login" );
+            
         } else if(codeError == 420) {
-            txt = "الرجاء قم بلمئ كافة البيانات";
+            
+            txt = "خطأ, الرجاء قم بلمئ كافة البيانات";
+            mainApp.codeWraningNotification( txt , "error" );
+            
         } else if(codeError == 450) {
-            let txt = "خطأ غير معروف, حاول مرة أخرى";
+            
+            txt = "خطأ غير معروف, حاول مرة أخرى !!";
+            mainApp.codeWraningNotification( txt , "error" );
+            
         } else {
+            
             txt = "خطأ غير معروف !";
+            mainApp.codeWraningNotification( txt , "error" );
+            
         }
         
-        alert(txt);
+        // alert(txt);
+        
     });
 }
 function clickEditExperience( idExperience ) {
@@ -2403,8 +2572,10 @@ function clickEditExperience( idExperience ) {
         fillProfileExperience();
         
         cancel();
+        mainApp.codeWraningNotification( "تم تحديث الخبرة", "success" );
         
     }).catch( (reject) => {
+        
         // Mode Error
         const data = reject["data"];
         const codeError = data["codeError"];
@@ -2412,30 +2583,45 @@ function clickEditExperience( idExperience ) {
         
         let txt = "";
         if(codeError == 410) {
+            
             txt = "انتهت الجلسة,";
+            mainApp.codeWraning( txt , "login" );
+            
         } else if(codeError == 420) {
-            txt = "الرجاء قم بلمئ كافة البيانات";
+            
+            txt = "خطأ, الرجاء قم بلمئ كافة البيانات";
+            mainApp.codeWraningNotification( txt , "error" );
+            
         } else if(codeError == 450) {
-            let txt = "خطأ غير معروف, حاول مرة أخرى";
+            
+            txt = "خطأ غير معروف, حاول مرة أخرى !!";
+            mainApp.codeWraningNotification( txt , "error" );
+            
         } else {
+            
             txt = "خطأ غير معروف !";
+            mainApp.codeWraningNotification( txt , "error" );
+            
         }
         
-        alert(txt);
+        // alert(txt);
+        
     });
     
 
 }
 function clickRemoveExperience( idExperience  ) {
 
-    myProfile.updateExperience( idExperience ).then( (result) => {
+    myProfile.removeExperience( idExperience ).then( (result) => {
         
         myProfile.fillProfileExperience( result );
         fillProfileExperience();
         
         cancel();
+        mainApp.codeWraningNotification( "تم حذف الخبرة", "success" );
         
     }).catch( (reject) => {
+        
         // Mode Error
         const data = reject["data"];
         const codeError = data["codeError"];
@@ -2443,16 +2629,29 @@ function clickRemoveExperience( idExperience  ) {
         
         let txt = "";
         if(codeError == 410) {
+            
             txt = "انتهت الجلسة,";
+            mainApp.codeWraning( txt , "login" );
+            
         } else if(codeError == 420) {
-            txt = "الرجاء قم بلمئ كافة البيانات";
+            
+            txt = "خطأ, الرجاء قم بلمئ كافة البيانات";
+            mainApp.codeWraningNotification( txt , "error" );
+            
         } else if(codeError == 450) {
-            let txt = "خطأ غير معروف, حاول مرة أخرى";
+            
+            txt = "خطأ غير معروف, حاول مرة أخرى !!";
+            mainApp.codeWraningNotification( txt , "error" );
+            
         } else {
+            
             txt = "خطأ غير معروف !";
+            mainApp.codeWraningNotification( txt , "error" );
+            
         }
         
-        alert(txt);
+        // alert(txt);
+        
     });
 }
 
@@ -2631,11 +2830,13 @@ function clickAddSkill() {
     myProfile.addUserSkill( codeSkill , codeLevel , description ).then( (result) => {
         
         myProfile.fillProfileUserSkill( result );
-        fillProfileSkills();
+        fillProfileUserSkill();
         
         cancel();
+        mainApp.codeWraningNotification( "تم إضافة المهارة", "success" );
         
     }).catch( (reject) => {
+        
         // Mode Error
         const data = reject["data"];
         const codeError = data["codeError"];
@@ -2643,16 +2844,29 @@ function clickAddSkill() {
         
         let txt = "";
         if(codeError == 410) {
+            
             txt = "انتهت الجلسة,";
+            mainApp.codeWraning( txt , "login" );
+            
         } else if(codeError == 420) {
-            txt = "الرجاء قم بلمئ كافة البيانات";
+            
+            txt = "خطأ, الرجاء قم بلمئ كافة البيانات";
+            mainApp.codeWraningNotification( txt , "error" );
+            
         } else if(codeError == 450) {
-            let txt = "خطأ غير معروف, حاول مرة أخرى";
+            
+            txt = "خطأ غير معروف, حاول مرة أخرى !!";
+            mainApp.codeWraningNotification( txt , "error" );
+            
         } else {
+            
             txt = "خطأ غير معروف !";
+            mainApp.codeWraningNotification( txt , "error" );
+            
         }
         
-        alert(txt);
+        // alert(txt);
+        
     });
 }
 function clickEditSkill( idUserSkill ) {
@@ -2692,11 +2906,13 @@ function clickEditSkill( idUserSkill ) {
     myProfile.updateUserSkill( idUserSkill , codeSkill , codeLevel , description ).then( (result) => {
         
         myProfile.fillProfileUserSkill( result );
-        fillProfileSkills();
+        fillProfileUserSkill();
         
         cancel();
+        mainApp.codeWraningNotification( "تم تحديث المهارة", "success" );
         
     }).catch( (reject) => {
+        
         // Mode Error
         const data = reject["data"];
         const codeError = data["codeError"];
@@ -2704,16 +2920,29 @@ function clickEditSkill( idUserSkill ) {
         
         let txt = "";
         if(codeError == 410) {
+            
             txt = "انتهت الجلسة,";
+            mainApp.codeWraning( txt , "login" );
+            
         } else if(codeError == 420) {
-            txt = "الرجاء قم بلمئ كافة البيانات";
+            
+            txt = "خطأ, الرجاء قم بلمئ كافة البيانات";
+            mainApp.codeWraningNotification( txt , "error" );
+            
         } else if(codeError == 450) {
-            let txt = "خطأ غير معروف, حاول مرة أخرى";
+            
+            txt = "خطأ غير معروف, حاول مرة أخرى !!";
+            mainApp.codeWraningNotification( txt , "error" );
+            
         } else {
+            
             txt = "خطأ غير معروف !";
+            mainApp.codeWraningNotification( txt , "error" );
+            
         }
         
-        alert(txt);
+        // alert(txt);
+        
     });
     
 
@@ -2723,11 +2952,13 @@ function clickRemoveSkill( idUserSkill ) {
     myProfile.removeUserSkill( idUserSkill ).then( (result) => {
         
         myProfile.fillProfileUserSkill( result );
-        fillProfileSkills();
+        fillProfileUserSkill();
         
         cancel();
+        mainApp.codeWraningNotification( "تم حذف المهارة", "success" );
         
     }).catch( (reject) => {
+        
         // Mode Error
         const data = reject["data"];
         const codeError = data["codeError"];
@@ -2735,16 +2966,29 @@ function clickRemoveSkill( idUserSkill ) {
         
         let txt = "";
         if(codeError == 410) {
+            
             txt = "انتهت الجلسة,";
+            mainApp.codeWraning( txt , "login" );
+            
         } else if(codeError == 420) {
-            txt = "الرجاء قم بلمئ كافة البيانات";
+            
+            txt = "خطأ, الرجاء قم بلمئ كافة البيانات";
+            mainApp.codeWraningNotification( txt , "error" );
+            
         } else if(codeError == 450) {
-            let txt = "خطأ غير معروف, حاول مرة أخرى";
+            
+            txt = "خطأ غير معروف, حاول مرة أخرى !!";
+            mainApp.codeWraningNotification( txt , "error" );
+            
         } else {
+            
             txt = "خطأ غير معروف !";
+            mainApp.codeWraningNotification( txt , "error" );
+            
         }
         
-        alert(txt);
+        // alert(txt);
+        
     });
 }
 

@@ -58,8 +58,20 @@ export default class MyActivities {
         return this.listProjectJoin;
     }
     
-    getthisCountTaskWorking() {
+    getCountTaskWorking() {
         return this.countTaskWorking;
+    }
+    getCountProjectJoin() {
+        return this.listProjectJoin.length;
     }
     
 }
+
+
+
+
+
+
+
+
+

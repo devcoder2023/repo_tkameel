@@ -1,5 +1,5 @@
 
-import Notification , { NotificationList } from './moduleNotification.js';
+import { NotificationList } from './moduleNotification.js';
 
 
 
@@ -12,6 +12,7 @@ export default function Main() {
     
     this. myNotificationList = null;
     this.durationNotification = 30000;
+    this.durationWraningNotification = 5000;
     
     
     
@@ -421,33 +422,6 @@ export default function Main() {
         return /\.(jpg|jpeg|png|webp|avif|gif|svg)$/.test(url);
     }
     
-    this.codeWraning = function( msg , page ) {
-        
-        let txtButton = "الصفحة الرئيسية";
-        
-        if( page == "login" ) {
-            txtButton = "تسجيل الدخول";
-        }
-        
-        var wrapper = document.getElementById("wrapper") ;
-        
-        let code = `
-            <div class='widget'>
-            <div class='widgetWarning'>
-            
-                <p>${msg}</p>
-                
-                <a href='${this.pathDomain}${page}'>
-                    <div class='buttons'>${txtButton}</div>
-                </a>
-                
-            </div>
-            </div>
-        `;
-        
-        wrapper.innerHTML = code ;
-    }
-    
     
     
     
@@ -487,15 +461,24 @@ export default function Main() {
         var buttonNotification = document.getElementById('buttonNotification');
         var menuNotification = document.getElementById("menuNotification") ;
         
+        
         document.addEventListener( "click" , (e) => {
             
-            // if( !menu.contains( e.target ) && !buttonMenu.contains( e.target ) ) {
-            //     menu.classList.add("hide");
-            // }
+            if( !menu.contains( e.target ) && !buttonMenu.contains( e.target ) ) {
+                menu.classList.add("hide");
+            }
             
-            // if( !menuNotification.contains( e.target ) && !buttonNotification.contains( e.target ) ) {
-            //     menuNotification.classList.add("hide");
-            // }
+            if( !menuNotification.contains( e.target ) && !buttonNotification.contains( e.target ) ) {
+                menuNotification.classList.add("hide");
+            }
+            
+            
+            let menuOptionPost = document.getElementById("menuPostOption");
+            if( document.contains(menuOptionPost) ) {
+                
+                menuOptionPost.remove();
+                
+            }
             
         });
         
@@ -600,7 +583,7 @@ export default function Main() {
             svgNotification.setAttribute('href', '#svgnotificationOn');
             
             const code = listNotifications[i].code;
-            const typeNotification = listNotifications[i].typeNotification;
+            const codeType = listNotifications[i].codeType;
             
             const codeUserNoti = listNotifications[i].codeUserNoti;
             const firstName = listNotifications[i].firstName;
@@ -612,31 +595,85 @@ export default function Main() {
             const codeTask = listNotifications[i].codeTask;
             const nameTask = listNotifications[i].nameTask;
             
-            const codeStatusApproveJoin = ( listNotifications[i].codeStatusApproveJoin == 1 ) ? "قبول" : "رفض" ;
-            const codeStatusApproveTask = ( listNotifications[i].codeStatusApproveTask == 1 ) ? "إعتماد" : "إعادة" ;
+            
             
             let textNotification = "";
             let goToURL = "";
             
-            if( typeNotification == "follow" ) {
+            if( codeType == 1 ) {
                 
                 textNotification = `<p>قام المستخدم <b>${firstName} ${lastName}</b> بمتابعتك</p>`;
                 goToURL = this.pathDomain + `profile/${codeUserNoti}`;
                 
-            } else if( typeNotification === "join" ) {
+            } else if( codeType == 2 ) {
                 
                 textNotification = `<p>لديك طلب للإنضمام إلى المشروع <b>${nameProject}</b></p>`;
                 goToURL = this.pathDomain + `myproject/${codeProject}`;
                 
-            } else if( typeNotification === "joinTo" ) {
+            } else if( codeType == 3 ) {
                 
-                textNotification = `<p>تم <b>${codeStatusApproveJoin}</b> إنضمامك لمشروع <b>${nameProject}</b></p>`;
+                textNotification = `<p>تم <b>قبول</b> إنضمامك لمشروع <b>${nameProject}</b></p>`;
                 goToURL = this.pathDomain + `live/${codeProject}`;
                 
-            } else if( typeNotification == "task" ) {
+            } else if( codeType == 4 ) {
                 
-                textNotification = `<p>تم <b>${codeStatusApproveTask}</b> مهمتك <b>${nameTask}</b> في مشروع <b>${nameProject}</b></p>`;
-                goToURL = this.pathDomain + `workproject/${codeProject}/${codeProjectSkill}`;
+                textNotification = `<p>تم <b>رفض</b> إنضمامك لمشروع <b>${nameProject}</b></p>`;
+                goToURL = this.pathDomain + `showproject/${codeProject}`;
+                
+            } else if( codeType == 5 ) {
+                
+                textNotification = `<p>قام المستخدم <b>بمغادرة</b> المشروع <b>${nameProject}</b></p>`;
+                goToURL = this.pathDomain + `myproject/${codeProject}`;
+                
+            } else if( codeType == 6 ) {
+                
+                textNotification = `<p>تم <b>إنهاء خدمتك</b> في المشروع <b>${nameProject}</b></p>`;
+                goToURL = this.pathDomain + `showproject/${codeProject}`;
+                
+            } else if( codeType == 7 ) {
+                
+                textNotification = `<p>تم <b>تقييمك</b> في المشروع <b>${nameProject}</b></p>`;
+                goToURL = this.pathDomain + `workproject/${codeProject}`;
+                
+            } else if( codeType == 8 ) {
+                
+                textNotification = `<p>قام المستخدم ${firstName} ${lastName} <b>بإستلام</b> المهمة ${nameTask} في المشروع <b>${nameProject}</b></p>`;
+                goToURL = this.pathDomain + `myproject/${codeProject}`;
+                
+            } else if( codeType == 9 ) {
+                
+                textNotification = `<p>قام المستخدم ${firstName} ${lastName} <b>بمغادرة</b> المهمة ${nameTask} في المشروع <b>${nameProject}</b></p>`;
+                goToURL = this.pathDomain + `myproject/${codeProject}`;
+                
+            } else if( codeType == 10 ) {
+                
+                textNotification = `<p>قام المستخدم ${firstName} ${lastName} <b>بإتمام</b> المهمة ${nameTask} في المشروع <b>${nameProject}</b></p>`;
+                goToURL = this.pathDomain + `myproject/${codeProject}`;
+                
+            } else if( codeType == 11 ) {
+                
+                textNotification = `<p> تم <b>قبول</b> مهمتك ${nameTask} في المشروع <b>${nameProject}</b></p>`;
+                goToURL = this.pathDomain + `workproject/${codeProject}`;
+                
+            } else if( codeType == 12 ) {
+                
+                textNotification = `<p> تم <b>رفض</b> مهمتك ${nameTask} في المشروع <b>${nameProject}</b></p>`;
+                goToURL = this.pathDomain + `workproject/${codeProject}`;
+                
+            } else if( codeType == 13 ) {
+                
+                textNotification = `<p> تم <b>إقصاءك</b> من المهمة ${nameTask} في المشروع <b>${nameProject}</b></p>`;
+                goToURL = this.pathDomain + `workproject/${codeProject}`;
+                
+            } else if( codeType == 14 ) {
+                
+                textNotification = `<p> تم <b>الإنتهاء</b> من المشروع <b>${nameProject}</b></p>`;
+                goToURL = this.pathDomain + `myproject/${codeProject}`;
+                
+            } else if( codeType == 15 ) {
+                
+                textNotification = `<p> تم <b>إلغاء</b> المشروع <b>${nameProject}</b></p>`;
+                goToURL = this.pathDomain + `myproject/${codeProject}`;
                 
             }
             
@@ -652,8 +689,151 @@ export default function Main() {
             menuNotification.insertAdjacentHTML("beforeend", codeoption);
             
         }
+        
     }
     
+    
+    /*----- Notification -------*/
+    
+    this.catchWraning = function( reject ) {
+        
+        if( reject["data"] == undefined ) {
+            
+            txt = "خطأ داخلي !";
+            this.codeWraningNotification( txt , "error" );
+            
+            return;
+        }
+        
+        const data = reject["data"];
+        
+        if( data["codeError"] == undefined ) {
+            
+            txt = "خطأ داخلي !";
+            this.codeWraningNotification( txt , "error" );
+            
+            return;
+        }
+        
+        const codeError = data["codeError"];
+        const textError = data["message"];
+        
+        let txt = "";
+        if(codeError == 410) {
+            
+            txt = "انتهت الجلسة.";
+            this.codeWraning( txt , "login" );
+            
+        } else if(codeError == 420) {
+            
+            txt = "خطأ, الرجاء قم بلمئ كافة البيانات.";
+            this.codeWraningNotification( txt , "error" );
+            
+        } else if(codeError == 430) {
+            
+            txt = "خطأ, الكائن غير موجود !";
+            this.codeWraningNotification( txt , "error" );
+            
+        } else if(codeError == 440) {
+            
+            txt = "خطأ, غير مصرح لك هذا الإجراء !";
+            this.codeWraningNotification( txt , "error" );
+            
+        } else if(codeError == 450) {
+            
+            let txt = "خطأ غير معروف, حاول مرة أخرى";
+            this.codeWraningNotification( txt , "error" );
+            
+        } else if(codeError == 451) {
+            
+            let txt = "خطأ غير معروف, حاول مرة أخرى !";
+            this.codeWraningNotification( txt , "error" );
+            
+        } else if(codeError == 452) {
+            
+            let txt = "خطأ غير معروف, حاول مرة أخرى !!";
+            this.codeWraningNotification( txt , "error" );
+            
+        } else if(codeError == 453) {
+            
+            let txt = "خطأ غير معروف, حاول مرة أخرى !!!";
+            this.codeWraningNotification( txt , "error" );
+            
+        } else if(codeError == 454) {
+            
+            let txt = "خطأ غير معروف, حاول مرة أخرى !!!!";
+            this.codeWraningNotification( txt , "error" );
+            
+        } else if(codeError == 455) {
+            
+            let txt = "خطأ غير معروف, حاول مرة أخرى !!!!!";
+            this.codeWraningNotification( txt , "error" );
+            
+        } else {
+            
+            txt = "خطأ غير معروف !";
+            this.codeWraningNotification( txt , "error" );
+            
+        }
+    }
+    
+    this.codeWraning = function( msg , page ) {
+        
+        let txtButton = "الصفحة الرئيسية";
+        
+        if( page == "login" ) {
+            txtButton = "تسجيل الدخول";
+        }
+        
+        var wrapper = document.getElementById("wrapper") ;
+        
+        let code = `
+            <div class='widget'>
+            <div class='widgetWarning'>
+            
+                <p>${msg}</p>
+                
+                <a href='${this.pathDomain}${page}'>
+                    <div class='buttons'>${txtButton}</div>
+                </a>
+                
+            </div>
+            </div>
+        `;
+        
+        wrapper.innerHTML = code ;
+    }
+    
+    this.codeWraningNotification = function( msg , type ) {
+        
+        var wrapper = document.getElementById("wrapper") ;
+        
+        let code = `
+            <div id="processnotification" class='processnotification ${type}'>
+                
+                <div class="divsvg">
+                    <svg class="svgfill">
+                        <use xlink:href="#svgexclamation"/>
+                    </svg>
+                </div>
+                
+                <div class='textNotification'>
+                    <p>${msg}</p>
+                </div>
+                
+            </div>
+        `;
+        wrapper.insertAdjacentHTML("beforeend", code) ;
+        
+        
+        setTimeout( () => {
+            
+            var wrapper = document.getElementById("wrapper") ;
+            var processnotification = document.getElementById("processnotification") ;
+            let v = wrapper.removeChild( processnotification );
+            
+        } , this.durationWraningNotification )
+    }
     
     
     

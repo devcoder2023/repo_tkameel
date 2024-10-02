@@ -481,8 +481,10 @@ function clickNavJoinLeft() {
 function fillShowData() {
     
     let displayCountTaskWorking = document.getElementById("displayCountTaskWorking");
+    let displayCountProjectJoin = document.getElementById("displayCountProjectJoin");
     
-    displayCountTaskWorking.textContent = myActivities.getthisCountTaskWorking() //data["countTaskWorking"];
+    displayCountTaskWorking.textContent = myActivities.getCountTaskWorking();
+    displayCountProjectJoin.textContent = myActivities.getCountProjectJoin();
     
     
 }
